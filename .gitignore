@@ -3,6 +3,7 @@
 *.rej
 *.sw!
 *.un~
+/Makefile
 /autom4te.cache
 /config.*
 /configure
