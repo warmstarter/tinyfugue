@@ -1,2 +1,2 @@
 # tinyfugue
-TinyFugue
+TinyFugue, the classic MU* client Modernized.
