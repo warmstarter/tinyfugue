@@ -216,11 +216,6 @@ TFILE *tfopen(const char *name, const char *mode)
     }
 
     if (*mode == 'p') {
-#ifdef __CYGWIN32__
-        eprintf("TF does not support pipes under cygwin32.");
-        errno = EPIPE;
-        return NULL;
-#else
 	if (restriction >= RESTRICT_SHELL) {
 	    errno = EPERM;
 	    return NULL;
@@ -239,7 +234,6 @@ TFILE *tfopen(const char *name, const char *mode)
         filemap[fileno(fp)] = result;
         selectable_tfiles++;
         return result;
-#endif
     }
 
     if ((fp = fopen(name, mode)) && fstat(fileno(fp), &buf) == 0) {

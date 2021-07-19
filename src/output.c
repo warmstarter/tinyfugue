@@ -79,13 +79,8 @@ static char *lang = NULL;
 
 /*				vt100		vt220		ansi */
 /*				-----		-----		---- */
-#ifdef __CYGWIN32__  /* "\033[J" is broken in CYGWIN32 b18. */
-TERMCODE (clear_screen,		NULL,		NULL,		NULL)
-TERMCODE (clear_to_eos,		NULL,		NULL,		NULL)
-#else
 TERMCODE (clear_screen,		"\033[H\033[J", "\033[H\033[J", "\033[H\033[J")
 TERMCODE (clear_to_eos,		"\033[J",	"\033[J",	"\033[J")
-#endif
 TERMCODE (clear_to_eol,		"\033[K",	"\033[K",	"\033[K")
 TERMCODE (cursor_address,	"\033[%d;%dH",	"\033[%d;%dH",	"\033[%d;%dH")
 TERMCODE (enter_ca_mode,	NULL,		NULL,		NULL)
@@ -94,11 +89,7 @@ TERMCODE (set_scroll_region,	"\033[%d;%dr",	"\033[%d;%dr",	NULL)
 TERMCODE (insert_line,		NULL,		"\033[L",	"\033[L")
 TERMCODE (delete_line,		NULL,		"\033[M",	"\033[M")
 TERMCODE (delete_char,		NULL,		"\033[P",	"\033[P")
-#ifdef __CYGWIN32__  /* "\033[@" is broken in CYGWIN32 b18. */
-TERMCODE (insert_char,		NULL,		NULL,		NULL)
-#else
 TERMCODE (insert_char,		NULL,		"\033[@",	"\033[@")
-#endif
 TERMCODE (insert_start,		NULL,		NULL,		"\033[4h")
 TERMCODE (insert_end,		NULL,		NULL,		"\033[4l")
 TERMCODE (keypad_on,		"\033[?1h\033=",NULL,		NULL)
@@ -587,7 +578,8 @@ static void xy(int x, int y)
     } else if (x == 1 && y > cy && y < cy + 5 &&       /* optimization... */
         cy >= top_margin && y <= bottom_margin)        /* if '\n' is safe */
     {
-        /* Some broken emulators (including CYGWIN32 b18) lose
+        /* TODO: With CYGWIN deprecated, see where we care here.
+	 * Some broken emulators (including CYGWIN32 b18) lose
          * attributes when \r\n is printed, so we print \n\r instead.
          */
         bufputnc('\n', y - cy);

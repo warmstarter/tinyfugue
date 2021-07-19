@@ -47,7 +47,6 @@ struct Value *handle_help_command(String *args, int offset)
         return shareval(val_zero);
     }
 
-#ifndef __CYGWIN32__
     if (helpfile->type == TF_FILE) {
         /* regular file: use index */
         Sprintf(indexfname, "%s.idx", name);
@@ -57,7 +56,6 @@ struct Value *handle_help_command(String *args, int offset)
             return shareval(val_zero);
         }
     } else
-#endif
     {
         /* use brute-force search */
         indexfile = helpfile;

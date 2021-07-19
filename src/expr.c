@@ -821,14 +821,10 @@ static Value *function_switch(const ExprFunc *func, int n, const char *parent)
 
     int symbol = func - functab;
 
-#ifdef __CYGWIN32__
-    STATIC_STRING(systype, "cygwin32", 0);
-#else
-# ifdef PLATFORM_UNIX
+#ifdef PLATFORM_UNIX
     STATIC_STRING(systype, "unix", 0);
-# else
+#else
     STATIC_STRING(systype, "unknown", 0);
-# endif
 #endif
 
         switch (symbol) {

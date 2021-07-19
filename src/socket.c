@@ -110,10 +110,8 @@ struct sockaddr_in {
 #endif
 
 #ifdef PLATFORM_UNIX
-# ifndef __CYGWIN32__
-#  if HAVE_WAITPID
-#   define NONBLOCKING_GETHOST
-#  endif
+# if HAVE_WAITPID
+#  define NONBLOCKING_GETHOST
 # endif
 #endif
 
@@ -192,11 +190,7 @@ static const char *h_errlist[] = {
 #  define hstrerror(err)  ((err) <= 4 ? h_errlist[(err)] : "unknown error")
 # endif /* !HAVE_HSTRERROR */
 
-#if HAVE_H_ERRNO
-  /* extern int h_errno; */ /* this could conflict */
-#elif !defined(h_errno)
-# define h_errno 1
-#endif
+#define h_errno 1
 
 # define gai_strerror(err) ((err) < 0 ? tf_gai_errlist[-(err)] : hstrerror(err))
 

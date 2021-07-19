@@ -175,14 +175,12 @@ World *new_world(const char *name, const char *type,
 #endif
 
 #ifdef PLATFORM_UNIX
-# ifndef __CYGWIN32__
     if (pass && *pass && loadfile && (loadfile->mode & (S_IROTH | S_IRGRP)) &&
         !loadfile->warned)
     {
         tfwprintf("file contains passwords and is readable by others.");
         loadfile->warned++;
     }
-# endif /* __CYGWIN32__ */
 #endif /* PLATFORM_UNIX */
 
     if (is_redef)

@@ -1,9 +1,3 @@
-/* config.h.
- * Manually generated for OS/2 from information provided by A.Sahlbach.
- * Lines marked with '?' indicate I don't have information about that feature
- * for OS/2; for most of those, I assume a safe value.
- */
-#define PLATFORM_OS2 1
 #define HAVE_DRIVES 1
 
 #define MAILDIR    ""
@@ -40,8 +34,6 @@
 /* #undef HAVE_GETIPNODEBYNAME */ /* ? */
 /* #undef HAVE_GETPWNAM */
 /* #undef HAVE_GETTIMEOFDAY */ /* ? */
-/* #undef HAVE_GETWD */
-#define HAVE_H_ERRNO 1
 /* #undef HAVE_HSTRERROR */ /* Not all versions of OS/2 have this. -Ken Keys */
 /* #undef HAVE_INDEX */
 /* #undef HAVE_INET_ATON */ /* ? */
@@ -73,17 +65,12 @@
 /* #undef HARDCODE */
 #define USE_TERMIOS 1
 /* #undef USE_TERMIO */
-/* #undef USE_SGTTY */
 
 /* #undef ENABLE_INET6 */ /* ? */
 /* #undef IN6_ADDR */
 /* #undef NO_HISTORY */
 /* #undef NO_PROCESS */
-/* #undef NO_FLOAT */
 
 /* #undef inline */
-
-#define UNAME "OS/2"
-/* LIBDIR is defined by os2make.cmd */
 
 #include <assert.h>

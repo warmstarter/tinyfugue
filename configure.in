@@ -423,23 +423,12 @@ dnl ########### cygwin ############
 dnl XXX check for debian linux's broken termcap
 dnl # Cygwin may not have termcap at all, but it only supports ANSI emulation
 dnl # anyway, so we hardcode that (unless it was overridden).
-if test "$CYGWIN" = "yes"; then
-    terminal_hardcode="TERM_ansi";
-    if test "$enable_termcap" = "default"; then
-	enable_termcap="no";
-    fi
-fi
-
-dnl AC_CANONICAL_HOST
-dnl case $host_os in
-dnl  *cygwin* ) CYGWIN=yes;;
-dnl	 * ) CYGWIN=no;;
-dnl esac
-
-dnl # override a few values
-if test "$CYGWIN" = "yes"; then
-    AC_DEFINE([HAVE_H_ERRNO], [0], [cygwin h_errno broken])
-fi
+dnl if test "$CYGWIN" = "yes"; then
+dnl    terminal_hardcode="TERM_ansi";
+dnl    if test "$enable_termcap" = "default"; then
+dnl	enable_termcap="no";
+dnl    fi
+dnlfi
 
 if test "$enable_256colors" = "yes"; then
     AC_DEFINE([NCOLORS], [256], [256 color mode enabled])
