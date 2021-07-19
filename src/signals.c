@@ -430,11 +430,7 @@ static void coremsg(FILE *dumpfile)
 void init_exename(char *name)
 {
     argv0 = name;
-#if HAVE_GETCWD
     getcwd(initial_dir, PATH_MAX);
-#elif HAVE_GETWD
-    getwd(initial_dir);
-#endif
     initial_path = getenv("PATH");
 }
 

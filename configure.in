@@ -535,9 +535,9 @@ dnl # required standard functions
 AC_CHECK_FUNCS(strstr strtol, ,
     AC_MSG_ERROR([Missing required standard function.]))
 dnl # optional functions
-AC_CHECK_FUNCS(bcopy bzero connect fileno getcwd \
+AC_CHECK_FUNCS(bcopy bzero connect fileno \
     gethostname gethostbyname getipnodebyname \
-    getpwnam gettimeofday getwd hstrerror index inet_aton)
+    getpwnam gettimeofday hstrerror index inet_aton)
 dnl # uncommented functions, presumably all optional
 AC_CHECK_FUNCS(kill memcpy memset raise setlocale \
     setrlimit sigaction srand srandom strcasecmp strchr \

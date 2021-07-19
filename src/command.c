@@ -318,14 +318,7 @@ struct Value *handle_lcd_command(String *args, int offset)
         operror(name);
         return shareval(val_zero);
     }
-
-#if HAVE_GETCWD
     oprintf("%% Current directory is %s", getcwd(buffer, PATH_MAX));
-#else
-# if HAVE_GETWD
-    oprintf("%% Current directory is %s", getwd(buffer));
-# endif
-#endif
     return shareval(val_one);
 }
 
