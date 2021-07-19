@@ -31,7 +31,6 @@ jobs:
     - name: make
       run: make
 
-jobs:
   build:
 
     runs-on:
@@ -46,7 +45,6 @@ jobs:
     - name: make
       run: make
 
-jobs:
   build:
 
     runs-on:
