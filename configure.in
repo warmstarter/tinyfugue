@@ -418,18 +418,6 @@ dnl    AC_MSG_WARN([Hardcoding terminal codes.])
 fi
 dnl XXX check for debian linux's broken termcap
 
-dnl ########### cygwin ############
-
-dnl XXX check for debian linux's broken termcap
-dnl # Cygwin may not have termcap at all, but it only supports ANSI emulation
-dnl # anyway, so we hardcode that (unless it was overridden).
-dnl if test "$CYGWIN" = "yes"; then
-dnl    terminal_hardcode="TERM_ansi";
-dnl    if test "$enable_termcap" = "default"; then
-dnl	enable_termcap="no";
-dnl    fi
-dnlfi
-
 if test "$enable_256colors" = "yes"; then
     AC_DEFINE([NCOLORS], [256], [256 color mode enabled])
 fi
