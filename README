@@ -53,6 +53,9 @@ If needed the old sources are in the git history.
 CYGWIN deprecated in favor of WSL for Windows, to better keeps platofmrs
 in-sync and remove issues.
 
+BeOS deprecate as likely no longer used. Should still compile, but might
+require some modifications for installation of binary, no way to test.
+
 ======
 
 Unicode notes:
