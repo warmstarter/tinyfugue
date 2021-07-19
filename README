@@ -7,6 +7,7 @@ ANSI log output (/help ansi_log) off by default
 LOGs output prefix, such as timestamp (/help log_prefix) off by default
 ERROR output prefix now adjustable (/help error_prefix) '%' by default
 UNNAMED worlds not wrapped in () (/help oldunnamed) no-() by default
+FG world switching can use TF4 stle (/help oldstylefg) off by default
 @ALERT picks up on messages that could have been lost
 / as a prefix to /command sends to MU, as opposed to ///command
 SSL now looks for GNU TLS

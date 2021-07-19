@@ -1075,6 +1075,7 @@ int world_hook(const char *fmt, const char *name)
 static int fg_sock(Sock *sock, int quiet)
 {
     static int depth = 0;
+    String *buffer = NULL;
 
     if (depth) {
         eprintf("illegal reentry");
@@ -1106,6 +1107,12 @@ static int fg_sock(Sock *sock, int quiet)
     hide_screen(NULL);
 
     if (sock) {
+        if (getintvar(VAR_oldstylefg) == 1)
+        {
+          buffer = Stringnew(NULL, -1, 0);
+          Sprintf(buffer, (sock->constate >= SS_ZOMBIE) ? "---- World %s (dead) ----" : "---- World %s ----", sock->world->name);
+          world_output(sock->world, CS(buffer));
+        }
 	if (sock->alert_id == alert_id) {
 	    clear_alert();
 	    sock->alert_id = 0;
@@ -1130,6 +1137,12 @@ static int fg_sock(Sock *sock, int quiet)
         fg_screen = default_screen;
 	unhide_screen(fg_screen);
         world_hook("---- No world ----", NULL);
+	if (getintvar(VAR_oldstylefg) == 1)
+        {
+          buffer = Stringnew(NULL, -1, 0);
+          Sprintf(buffer, "---- No world ----");
+          world_output(sock->world, CS(buffer));
+        }
 	switch_screen(quiet || !bg_output);
         update_prompt(NULL, 1);
     }

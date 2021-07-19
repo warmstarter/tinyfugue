@@ -9380,6 +9380,13 @@ Special global variables
           only slashes at the beginning of a body are handled specially.  You
           are encouraged to turn this off.  (See: [1mevaluation[22;0m)
 
+#oldstylefg
+#%oldstulefg
+  [1moldstylefg[22m=off
+          (flag) If on, used old style fg switching from TF4.
+          This does not clear the screen allowing you to see what was in the
+          previous world after switching.
+
 #oldunnamed
 #%oldunnamed
   [1moldunnamed[22m=off

@@ -3392,7 +3392,14 @@ void unhide_screen(Screen *screen)
  */
 void switch_screen(int quiet)
 {
-    if (fg_screen != display_screen) {	/* !virtscreen */
+
+    if (getintvar(VAR_oldstylefg) == 1)
+    {
+      update_status_field(NULL, STAT_WORLD);
+      return;
+    }
+
+    if (fg_screen != display_screen) {	/* !virtscreen *.
         /* move lines from fg_screen to display_screen */
 	/* XXX optimize when no filter */
 	PhysLine *pl;
