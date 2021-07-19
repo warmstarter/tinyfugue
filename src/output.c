@@ -3399,7 +3399,7 @@ void switch_screen(int quiet)
       return;
     }
 
-    if (fg_screen != display_screen) {	/* !virtscreen *.
+    if (fg_screen != display_screen) {	/* !virtscreen */
         /* move lines from fg_screen to display_screen */
 	/* XXX optimize when no filter */
 	PhysLine *pl;
