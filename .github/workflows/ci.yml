@@ -19,36 +19,7 @@ on:
 jobs:
   build:
 
-    runs-on:
-      - macos-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: autoconf
-      run: autoconf
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-
-  build:
-
-    runs-on:
-      - ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: autoconf
-      run: autoconf
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-
-  build:
-
-    runs-on:
-      - windows-latest
+    runs-on: [ macos-latest, ubuntu-latest, windows-latest ]
 
     steps:
     - uses: actions/checkout@v2
