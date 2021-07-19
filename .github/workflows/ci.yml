@@ -3,23 +3,29 @@ name: C CI
 on:
   push:
     branches:
-      - main
       - release
-      - pre-release
       - "feature/*"
       - "*"
   pull_request:
     branches:
-      - main
       - release
-      - pre-release
       - "feature/*"
       - "*"
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on:
+      - macos-10.15
+      - macos-11
+      - macos-latest
+      - ubuntu-18.04
+      - ubuntu-20.04
+      - ubuntu-latest
+      - windows-2016
+      - windows-2019
+      - windost-latest
+
 
     steps:
     - uses: actions/checkout@v2
