@@ -47,6 +47,8 @@ Deprecations:
 NO_FLOAT deprecated. This has been broken for over a decade and has little
 purpose on modern computer systems.
 
+OS/2 deprecated. This was not being maintained and likely not used by anyone.
+If needed the old sources are in the git history.
 
 ======
 
@@ -69,39 +71,14 @@ Unicode notes:
 
 ======
 
-  TinyFugue is Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)
-
-=======
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
-
-=======
 
 
                        INSTALLING TINYFUGUE
 
-TinyFugue can be installed and run on UNIX-like systems, Mac OS X, OS/2,
+TinyFugue can be installed and run on UNIX-like systems, Mac OS X,
 and Win32.  For instructions, see the README file in the appropriate
 directory.  For information on unofficial versions of TF for other
 operating systems, see the TF web page at http://tinyfugue.sourceforge.net/.
-
-Note that the .tar.gz and .tar.Z distributions contain LF line delimiters,
-intended for UNIX, and the .zip distribution contains CR LF delimiters,
-intended for OS/2.  It is possible to convert line delimiters, but it's
-easier to just get a distribution that already has the correct delimiters.
-
 
 "Make" options
 --------------
@@ -188,14 +165,74 @@ kenkeys@users.sourceforge.net.  Please provide the following information:
     If you have a core file, do NOT send it.
 
 
-Porting
+Credits
 -------
 
-I have no personal interest in Mac OS 9, DOS, Windows 95, Windows NT, or
-Amiga, so I don't plan on porting to them.  However, I am willing to
-work with someone who wants to try and is willing to follow my
-guidelines (this is how the OS/2 version was created, and why it is an
-official version which continues to grow).  Basically, this means
-keeping the platform-specific code separate and to a minimum, and not
-adding new features.
+This fork of TinyFugue is currently being supported by Kruton,
+Sketch, and wstarter. It also includes assorted patches developed
+by various community members in the years since TF saw saw it's
+final release.
 
+TinyFugue is Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)
+
+For a long time TinyFugue was written, maintained, and copyrighted
+by Ken Keys ("Hawkeye"), who can be reached by email at kkeys@ucsd.edu.
+His final release was 50b8 in January 2007, but he is still active
+in giving support at https://sourceforge.net/p/tinyfugue
+
+TinyFugue versions 1.5.3 and earlier were written by Greg Hudson
+("Explorer_Bob"), without whom I would have never gotten into this mess.
+
+TinyFugue was initially derived from tinytalk, a unix client written by
+Anton Rang ("Tarrant") and modified by Leo Plotkin ("Grod").
+
+Additional thanks to Jeff Prothero ("Cynbe"), Bruce Sterling Woodcock
+("Bruce"), David Moore ("OliverJones"), Ben Jackson ("Ben"), the mudders of
+glia.biostr.washington.edu, and everyone else who tested, found bugs,
+or came up with suggestions, and to Jim Lick ("Jingoro") for providing
+tcp.com services.
+
+============================================
+TinyFugue for Mac OS X
+
+You must have the developer tools installed on your system.
+Open a shell window, and follow the instructions in unix/README.
+
+----------------------------------------------------------------
+
+TinyFugue for Win32
+
+The likely best option for running TinyFugue under Windows is to
+get 'Windows Subsystem for Linux'. This should be straight-forward
+and give you an almost identical experience to a TinyFugue on UNIX
+like systems, but it has not yet been tested.
+
+https://docs.microsoft.com/en-us/windows/wsl/install-win10
+
+Once installed, open a shell window, and follow the instructions in
+unix/README.
+
+===================================================================
+
+Older note on TinyFugue for Win32 (not the recommended option)
+
+The official release of TF for win32 is available only in source form.
+To compile it, you will need the Cygwin Development Kit (cdk.exe),
+available at http://www.cygnus.com/misc/gnu-win32/.  Once you have the
+CDK installed, follow the instructions for compiling TF under UNIX.
+
+Unofficial binary releases may be available.  Check
+http://tinyfugue.sourceforge.net/ for more information.
+
+There are several known problems with the win32 version of tf, mostly due
+to shortcomings of cygwin:
+ * Scrolling in visual mode is jumpy.
+ * /quote ! (and code that calls it, like /sys) is not supported.
+ * $COMPRESS_READ is not supported.
+ * Nonblocking hostname resolution (%gethostbyname) is not supported.
+ * The flash attribute (-af) does not work.
+
+Note that TF (and all cygwin applications) use "//X" notation instead of
+"X:" to indicate drives in paths, and slashes instead of backslashes
+to separate path components.  For example, a DOS path of "C:\foo\bar"
+should be written "//c/foo/bar" in cygwin.

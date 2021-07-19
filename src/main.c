@@ -56,12 +56,7 @@ const char mods[] = "";
 const char copyright[] =
     "Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)";
 
-const char contrib[] =
-#ifdef PLATFORM_OS2
-    "OS/2 support written by Andreas Sahlbach (asa@stardiv.de)";
-#else
-    "";
-#endif
+const char contrib[] = "";
 
 int restriction = 0;
 int debug = 0;

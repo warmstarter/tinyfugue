@@ -153,6 +153,8 @@ static int fatal_signal = 0;
 /* HAVE_SIGACTION doesn't mean we NEED_sigaction.  On some systems that have
  * it, struct sigaction will not get defined unless _POSIX_SOURCE or similar
  * is defined, so it's best to avoid it if we don't need it.
+ *
+ * This might be some OS2 cruft to get rid of.
  */
 #ifdef SA_RESTART
 # define NEED_sigaction
@@ -176,10 +178,6 @@ static SigHandler *setsighandler(int sig, SigHandler *func)
 # ifdef SA_RESTART
         /* Disable system call restarting, so select() is interruptable. */
         act.sa_flags &= ~SA_RESTART;
-# endif
-# ifdef SA_ACK
-        /* Disable OS2 SA_ACK, so signals can be re-installed POSIX-style. */
-        act.sa_flags &= ~SA_ACK;
 # endif
         act.sa_handler = func;
         sigaction(sig, &act, NULL);
@@ -638,9 +636,5 @@ int shell(const char *cmd)
     redraw();
     if (result == -1) return result;
     check_mail();
-#ifdef PLATFORM_OS2
-    return result;
-#else /* UNIX */
     return shell_status(result);
-#endif
 }
