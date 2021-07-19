@@ -186,14 +186,7 @@ static void  (*tp)(const char *str);
 #define bufputc(c)		Stringadd(outbuf, c)
 #define bufputnc(c, n)		Stringnadd(outbuf, c, n)
 
-
-/* This might be some OS2 stuff when not using EMXANSI */
-#ifdef USE_SGTTY  /* CRMOD is off (tty.c) */
-#  define crnl(count)  do { bufputc('\r'); bufputnc('\n', count); } while (0)
-# else             /* ONLCR is on (tty.c) */
-#  define crnl(count)  bufputnc('\n', count)
-#endif
-
+#define crnl(count)  bufputnc('\n', count)
 
 /* Others */
 

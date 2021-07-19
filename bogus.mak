@@ -18,10 +18,6 @@ all:
 	@echo : appropriate to your system.  For more information, see
 	@echo : the README file in the directory for your system.
 	@echo :
-	@echo : UNIX, CYGWIN, MACOS X:
-	@echo : ./configure [options]
-	@echo : make install
-	@echo :
 
 install files tf clean uninstall: all
 

@@ -49,17 +49,6 @@
 # include <sys/ptem.h>               /* needed for struct winsize.  Ugh. */
 #endif
 
-#if HAVE_SGTTY_H
-# define USE_SGTTY
-# include <sys/ioctl.h>
-# include <sgtty.h>                  /* BSD's old "new" terminal driver. */
-# define tty_struct struct sgttyb
-# define insetattr(buf) (ioctl(STDIN_FILENO, TIOCSETP, (buf)))
-# define ingetattr(buf) (ioctl(STDIN_FILENO, TIOCGETP, (buf)))
-# define insetattr_error "TIOCSETP ioctl"
-# define ingetattr_error "TIOCGETP ioctl"
-#endif
-
 static tty_struct old_tty;
 static int is_custom_tty = 0;        /* is tty in customized mode? */
 
@@ -78,9 +67,6 @@ int no_tty = 1;
 void init_tty(void)
 {
 #ifdef USE_HPUX_TERMIO
-    struct ltchars chars;
-#endif
-#ifdef USE_SGTTY
     struct ltchars chars;
 #endif
 
@@ -114,17 +100,6 @@ void init_tty(void)
             *bword = chars.t_werasc;
             *refresh = chars.t_rprntc;
             /* *lnext = chars.t_lnextc; */  /* ?? Screw it, use default. */
-        }
-#endif
-
-#ifdef USE_SGTTY
-        *bs = old_tty.sg_erase;
-        *dline = old_tty.sg_kill;
-        if (ioctl(STDIN_FILENO, TIOCGLTC, &chars) < 0) perror("TIOCGLTC ioctl");
-        else {
-            *bword = chars.t_werasc;
-            *refresh = chars.t_rprntc;
-            *lnext = chars.t_lnextc;
         }
 #endif
 
@@ -231,16 +206,6 @@ void cbreak_noecho_mode(void)
      */
     tty.c_cc[VMIN] = 0;
     tty.c_cc[VTIME] = 0;
-#endif
-
-#ifdef USE_SGTTY
-    tty.sg_flags |= CBREAK;
-    tty.sg_flags &= ~(ECHO | CRMOD);
-    /* Sgtty's CRMOD is equivalent to termios' (ICRNL | OCRNL | ONLCR).
-     * So to turn off icrnl and ocrnl we must also turn off onlcr.
-     * This means we'll have to print '\r' ourselves in output.c, and
-     * we can't do anything about making external screen writers look sane.
-     */
 #endif
 
     if (insetattr(&tty) < 0) die(insetattr_error, errno);

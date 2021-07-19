@@ -540,7 +540,7 @@ AC_CHECK_FUNCS(bcopy bzero connect fileno \
     getpwnam gettimeofday hstrerror index inet_aton)
 dnl # uncommented functions, presumably all optional
 AC_CHECK_FUNCS(kill memcpy memset raise setlocale \
-    setrlimit sigaction srand srandom strcasecmp strchr \
+    setrlimit srand srandom strcasecmp strchr \
     strcmpi strcspn strerror stricmp tzset waitpid)
 
 dnl ########### networking ############

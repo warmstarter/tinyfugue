@@ -79,7 +79,6 @@
 #define HARDCODE 0
 #define HAVE_TERMIOS_H 0
 #define HAVE_TERMIO_H 0
-#define HAVE_SGTTY_H 0
 
 #define HAVE_SOCKADDR_SA_LEN 0
 #define HAVE_GETADDRINFO 0

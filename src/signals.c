@@ -150,40 +150,19 @@ static SigHandler *setsighandler(int sig, SigHandler *func);
 static jmp_buf jumpenv;
 static int fatal_signal = 0;
 
-/* HAVE_SIGACTION doesn't mean we NEED_sigaction.  On some systems that have
- * it, struct sigaction will not get defined unless _POSIX_SOURCE or similar
- * is defined, so it's best to avoid it if we don't need it.
- *
- * This might be some OS2 cruft to get rid of.
- */
-#ifdef SA_RESTART
-# define NEED_sigaction
-#endif
-#ifdef SA_ACK
-# define NEED_sigaction
-#endif
-
 static SigHandler *setsighandler(int sig, SigHandler *func)
 {
     if (!sig) return NULL;
-#ifndef NEED_sigaction
-    return signal(sig, func);
-#else
     {
         struct sigaction act;
         SigHandler *oldfunc;
 
         sigaction(sig, NULL, &act);
         oldfunc = act.sa_handler;
-# ifdef SA_RESTART
-        /* Disable system call restarting, so select() is interruptable. */
-        act.sa_flags &= ~SA_RESTART;
-# endif
         act.sa_handler = func;
         sigaction(sig, &act, NULL);
         return oldfunc;
     }
-#endif /* HAVE_SIGACTION */
 }
 
 /* Returns s, unless s is NULL, accessing s would cause a SIGBUS or SIGSEGV,
