@@ -15,20 +15,17 @@ AC_PREREQ([2.69])
 
 dnl ### Initialization variables.
 
-dnl This should be placed into src/main.c rather than pulled from it.
-dnl PACKAGE_VERSIONSION=`sed -n -e '/Fugue version/s/^.*"\(.*\)".*$/\1/p' src/main.c`
-
-dnl This gets used elsewhere as is, but having issues in the init, needs to get fixe up.
+dnl This gets used elsewhere as is, but having issues in the init, needs to get fixed up.
 PACKAGE_SHORTNAME="tf"
 AC_SUBST([PACKAGE_SHORTNAME])
 
 m4_define([tf_VERSION], [50b8])
+m4_define([tf_URL], [https://github.com/warmstarter/tinyfugue])
 AC_INIT([TinyFugue],
-    m4_defn([tf_VERSION]),
-    [https://github.com/warmstarter/tinyfugue/issues],
-    [tf-]m4_defn([tf_VERSION]),
-    [https://github.com/warmstarter/tinyfugue])
-
+    [tf_VERSION],
+    [tf_URL][/issues],
+    [tf-][tf_VERSION],
+    [tf_URL])
 
 AC_COPYRIGHT([Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)])
 AC_REVISION([$Revision: 0.20 $])
@@ -42,6 +39,11 @@ AC_PREFIX_DEFAULT([/usr/local])
 AC_CONFIG_HEADERS([src/tfconfig.h])
 
 AC_MSG_NOTICE([Configuring $PACKAGE_NAME $PACKAGE_VERSION])
+
+dnl This should be placed into src/main.c rather than pulled from it.
+dnl Actually, there's a whole bunch of things in main.c that can be better handled
+dnl by pushing into it. Check out how UNAME is, but also ... do that better.
+dnl PACKAGE_VERSIONSION=`sed -n -e '/Fugue version/s/^.*"\(.*\)".*$/\1/p' src/main.c`
 
 dnl Better question: what is this being used for?
 dnl is there a better way to do this?
@@ -203,6 +205,7 @@ AC_ARG_WITH([inclibpfx],
     [],
     [])
 
+dnl this seems pretty silly.
 AC_ARG_WITH([incdir])       dnl because I never remember if it's singular or plural
 AC_ARG_WITH([libdir])       dnl because I never remember if it's singular or plural
 AC_ARG_WITH([inclibdir])    dnl because I never remember if it's singular or plural
@@ -221,9 +224,14 @@ AC_SUBST(MANTYPE)
 # Developer options
 # --enable-development implies --enable-core --disable-symlink
 AC_ARG_ENABLE([development], , , enable_development=no)
+dnl These mallocs needs to be looked into further so they can actually be supported.
 AC_ARG_ENABLE([dmalloc], , , enable_dmalloc=no)
 AC_ARG_ENABLE([mmalloc], , , enable_mmalloc=no)
 
+
+
+dnl Is this used outside for anything important?
+dnl Check on that as it seems unnecessary.
 if test "$enable_development" = "yes"; then
     AC_MSG_NOTICE([Development version.])
 elif echo $TFVERSION | egrep "alpha" >/dev/null 2>&1; then
@@ -273,9 +281,6 @@ if test "$enable_mmalloc" = "yes"; then
     AC_DEFINE([USE_MMALLOC], [1], [GNU malloc enabled])
 fi
 
-dnl XXX option: TTYDRIVER
-
-
 dnl ########### programs ############
 
 AC_PROG_MAKE_SET
@@ -285,6 +290,7 @@ if test "$enable_core" = "no"; then
 fi
 AC_SUBST(STRIP)
 
+dnl Might be redundant witha setting in the header.
 AC_CHECK_PROG(RANLIB, ranlib, ranlib, :)
 
 
@@ -305,6 +311,7 @@ AC_DEFUN(TF_DIRS, [
     fi
 ])
 
+dnl This is making the singular/plural ARG_WITH even mor eof a hassle.
 TF_DIRS(with_incdirs,    CPPFLAGS, -I)
 TF_DIRS(with_incdir,     CPPFLAGS, -I)
 TF_DIRS(with_inclibdirs, CPPFLAGS, -I)
@@ -352,6 +359,10 @@ AC_CHECK_LIB(net, main)
 dnl ## If we haven't found connect(), look for -lsocket.
 dnl ## Note: on IRIX 5, -lsocket exists, but we mustn't use its gethostbyname().
 AC_SEARCH_LIBS(connect, socket)
+
+
+dnl  It seems pretty clear that socks is broken, did it ever work?
+dnl figure out the deal and possible just yank it.
 
 dnl XXX --enable-socks
 dnl if test "$enable_socks" != "no" ; then
@@ -613,6 +624,9 @@ if test -n "$MAILDIR"; then
 fi
 
 
+
+dnl All of this really needs to be rewritten, as there's better ways to do it.
+
 dnl ### Figure out names of executable, library directory, and symlink.
 
 if test "$enable_version" != "no" && test "$program_suffix" == "NONE"; then
@@ -643,6 +657,10 @@ AC_SUBST(PROGNAME)
 AC_SUBST(LIBNAME)
 AC_SUBST(SYMLINK)
 
+
+dnl Do we need this at all? It's bee commented out forever, so people seem
+dnl to be doings fine without it. Check it's purpose and if it's not better
+dnl handled through something else.
 
 dnl # XXX
 dnl ### Sanity check for filenames (some people do pretty stupid things)
