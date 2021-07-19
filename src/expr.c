@@ -44,7 +44,6 @@
 
 int stacktop = 0;
 Value *stack[STACKSIZE];
-const int feature_float = !(NO_FLOAT-0);
 
 static Value *valpool = NULL;		/* freelist */
 
@@ -110,8 +109,6 @@ Value *expr_value_safe(Program *prog)
     return prog_interpret(prog, 1);
 }
 
-
-#if !NO_FLOAT
 Value *newfloat_fl(double f, const char *file, int line)
 {
     Value *val;
@@ -124,7 +121,6 @@ Value *newfloat_fl(double f, const char *file, int line)
     val->sval = NULL;
     return val;
 }
-#endif /* NO_FLOAT */
 
 inline Value *newval_fl(const char *file, int line)
 {
@@ -310,10 +306,8 @@ int valbool(const Value *val)
         return !!val->u.ival;
     if (val->type & (TYPE_DECIMAL|TYPE_DTIME|TYPE_ATIME))
         return (val->u.tval.tv_sec || val->u.tval.tv_usec);
-#if !NO_FLOAT
     else if (val->type & TYPE_FLOAT)
         return !!val->u.fval;
-#endif
     return 0;
 }
 
@@ -327,7 +321,6 @@ long valint(const Value *val)
         return val->u.ival;
     if (val->type & (TYPE_DECIMAL|TYPE_DTIME|TYPE_ATIME))
         return (long)val->u.tval.tv_sec;
-#if !NO_FLOAT
     else if (val->type & TYPE_FLOAT) {
         double fival = val->u.fval < 0 ? ceil(val->u.fval) : floor(val->u.fval);
         if (fival != (long)val->u.fval) {
@@ -335,7 +328,6 @@ long valint(const Value *val)
 	}
         return (long)val->u.fval;
     }
-#endif
     return 0;
 }
 
@@ -353,7 +345,6 @@ int valtime(struct timeval *tvp, const Value *val)
         tvp->tv_usec = 0;
     } else if (val->type & (TYPE_DECIMAL|TYPE_DTIME|TYPE_ATIME)) {
         *tvp = val->u.tval;
-#if !NO_FLOAT
     } else if (val->type & TYPE_FLOAT) {
         long ival = (long)val->u.fval;
         double fival = val->u.fval < 0 ? ceil(val->u.fval) : floor(val->u.fval);
@@ -363,7 +354,6 @@ int valtime(struct timeval *tvp, const Value *val)
 	}
         tvp->tv_usec = (long)((val->u.fval - ival) * 1000000);
         tvp->tv_sec = ival;
-#endif
     }
     return 1;
 
@@ -372,7 +362,6 @@ valtime_error:
     return 0;
 }
 
-#if !NO_FLOAT
 /* return floating value of item */
 double valfloat(const Value *val)
 {
@@ -390,7 +379,6 @@ double valfloat(const Value *val)
         return (double)val->u.tval.tv_sec + val->u.tval.tv_usec / 1000000.0;
     return val->sval ? strtod(val->sval->data, NULL) : 0.0;
 }
-#endif /* NO_FLOAT */
 
 /* return String value of item (only valid for lifetime of val!) */
 /* If C had "mutable", sval could be mutable, and val could be const */
@@ -451,7 +439,6 @@ conString *valstr(Value *val)
 	    }
             val->sval = CS(sval);
             break;
-#if !NO_FLOAT
         case TYPE_FLOAT:
 	    if (val->sval) conStringfree(val->sval);
 	    sval = Stringnew(NULL, 0, 0);
@@ -462,7 +449,6 @@ conString *valstr(Value *val)
                 Stringadd(sval, '.');
             val->sval = CS(sval);
             break;
-#endif
         default:
 	    internal_error(__FILE__, __LINE__, "valstr: impossible type %d",
 		val->type);
@@ -1131,7 +1117,6 @@ static Value *function_switch(const ExprFunc *func, int n, const char *parent)
         case FN_morescroll:
             return newint(clear_more(opdint(1)));
 
-#if !NO_FLOAT
         case FN_sqrt:
             return newfloat(sqrt(opdfloat(1)));
 
@@ -1174,10 +1159,6 @@ static Value *function_switch(const ExprFunc *func, int n, const char *parent)
 	    return (!val) ? shareval(val_zero) : (val->type & TYPE_INT) ?
                 newint(labs(valint(val))) : newfloat(fabs(valfloat(val)));
 	  }
-#else
-        case FN_abs:
-            return newint(abs(opdint(1)));
-#endif /* NO_FLOAT */
 
         case FN_rand:
             if (n == 0) return newint(RAND());
@@ -1582,7 +1563,6 @@ static Value *do_function(int n /* number of operands (including func id) */)
         current_command = val->name;
         errno = 0;
         val = function_switch(funcrec, n, old_command);
-#if !NO_FLOAT
 	/* BUG: setting val=NULL aborts the macro.  Perhaps instead we should
 	 * set val to a value with TYPE_ERROR.
 	 */
@@ -1595,7 +1575,6 @@ static Value *do_function(int n /* number of operands (including func id) */)
             freeval(val);
             val = NULL;
         }
-#endif
         current_command = old_command;
         return val;
     }

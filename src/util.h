@@ -57,7 +57,6 @@ extern struct feature features[];
 
 extern const int feature_256colors;
 extern const int feature_core;
-extern const int feature_float;
 extern const int feature_ftime;
 extern const int feature_history;
 extern const int feature_IPv6;

@@ -235,12 +235,6 @@ extern char *sys_errlist[];
 # endif
 #endif
 
-
-#if !HAVE_STRTOD
-# define NO_FLOAT
-#endif
-
-
 #ifndef PATH_MAX
 # ifdef MAXPATHLEN
 #  define PATH_MAX MAXPATHLEN
@@ -248,7 +242,6 @@ extern char *sys_errlist[];
 #  define PATH_MAX 1023
 # endif
 #endif
-
 
 /* These just prevent warnings during development.  They should not be
  * used in production, since they might conflict with system headers.

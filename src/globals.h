@@ -35,12 +35,7 @@ typedef enum {
 } type_t;
 
 /* numeric types */
-#define TYPE_EXACTNUM	(TYPE_INT | TYPE_DECIMAL | TYPE_DTIME | TYPE_ATIME)
-#if NO_FLOAT
-# define TYPE_NUM	(TYPE_EXACTNUM)
-#else
-# define TYPE_NUM	(TYPE_EXACTNUM | TYPE_FLOAT)
-#endif
+#define TYPE_NUM	(TYPE_INT | TYPE_DECIMAL | TYPE_DTIME | TYPE_ATIME | TYPE_FLOAT)
 
 #define TYPES_BASIC \
     ( TYPE_ID | TYPE_STR | TYPE_ENUM | TYPE_POS | TYPE_NUM \

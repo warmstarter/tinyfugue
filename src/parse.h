@@ -102,9 +102,7 @@ extern const char *valstd(Value *val);
 extern long        valint(const Value *val);
 extern int         valtime(struct timeval *tv, const Value *val);
 extern int         valbool(const Value *val);
-#if !NO_FLOAT
 extern double      valfloat(const Value *val);
-#endif /* NO_FLOAT */
 extern void       *valptr(Value *val);
 extern int         pushval(Value *val);
 extern void        freeval_fl(Value *val, const char *file, int line);

@@ -64,7 +64,6 @@ AUTO_BUFFER(featurestr);
 struct feature features[] = {
     { "256colors",	&feature_256colors, },
     { "core",		&feature_core, },
-    { "float",		&feature_float },
     { "ftime",		&feature_ftime },
     { "history",	&feature_history },
     { "IPv6",		&feature_IPv6 },
@@ -810,10 +809,6 @@ Value *parsenumber(const char *str, const char **caller_endp, int typeset,
     if ((allocated = !val))
 	val = newval();
 
-#if NO_FLOAT
-    typeset &= ~TYPE_FLOAT;
-#endif
-
     for ( ; *str == '+' || *str == '-'; str++) {
         if (*str == '-') neg = !neg;
     }
@@ -912,10 +907,6 @@ time_overflow:
 
 parse_float:
     val->type = TYPE_FLOAT;
-#if NO_FLOAT
-    eprintf("floating point numeric values are not enabled.");
-    goto fail;
-#else
     val->u.fval = strtod(str, &endp);
     if (val->u.fval == HUGE_VAL && errno == ERANGE) {
         eprintf("numeric value too large");
@@ -923,7 +914,6 @@ parse_float:
     }
     if (neg) val->u.fval = -val->u.fval;
     goto success;
-#endif
 
 success:
     if (caller_endp) *caller_endp = endp;

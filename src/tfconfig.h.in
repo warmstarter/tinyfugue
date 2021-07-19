@@ -70,7 +70,6 @@
 #define HAVE_STRERROR 0
 #define HAVE_STRFTIME 0
 #define HAVE_STRICMP 0
-#define HAVE_STRTOD 0
 #define HAVE_TZSET 0
 #define HAVE_WAITPID 0
 
@@ -92,7 +91,6 @@
 #undef  IN6_ADDR
 #define NO_HISTORY 0
 #define NO_PROCESS 0
-#define NO_FLOAT 0
 #define NCOLORS 16
 #define WIDECHAR 0
 #define USE_DMALLOC 0

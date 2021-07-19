@@ -42,6 +42,12 @@ be integrated into tf-lib:
 
 https://github.com/warmstarter/tinyfugue-scripts
 
+Deprecations:
+
+NO_FLOAT deprecated. This has been broken for over a decade and has little
+purpose on modern computer systems.
+
+
 ======
 
 Unicode notes:
