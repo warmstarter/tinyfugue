@@ -63,11 +63,15 @@ extern const int feature_IPv6;
 extern const int feature_locale;
 extern const int feature_MCCPv1;
 extern const int feature_MCCPv2;
+extern const int feature_ATCP;
+extern const int feature_GMCP;
+extern const int feature_OPTION102;
 extern const int feature_process;
 extern const int feature_SOCKS;
-extern const int feature_ssl;
+extern const int feature_SSL;
 extern const int feature_subsecond;
 extern const int feature_TZ;
+extern const int feature_widechar;
 
 #define is_quote(c)	(tf_ctype[(unsigned char)c] & IS_QUOTE)
 #define is_statmeta(c)	(tf_ctype[(unsigned char)c] & IS_STATMETA)

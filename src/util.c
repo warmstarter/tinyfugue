@@ -70,11 +70,15 @@ struct feature features[] = {
     { "locale",		&feature_locale },
     { "MCCPv1",		&feature_MCCPv1 },
     { "MCCPv2",		&feature_MCCPv2 },
+    { "ATCP",		&feature_ATCP },
+    { "GMCP",		&feature_GMCP },
+    { "OPTION102",	&feature_OPTION102 },
     { "process",	&feature_process },
     { "SOCKS",		&feature_SOCKS },
-    { "ssl",		&feature_ssl },
+    { "SSL",		&feature_SSL },
     { "subsecond",	&feature_subsecond },
     { "TZ",		&feature_TZ, },
+    { "widechar",       &feature_widechar, },
     { NULL,		NULL }
 };
 

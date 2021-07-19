@@ -491,8 +491,12 @@ String *incoming_text = NULL;
 const int feature_IPv6 = ENABLE_INET6 - 0;
 const int feature_MCCPv1 = HAVE_MCCP - 0;
 const int feature_MCCPv2 = HAVE_MCCP - 0;
-const int feature_ssl = HAVE_SSL - 0;
+const int feature_ATCP = H_ATCP - 0;
+const int feature_GMCP = H_GMCP - 0;
+const int feature_OPTION102 = H_OPTION102 - 0;
+const int feature_SSL = HAVE_SSL - 0;
 const int feature_SOCKS = SOCKS - 0;
+const int feature_widechar = WIDECHAR - 0;
 
 static const char *CONFAIL_fmt = "%% Connection to %s failed: %s: %s";
 static const char *ICONFAIL_fmt = "%% Intermediate connection to %s failed: %s: %s";
