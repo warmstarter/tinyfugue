@@ -114,6 +114,8 @@ typedef struct CQueue {		/* circular queue of data */
 #define hash_insert(datum, table) \
     hashed_insert(datum, hash_string(*(char**)datum), table)
 
+#define HASH_SIZE 997 /* prime number */
+
 extern void init_list(List *list);
 extern void *unlist(ListEntry *node, List *list);
 extern ListEntry *inlist_fl(void *datum, List *list, ListEntry *where,

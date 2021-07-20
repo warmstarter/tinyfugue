@@ -146,8 +146,6 @@ extern attr_t adj_attr(attr_t base, attr_t adj);
 # define VEC_ZERO(p)   bzero((char *)(p)->bits, sizeof(*(p)))
 #endif
 
-#define HASH_SIZE 997 /* prime number */
-
 /* Define enumerated constants */
 #define ENUMEXTERN extern
 #define bicode(a, b)  a 
