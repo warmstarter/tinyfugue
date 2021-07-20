@@ -258,12 +258,6 @@ static const char *h_errlist[] = {
 extern int connect(int, struct sockaddr *, int);
 #endif
 
-#if SOCKS
-# ifndef SOCKS_NONBLOCK
-#  define TF_NONBLOCK 0
-# endif
-#endif
-
 /* connection states */
 typedef enum {
     SS_NEW,		/* brand spanking new */
@@ -495,7 +489,6 @@ const int feature_ATCP = ENABLE_ATCP - 0;
 const int feature_GMCP = ENABLE_GMCP - 0;
 const int feature_OPTION102 = ENABLE_OPTION102 - 0;
 const int feature_SSL = HAVE_SSL - 0;
-const int feature_SOCKS = SOCKS - 0;
 const int feature_widechar = WIDECHAR - 0;
 
 static const char *CONFAIL_fmt = "%% Connection to %s failed: %s: %s";
@@ -1932,10 +1925,10 @@ static int establish(Sock *sock)
          * check for ENOTCONN.  Disadvantage: doesn't work with SOCKS, etc.
          */
 
+/* without SOCKS, this might be able to be contracted
+ * same with at least parts of above comment. */
 #ifdef SO_ERROR
-# if !SOCKS
 #  define USE_SO_ERROR
-# endif
 #endif
 
 #ifdef USE_SO_ERROR

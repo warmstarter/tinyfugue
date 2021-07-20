@@ -74,7 +74,6 @@ struct feature features[] = {
     { "GMCP",		&feature_GMCP },
     { "OPTION102",	&feature_OPTION102 },
     { "process",	&feature_process },
-    { "SOCKS",		&feature_SOCKS },
     { "SSL",		&feature_SSL },
     { "subsecond",	&feature_subsecond },
     { "TZ",		&feature_TZ, },

@@ -132,9 +132,6 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-#if SOCKS
-    SOCKSinit(argv0);  /* writes message to stdout */
-#endif
     init_exename(argv0);
 
     SRAND(getpid() + time(NULL));	/* seed random generator */

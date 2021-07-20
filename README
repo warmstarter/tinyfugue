@@ -54,8 +54,11 @@ If needed the old sources are in the git history.
 CYGWIN deprecated in favor of WSL for Windows, to better keeps platofmrs
 in-sync and remove issues.
 
-BeOS deprecate as likely no longer used. Should still compile, but might
+BeOS deprecated as likely no longer used. Should still compile, but might
 require some modifications for installation of binary, no way to test.
+
+SOCKS deprecated as it was broken and mostly removed anyway. Very little
+use in modern world and can be handled by a separate application.
 
 ======
 
@@ -416,17 +419,6 @@ Solution 1: set the environment variable LD_LIBRARY_PATH to "/usr/local/lib"
 Solution 2: on SunOS, set environment variable LDFLAGS to "-R/usr/local/lib"
   when running ./configure.  On other operating systems, different options
   may be available; see "man ld" (try "-rpath /usr/local/lib").
-
-
-SOCKS Proxy XXX
------------
-
-TF supports the SOCKS proxy server.  If your site uses SOCKS to connect
-to outside hosts through a firewall (this is probably true if you use
-"rtelnet" instead of "telnet"), then set SOCKS='yes' in the unix/Config file.
-
-TF can also be made to connect through a generic proxy server by setting
-the %proxy_host variable at runtime.  See "/help proxy".
 
 
 Last Resort XXX

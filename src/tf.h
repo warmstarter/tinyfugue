@@ -46,16 +46,6 @@
 #include "dstring.h"
 #include "globals.h"
 
-#if SOCKS
-# if (SOCKS == 4)
-#  define connect Rconnect
-#  define select Rselect
-# else /* (SOCKS >= 5) */
-#  include <socks.h>
-# endif
-#endif
-
-
 /*
  * TinyFugue global types and variables.
  */

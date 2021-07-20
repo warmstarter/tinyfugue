@@ -33,7 +33,6 @@
 #define NEED_PTEM_H 0
 #define HAVE_ZLIB_H 0
 #define HAVE_LIBZ 0
-#define SOCKS 0
 #define HAVE_SSL 0
 #define HAVE_GNUTLS_OPENSSL_H 0
 

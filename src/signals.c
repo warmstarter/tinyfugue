@@ -393,9 +393,6 @@ static void coremsg(FILE *dumpfile)
     fprintf(dumpfile,"> virtscreen=%ld, visual=%ld, expnonvis=%ld, "
 	"emulation=%ld, lp=%ld, sub=%ld\r\n",
         virtscreen, visual, expnonvis, emulation, lpflag, sub);
-#if SOCKS
-    fprintf(dumpfile,"> SOCKS %d\r\n", SOCKS);
-#endif
     fprintf(dumpfile,"> TERM=\"%.32s\"\r\n", TERM ? TERM : "(NULL)");
     fprintf(dumpfile,"> cmd=\"%.32s\"\r\n",
 	current_command ? current_command : "(NULL)");

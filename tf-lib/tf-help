@@ -482,8 +482,7 @@ addworld()
       To automatically login to a world that expects a different login format,
       define your own LOGIN [1mhook[22;0m.
 
-  If you have trouble connecting (especially if you use SOCKS), try "[1m/set[22;0m
-  [1mconnect[22;0m=blocking".
+  If you have trouble connecting, try "[1m/set[22;0m [1mconnect[22;0m=blocking".
 
   If your host has multiple network interfaces, the OS will choose one of them
   for the client end of the connection according to its own rules.  To
@@ -1172,7 +1171,6 @@ eval()
     MCCPv1            Mud Client Compression Protocol version 1 (see: [1mmccp[22;0m)
     MCCPv2            Mud Client Compression Protocol version 2 (see: [1mmccp[22;0m)
     process           /repeat and /quote
-    SOCKS             SOCKS proxy
     SSL               Secure Sockets Layer
     subsecond         time is measured with subsecond accuracy
     TZ                honors the [1mTZ[22;0m variable
@@ -8451,8 +8449,7 @@ Protocols
 proxy server
 
   If [1m%{proxy_host}[22;0m is set, all connections will go through a proxy server
-  (firewall) defined by [1m%proxy_host[22;0m and [1m%proxy_port[22;0m.  Note that [1m%{proxy_host}[22;0m
-  should usually [4mnot[24m be set if TF has been compiled to use SOCKS.
+  (firewall) defined by [1m%proxy_host[22;0m and [1m%proxy_port[22;0m.
 
   When the connection to [1m%proxy_host[22;0m [1m%proxy_port[22;0m is made, only the PROXY [1mhook[22;0m
   is called; the CONNECT and LOGIN [1mhooks[22;0m which are normally called after
