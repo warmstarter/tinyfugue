@@ -130,6 +130,12 @@ AC_ARG_ENABLE(
         [disable 256 color support])],
     [enable_256colors=${enableval}],
     [enable_256colors=yes])
+if test "$enable_256colors" = "yes"; then
+    AC_DEFINE(
+        [NCOLORS],
+       	[256],
+       	[256 color mode enabled])
+fi
 
 AC_ARG_ENABLE(
     [widechar],
@@ -138,6 +144,21 @@ AC_ARG_ENABLE(
         [disable wide character UTF-8 support])],
     [enable_widechar=${enableval}],
     [enable_widechar=yes])
+dnl These two checks should be combined and only pass if both are there.
+if test "$enable_widechar" = "yes"; then
+    AX_CHECK_ICU(
+        [1],
+        [AC_DEFINE(
+	    [WIDECHAR],
+	    [1],
+	    [widechar unicode enabled]
+	)],
+        [AC_MSG_WARN([libicuuc not found. disabling widechar support.])])
+    AC_CHECK_HEADERS(
+        [wchar.h wctype.h],
+       	[],
+        [AC_MSG_WARN([wchar.h and wctype.h not found, require for widechar unicode support.])])
+fi
 
 # These double AS_HELP_STRINGs look kinda ugly. Putting each on one line would fix, consider doing so.
 AC_ARG_ENABLE(
@@ -574,29 +595,6 @@ else
 	    [HARDCODE],
 	    [$terminal_hardcode])
             AC_MSG_WARN([Hardcoding terminal codes.])])
-fi
-
-if test "$enable_256colors" = "yes"; then
-    AC_DEFINE(
-        [NCOLORS],
-       	[256],
-       	[256 color mode enabled])
-fi
-
-dnl These two checks should be combined and only pass if both are there.
-if test "$enable_widechar" = "yes"; then
-    AX_CHECK_ICU(
-        [1],
-        [AC_DEFINE(
-	    [WIDECHAR],
-	    [1],
-	    [widechar unicode enabled]
-	)],
-        [AC_MSG_WARN([libicuuc not found. disabling widechar support.])])
-    AC_CHECK_HEADERS(
-        [wchar.h wctype.h],
-       	[],
-        [AC_MSG_WARN([wchar.h and wctype.h not found, require for widechar unicode support.])])
 fi
 
 AC_CHECK_LIB(
