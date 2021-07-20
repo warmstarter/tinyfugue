@@ -707,7 +707,7 @@ fi
 dnl The "right" way of using program_transform_name, program_prefix, and
 dnl program_suffix expects you to use AC_ARG_PROGRAM here and do transformation
 dnl in the Makefile, but we want the values now, so we do it ourselves.
-EXENAME="tf" PROGNAME="tf"
+EXENAME="${PACKAGE_SHORTNAME}" PROGNAME="${PACKAGE_SHORTNAME}"
 test "${program_prefix}" != "NONE" && EXENAME="${program_prefix}${EXENAME}"
 test "${program_suffix}" != "NONE" && EXENAME="${EXENAME}${program_suffix}"
 if test "${program_transform_name}" != "NONE"; then
