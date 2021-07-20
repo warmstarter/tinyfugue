@@ -79,8 +79,7 @@ AC_ARG_ENABLE(
     [version],
     [AS_HELP_STRING(
         [--enable-version],
-        [insert version number into names of installed files])
-    ],
+        [insert version number into names of installed files])],
     [enable_version=${enableval}],
     [enable_version=default])
 
@@ -88,8 +87,7 @@ AC_ARG_ENABLE(
     [symlink],
     [AS_HELP_STRING(
         [--enable-symlink[=NAME]],
-        [make a symlink NAME to the executable])
-    ],
+        [make a symlink NAME to the executable])],
     [enable_symlink=${enableval}],
     [enable_symlink=default])
 
@@ -97,8 +95,7 @@ AC_ARG_ENABLE(
     [core],
     [AS_HELP_STRING(
         [--enable-core],
-        [enable core dumps for debugging])
-    ],
+        [enable core dumps for debugging])],
     [enable_core=${enableval}],
     [enable_core=default])
 
@@ -106,8 +103,7 @@ AC_ARG_ENABLE(
      [ssl],
      [AS_HELP_STRING(
          [--disable-ssl],
-         [disable SSL connections])
-     ],
+         [disable SSL connections])],
      [enable_ssl=${enableval}],
      [enable_ssl=yes])
 
@@ -115,8 +111,7 @@ AC_ARG_ENABLE(
     [getaddrinfo],
     [AS_HELP_STRING(
         [--disable-getaddrinfo],
-        [disable getaddrinfo implies --disable-inet6])
-    ],
+        [disable getaddrinfo implies --disable-inet6])],
     [enable_getaddrinfo=${enableval}],
     [enable_getaddrinfo=default])
 
@@ -124,18 +119,15 @@ AC_ARG_ENABLE(
     [inet6],
     [AS_HELP_STRING(
         [--disable-inet6],
-        [disable IPv6 network support])
-    ],
+        [disable IPv6 network support])],
     [enable_inet6=${enableval}],
     [enable_inet6=yes])
-
 
 AC_ARG_ENABLE(
     [256colors],
     [AS_HELP_STRING(
         [--disable-256colors],
-        [disable 256 color support])
-    ],
+        [disable 256 color support])],
     [enable_256colors=${enableval}],
     [enable_256colors=yes])
 
@@ -143,8 +135,7 @@ AC_ARG_ENABLE(
     [widechar],
     [AS_HELP_STRING(
         [--disable-widechar],
-        [disable wide character UTF-8 support])
-    ],
+        [disable wide character UTF-8 support])],
     [enable_widechar=${enableval}],
     [enable_widechar=yes])
 
@@ -156,8 +147,7 @@ AC_ARG_ENABLE(
  	[use hardcoded vt100 codes instead of termcap])
 AS_HELP_STRING(
 [--enable-termcap=LIB],
-[enable termcap with library LIB (e.g., "ncurses") (needed only if configure guesses incorrectly)])
-    ],
+[enable termcap with library LIB (e.g., "ncurses") (needed only if configure guesses incorrectly)])],
     [enable_termcap=${enableval}],
     [enable_termcap=default])
 
@@ -168,8 +158,7 @@ AC_ARG_ENABLE(
         [disable mail checking])
 AS_HELP_STRING(
 [--enable-mailcheck=DIR],
-[enable checking for mail in directory DIR (needed only if configure guesses incorrectly)])
-    ],
+[enable checking for mail in directory DIR (needed only if configure guesses incorrectly)])],
     [enable_mailcheck=${enableval}],
     [enable_mailcheck=yes])
 
@@ -177,8 +166,7 @@ AC_ARG_ENABLE(
     [history],
     [AS_HELP_STRING(
         [--disable-history],
-        [disable /recall and other history features])
-    ],
+        [disable /recall and other history features])],
     [enable_history=${enableval}],
     [enable_history=yes])
 if test "$enable_history"   = "no"; then
@@ -192,8 +180,7 @@ AC_ARG_ENABLE(
     [process],
     [AS_HELP_STRING(
         [--disable-process],
-        [disable /quote and repeat])
-    ],
+        [disable /quote and repeat])],
     [enable_process=${enableval}],
     [enable_process=yes])
 if test "$enable_process"   = "no"; then
@@ -207,8 +194,7 @@ AC_ARG_ENABLE(
     [atcp],
     [AS_HELP_STRING(
         [--enable-atcp],
-        [enable ATCP protocol support])
-    ],
+        [enable ATCP protocol support])],
     [enable_atcp=${enableval}],
     [enable_atcp=no])
 if test "$enable_atcp"      = "yes"; then
@@ -222,8 +208,7 @@ AC_ARG_ENABLE(
     [gmcp],
     [AS_HELP_STRING(
         [--enable-gmcp],
-        [enable GMCP protocol support])
-    ],
+        [enable GMCP protocol support])],
     [enable_gmcp=${enableval}],
     [enable_gmcp=no])
 if test "$enable_gmcp"      = "yes"; then
@@ -237,8 +222,7 @@ AC_ARG_ENABLE(
     [option102],
     [AS_HELP_STRING(
         [--enable-option102],
-        [enable option102 protocl support])
-    ],
+        [enable option102 protocl support])],
     [enable_option102=${enableval}],
     [enable_option102=no])
 if test "$enable_option102" = "yes"; then
@@ -252,8 +236,7 @@ AC_ARG_WITH(
     [incdirs],
     [AS_HELP_STRING(
         [--with-incdirs=DIRS],
-	[search for include files in DIRS])
-    ],
+	[search for include files in DIRS])],
     [],
     [])
 
@@ -261,8 +244,7 @@ AC_ARG_WITH(
     [libdirs],
     [AS_HELP_STRING(
         [--with-libdirs=DIRS],
-     	[search for libraries in DIRS])
-    ],
+     	[search for libraries in DIRS])],
     [],
     [])
 
@@ -270,8 +252,7 @@ AC_ARG_WITH(
     [inclibdirs],
     [AS_HELP_STRING(
         [--with-inclibdirs=DIRS],
-        [same as --with-incdirs=DIRS --with-libdirs=DIRS])
-    ],
+        [same as --with-incdirs=DIRS --with-libdirs=DIRS])],
     [],
     [])
 
@@ -279,8 +260,7 @@ AC_ARG_WITH(
     [inclibpfx],
     [AS_HELP_STRING(
         [--with-inclibpfx=DIRS],
-        [same, but appends '/include' and '/lib'])
-    ],
+        [same, but appends '/include' and '/lib'])],
     [],
     [])
 
@@ -293,6 +273,7 @@ AC_ARG_ENABLE(
 
 # Developer options
 # --enable-development implies --enable-core --disable-symlink
+
 AC_ARG_ENABLE(
     [development],
     [],
@@ -305,13 +286,28 @@ AC_ARG_ENABLE(
     [],
     [],
     [enable_dmalloc=no])
+if test "$enable_dmalloc" = "yes"; then
+    AC_MSG_NOTICE([Debug malloc enabled.])
+    OTHER_OBJS="$OTHER_OBJS dmalloc.o"
+    AC_DEFINE(
+        [USE_DMALLOC],
+       	[1],
+       	[dmalloc enabled])
+fi
 
 AC_ARG_ENABLE(
     [mmalloc],
     [],
     [],
     [enable_mmalloc=no])
-
+if test "$enable_mmalloc" = "yes"; then
+    AC_MSG_NOTICE([GNU malloc enabled.])
+    CPPFLAGS="${CPPFLAGS} -DUSE_MMALLOC"
+    AC_DEFINE(
+        [USE_MMALLOC],
+       	[1],
+       	[GNU malloc enabled])
+fi
 
 ################################################################
 # 5. Checks for programs, including ${CC} and its ${CFLAGS}
@@ -374,23 +370,6 @@ else
        	[core dumps disabled])
 fi
 
-if test "$enable_dmalloc" = "yes"; then
-    AC_MSG_NOTICE([Debug malloc enabled.])
-    OTHER_OBJS="$OTHER_OBJS dmalloc.o"
-    AC_DEFINE(
-        [USE_DMALLOC],
-       	[1],
-       	[dmalloc enabled])
-fi
-
-if test "$enable_mmalloc" = "yes"; then
-    AC_MSG_NOTICE([GNU malloc enabled.])
-    CPPFLAGS="${CPPFLAGS} -DUSE_MMALLOC"
-    AC_DEFINE(
-        [USE_MMALLOC],
-       	[1],
-       	[GNU malloc enabled])
-fi
 
 # This should be placed into src/main.c rather than pulled from it.
 # Actually, there's a whole bunch of things in main.c that can be better handled
