@@ -229,9 +229,6 @@ enum Vars {
 #define optimize_user	getintvar(VAR_optimize)
 #define option102	getintvar(VAR_option102)
 #define pedantic	getintvar(VAR_pedantic)
-/* prompt_sec prompt_usec getstdvar vs getstrvar ? */
-#define prompt_sec	getstdvar(VAR_prompt_sec)
-#define prompt_usec	getstdvar(VAR_prompt_usec)
 #define prompt_wait	gettimevar(VAR_prompt_wait)
 #define proxy_host	getstdvar(VAR_proxy_host)
 #define proxy_port	getstdvar(VAR_proxy_port)

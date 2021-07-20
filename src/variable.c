@@ -42,7 +42,6 @@ static char **find_env(const char *str);
 static void   remove_env(const char *str);
 static int    listvar(const char *name, const char *value,
                        int mflag, int exportflag, int shortflag);
-static int    obsolete_prompt(Var *var);
 static int    undocumented_var(Var *var);
 static void   init_special_variable(Var *var, const char *cval,
                        long ival, long uval);
@@ -958,12 +957,6 @@ listvar_end:
     free_pattern(&pname);
     free_pattern(&pvalue);
     return vars.size;
-}
-
-static int obsolete_prompt(Var *var)
-{
-    tfwprintf("%s is obsolete.  Use prompt_wait instead.", var->val.name);
-    return 1;
 }
 
 static int undocumented_var(Var *var)

@@ -130,8 +130,6 @@ varflag(VAR_option102,  "option102",    TRUE,           NULL)
 varenum(VAR_option102,  "option102",    FALSE,          NULL,   enum_off)
 #endif
 varflag(VAR_pedantic,	"pedantic",	FALSE,		NULL)
-varstr (VAR_prompt_sec,	"prompt_sec",	NULL,		obsolete_prompt)
-varstr (VAR_prompt_usec,"prompt_usec",	NULL,		obsolete_prompt)
 vartime(VAR_prompt_wait,"prompt_wait",	0,250000,	NULL)
 varstr (VAR_proxy_host,	"proxy_host",	NULL,		NULL)
 varstr (VAR_proxy_port,	"proxy_port",	"23",		NULL)
