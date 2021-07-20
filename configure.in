@@ -272,22 +272,9 @@ AC_PROG_SED
 
 ### These checks an such should go elsewhere and get cleaned up.
 
-dnl Note: autoconf uses <<EOF, so we use <<END instead.
-dnl Is this used outside for anything important?
-dnl Check on that as it seems unnecessary.
-dnl IN fact, PACKAGE_VERSION is not going to ever alpha, so really this can go.
 if test "$enable_development" = "yes"; then
     AC_MSG_NOTICE([Development version.])
-elif echo $PACKAGE_VERSION | egrep "alpha" >/dev/null 2>&1; then
-cat <<END
-This is an alpha version, and so may not be fully tested on some platforms.
-With the new features comes the possibility of new bugs.  If you don't want
-to deal with this, get the latest stable or gamma version.
-
-END
 fi
-
-dnl ''' for vim syntax highlighting
 
 if test "$enable_core" = "default"; then
     enable_core=$enable_development
