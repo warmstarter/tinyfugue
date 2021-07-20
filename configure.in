@@ -384,7 +384,8 @@ if test "$ax_cv_c_compiler_vendor" = "gnu"; then
 fi
 
 dnl Pretty sure this is a hard requirement, double check.
-AC_SEARCH_LIBS(sqrt, m)
+AC_SEARCH_LIBS(sqrt, m, ,
+   AC_MSG_WARN([TF can not work without math library.]))
 
 AC_SEARCH_LIBS(select, bsd, ,
     AC_MSG_ERROR([TF can not work without select().]))
