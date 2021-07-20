@@ -3393,7 +3393,7 @@ void unhide_screen(Screen *screen)
 void switch_screen(int quiet)
 {
 
-    if (getintvar(VAR_oldstylefg) == 1)
+    if (oldstylefg == 1)
     {
       update_status_field(NULL, STAT_WORLD);
       return;

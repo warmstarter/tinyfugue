@@ -463,7 +463,7 @@ static int do_quote(Proc *proc)
     if (proc->suf) Stringcat(buffer, proc->suf);
     if (proc->type == P_QSHELL) readers_clear(fileno(proc->input->u.fp));
     if (qecho)
-	tfprintf(tferr, "%S%S%A", qprefix, buffer, getattrvar(VAR_qecho_attr));
+	tfprintf(tferr, "%S%S%A", qprefix, buffer, qecho_attr);
     switch (proc->disp) {
     case DISP_ECHO:
         oputline(CS(buffer));

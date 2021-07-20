@@ -145,18 +145,22 @@ enum Vars {
 #define getstrvar(id)	((conString*)    strvar(id))
 #define getstdvar(id)	((char*)         (strvar(id) ? strvar(id)->data : NULL))
 
+/* setlocale? */
 #define MAIL		getstdvar(VAR_MAIL)
 #define TERM		getstdvar(VAR_TERM)
 #define TFLIBDIR	getstdvar(VAR_TFLIBDIR)
 #define TFPATH		getstdvar(VAR_TFPATH)
 #define TFMAILPATH	getstdvar(VAR_TFMAILPATH)
+/* TZ? */
 #define alert_attr	getattrvar(VAR_alert_attr)
 #define alert_time	gettimevar(VAR_alert_time)
 #define ansi_log	getintvar(VAR_ansi_log)
 #define async_conn	getintvar(VAR_async_conn)
 #define async_name	getintvar(VAR_async_name)
 #define atcp		getintvar(VAR_atcp)
+#if 0
 #define auto_fg		getintvar(VAR_auto_fg)
+#endif
 #define background	getintvar(VAR_background)
 #define backslash	getintvar(VAR_backslash)
 #define bamf		getintvar(VAR_bamf)
@@ -165,12 +169,13 @@ enum Vars {
 #define binary_eol	getintvar(VAR_binary_eol)
 #define borg		getintvar(VAR_borg)
 #define cecho		getintvar(VAR_cecho)
-#if WIDECHAR
-#define default_charset	getstrvar(VAR_default_charset)
-#endif
+#define checho_attr	getattrvar(VAR_cecho_attr)
 #define cleardone	getintvar(VAR_cleardone)
 #define clearfull	getintvar(VAR_clearfull)
 #define clock_flag	getintvar(VAR_clock)
+#if WIDECHAR
+#define default_charset	getstrvar(VAR_default_charset)
+#endif
 #define defcompile	getintvar(VAR_defcompile)
 #define emulation 	getintvar(VAR_emulation)
 #define error_attr	getattrvar(VAR_error_attr)
@@ -183,9 +188,11 @@ enum Vars {
 #define hilite		getintvar(VAR_hilite)
 #define hiliteattr	getattrvar(VAR_hiliteattr)
 #define histsize	getintvar(VAR_histsize)
+/* hook vs hookflag? */
 #define hookflag	getintvar(VAR_hook)
 #define hpri		getintvar(VAR_hpri)
 #define iecho		getintvar(VAR_iecho)
+#define iecho_attr	getattrvar(VAR_iecho_attr)
 #define info_attr	getattrvar(VAR_info_attr)
 #define insert		getintvar(VAR_insert)
 #define interactive	getintvar(VAR_interactive)
@@ -193,12 +200,14 @@ enum Vars {
 #define istrip		getintvar(VAR_istrip)
 #define kbnum		getstrvar(VAR_kbnum)
 #define kecho		getintvar(VAR_kecho)
+#define kecho_attr	getattrvar(VAR_kecho_attr)
 #define keepalive	getintvar(VAR_keepalive)
 #define keypad		getintvar(VAR_keypad)
 #define kprefix		getstrvar(VAR_kprefix)
 #define login		getintvar(VAR_login)
 #define log_prefix	getstrvar(VAR_log_prefix)
 #define log_time_format	getstrvar(VAR_log_time_format)
+/* lp vs lpflag? */
 #define lpflag		getintvar(VAR_lp)
 #define lpquote		getintvar(VAR_lpquote)
 #define maildelay	gettimevar(VAR_maildelay)
@@ -215,23 +224,31 @@ enum Vars {
 #define more		getintvar(VAR_more)
 #define mprefix		getstrvar(VAR_mprefix)
 #define oldslash	getintvar(VAR_oldslash)
+#define oldstylefg	getintvar(VAR_oldstylefg)
 #define oldunnamed	getintvar(VAR_oldunnamed)
 #define optimize_user	getintvar(VAR_optimize)
 #define option102	getintvar(VAR_option102)
 #define pedantic	getintvar(VAR_pedantic)
+/* prompt_sec prompt_usec getstdvar vs getstrvar ? */
+#define prompt_sec	getstdvar(VAR_prompt_sec)
+#define prompt_usec	getstdvar(VAR_prompt_usec)
 #define prompt_wait	gettimevar(VAR_prompt_wait)
 #define proxy_host	getstdvar(VAR_proxy_host)
 #define proxy_port	getstdvar(VAR_proxy_port)
 #define process_time	gettimevar(VAR_ptime)
 #define qecho		getintvar(VAR_qecho)
+#define qecho_attr	getattrvar(VAR_qecho_attr)
 #define qprefix		getstrvar(VAR_qprefix)
+/* quiet vs quietflag? */
 #define quietflag	getintvar(VAR_quiet)
 #define quitdone	getintvar(VAR_quitdone)
 #define redef		getintvar(VAR_redef)
 #define refreshtime	getintvar(VAR_refreshtime)
 #define scroll		getintvar(VAR_scroll)
 #define secho		getintvar(VAR_secho)
+#define secho_attr	getattrvar(VAR_secho_attr)
 #define shpause		getintvar(VAR_shpause)
+/* sidescroll defined in output.c */
 #define sigfigs		getintvar(VAR_sigfigs)
 #define snarf		getintvar(VAR_snarf)
 #define sockmload	getintvar(VAR_sockmload)
@@ -241,9 +258,15 @@ enum Vars {
 #define ssl_continue	getintvar(VAR_ssl_continue)
 #define ssl_depth	getintvar(VAR_ssl_depth)
 #define ssl_verbose	getintvar(VAR_ssl_verbose)
+/* stat_* vs status_* ? */
+/* stint_* vs status_* ? */
 #define status_attr	getattrvar(VAR_stat_attr)
 #define status_fields	getstdvar(VAR_stat_fields)
 #define status_height	getintvar(VAR_stat_height)
+/* status_int_* getstdvar vs getstrvar ? */
+#define status_int_clock getstdvar(VAR_stint_clock)
+#define status_int_more	getstdvar(VAR_stint_more)
+#define status_int_world getstdvar(VAR_stint_world)
 #define status_pad	getstdvar(VAR_stat_pad)
 #define sub		getintvar(VAR_sub)
 #define tabsize		getintvar(VAR_tabsize)
@@ -253,6 +276,11 @@ enum Vars {
 #define tfhost		getstdvar(VAR_tfhost)
 #define time_format	getstrvar(VAR_time_format)
 #define virtscreen	getintvar(VAR_virtscreen)
+/* visual is special: initial value of -1 indicates it was never explicitly
+ * set, but is still treated like "off".
+ */
+#define visual		((long)(getintvar(VAR_visual) > 0))
+#define warn_5keys	getintvar(VAR_warn_5keys)
 #define warn_curly_re	getintvar(VAR_warn_curly_re)
 #define warn_def_B	getintvar(VAR_warn_def_B)
 #define warn_status	getintvar(VAR_warn_status)
@@ -260,16 +288,12 @@ enum Vars {
 #define watchdog	getintvar(VAR_watchdog)
 #define watchname	getintvar(VAR_watchname)
 #define wordpunct	getstdvar(VAR_wordpunct)
+/* wrap vs wrapflag ? */
 #define wrapflag	getintvar(VAR_wrap)
 #define wraplog		getintvar(VAR_wraplog)
 #define wrappunct	getintvar(VAR_wrappunct)
 #define wrapsize	getintvar(VAR_wrapsize)
 #define wrapspace	getintvar(VAR_wrapspace)
-
-/* visual is special: initial value of -1 indicates it was never explicitly
- * set, but is still treated like "off".
- */
-#define visual		((long)(getintvar(VAR_visual) > 0))
 
 extern Var special_var[];
 

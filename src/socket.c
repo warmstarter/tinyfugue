@@ -1190,7 +1190,7 @@ static int fg_sock(Sock *sock, int quiet)
     hide_screen(NULL);
 
     if (sock) {
-        if (getintvar(VAR_oldstylefg) == 1)
+        if (oldstylefg == 1)
         {
           buffer = Stringnew(NULL, -1, 0);
           Sprintf(buffer, (sock->constate >= SS_ZOMBIE) ? "---- World %s (dead) ----" : "---- World %s ----", sock->world->name);
@@ -1220,7 +1220,7 @@ static int fg_sock(Sock *sock, int quiet)
         fg_screen = default_screen;
 	unhide_screen(fg_screen);
         world_hook("---- No world ----", NULL);
-	if (getintvar(VAR_oldstylefg) == 1)
+	if (oldstylefg == 1)
         {
           buffer = Stringnew(NULL, -1, 0);
           Sprintf(buffer, "---- No world ----");
@@ -2748,7 +2748,7 @@ int send_line(const char *src, unsigned int len, int eol_flag)
 
     if (secho) {
 	String *str = Stringnew(NULL, 0, 0);
-	Sprintf(str, "%S%.*s%A", sprefix, len, src, getattrvar(VAR_secho_attr));
+	Sprintf(str, "%S%.*s%A", sprefix, len, src, secho_attr);
 	world_output(xsock->world, CS(str));
     }
 

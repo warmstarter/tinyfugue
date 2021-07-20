@@ -691,7 +691,7 @@ void free_util(void)
 
 
 /* check_mail()
- * Enables the "(Mail)" indicator iff there is unread mail.
+ * Enables the "(Mail)" indicator if there is unread mail.
  * Calls the MAIL hook iff there is new mail.
  *
  * Logic:

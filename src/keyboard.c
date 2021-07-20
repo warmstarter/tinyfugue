@@ -443,7 +443,7 @@ int handle_input_line(void)
         line = scratch;
 
     if (kecho)
-	tfprintf(tferr, "%S%S%A", kprefix, line, getattrvar(VAR_kecho_attr));
+	tfprintf(tferr, "%S%S%A", kprefix, line, kecho_attr);
     gettime(&line->time);
     record_input(CS(line));
     readsafe = 1;
