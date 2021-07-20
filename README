@@ -10,7 +10,8 @@ UNNAMED worlds not wrapped in () (/help oldunnamed) no-() by default
 FG world switching can use TF4 stle (/help oldstylefg) off by default
 @ALERT picks up on messages that could have been lost
 / as a prefix to /command sends to MU, as opposed to ///command
-SSL now looks for GNU TLS
+SSL looks for GNU TLS
+SSL verifies cert chain and check for self-signed, only warn by default
 ATCP protocol support (--enable-atcp=yes) off by default
 GMCP protocol support (--enable-gmcp=yes) off by default
 OPTION 102 protocol support (--enable-option102=yes) off by default
