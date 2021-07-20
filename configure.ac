@@ -22,6 +22,10 @@ m4_include([m4/ax_compiler_vendor.m4])
 # those changes, but if they are needed outside this script, they should
 # be referenced through another variable.
 define(
+    [PROGRAM_STRING],
+    [TinyFugue])
+
+define(
     [VERSION_STRING],
     [50b8])
 
@@ -29,15 +33,19 @@ define(
     [URL_STRING],
     [https://github.com/warmstarter/tinyfugue])
 
+define(
+    [EXE_STRING],
+    [tf])
+
 ################################################################
 # 2. AC_INIT
 ################################################################
 
 AC_INIT(
-    [TinyFugue],
+    [PROGRAM_STRING],
     [VERSION_STRING],
     [URL_STRING][/issues],
-    [tf-][VERSION_STRING],
+    [EXE_STRING][-][VERSION_STRING],
     [URL_STRING])
 
 AC_MSG_NOTICE([Configuring $PACKAGE_STRING])
@@ -55,8 +63,8 @@ AC_PREFIX_DEFAULT([/usr/local])
 ################################################################
 
 dnl This gets used elsewhere as is, but having issues in the init, needs to get fixed up.
-PACKAGE_SHORTNAME="tf"
-AC_SUBST([PACKAGE_SHORTNAME])
+PACKAGE_EXE=EXE_STRING
+AC_SUBST([PACKAGE_EXE])
 
 dnl would be a really good idea to have this get inserted into files, rather
 dnl than just indiviually maintaining that.
@@ -121,6 +129,25 @@ AC_ARG_ENABLE(
     [enable_inet6=${enableval}],
     [enable_inet6=yes])
 
+
+AC_ARG_ENABLE(
+    [256colors],
+    [AS_HELP_STRING(
+        [--disable-256colors],
+        [disable 256 color support])
+    ],
+    [enable_256colors=${enableval}],
+    [enable_256colors=yes])
+
+AC_ARG_ENABLE(
+    [widechar],
+    [AS_HELP_STRING(
+        [--disable-widechar],
+        [disable wide character UTF-8 support])
+    ],
+    [enable_widechar=${enableval}],
+    [enable_widechar=yes])
+
 # These double AS_HELP_STRINGs look kinda ugly. Putting each on one line would fix, consider doing so.
 AC_ARG_ENABLE(
     [termcap],
@@ -133,15 +160,6 @@ AS_HELP_STRING(
     ],
     [enable_termcap=${enableval}],
     [enable_termcap=default])
-
-AC_ARG_ENABLE(
-    [256colors],
-    [AS_HELP_STRING(
-        [--disable-256colors],
-        [disable 256 color support])
-    ],
-    [enable_256colors=${enableval}],
-    [enable_256colors=yes])
 
 AC_ARG_ENABLE(
     [mailcheck],
@@ -163,6 +181,12 @@ AC_ARG_ENABLE(
     ],
     [enable_history=${enableval}],
     [enable_history=yes])
+if test "$enable_history"   = "no"; then
+    AC_DEFINE(
+        [NO_HISTORY],
+       	[1],
+       	[history and recall disabled])
+fi
 
 AC_ARG_ENABLE(
     [process],
@@ -172,15 +196,12 @@ AC_ARG_ENABLE(
     ],
     [enable_process=${enableval}],
     [enable_process=yes])
-
-AC_ARG_ENABLE(
-    [widechar],
-    [AS_HELP_STRING(
-        [--disable-widechar],
-        [disable wide character UTF-8 support])
-    ],
-    [enable_widechar=${enableval}],
-    [enable_widechar=yes])
+if test "$enable_process"   = "no"; then
+    AC_DEFINE(
+        [NO_PROCESS],
+       	[1],
+       	[quote and repeat disabled])
+fi
 
 AC_ARG_ENABLE(
     [atcp],
@@ -190,6 +211,12 @@ AC_ARG_ENABLE(
     ],
     [enable_atcp=${enableval}],
     [enable_atcp=no])
+if test "$enable_atcp"      = "yes"; then
+    AC_DEFINE(
+        [ENABLE_ATCP],
+       	[1],
+       	[ATCP protcol enabled])
+fi
 
 AC_ARG_ENABLE(
     [gmcp],
@@ -199,6 +226,12 @@ AC_ARG_ENABLE(
     ],
     [enable_gmcp=${enableval}],
     [enable_gmcp=no])
+if test "$enable_gmcp"      = "yes"; then
+    AC_DEFINE(
+        [ENABLE_GMCP],
+       	[1],
+       	[GMCP protocol enabled])
+fi
 
 AC_ARG_ENABLE(
     [option102],
@@ -208,6 +241,12 @@ AC_ARG_ENABLE(
     ],
     [enable_option102=${enableval}],
     [enable_option102=no])
+if test "$enable_option102" = "yes"; then
+    AC_DEFINE(
+        [ENABLE_OPTION102],
+       	[1],
+       	[OPTION102 protocol enabled])
+fi
 
 AC_ARG_WITH(
     [incdirs],
@@ -246,22 +285,11 @@ AC_ARG_WITH(
     [])
 
 # Hidden options.
-
-# This should be rewritten.
 AC_ARG_ENABLE(
     [manpage],
     [],
     [],
     [enable_manpage=yes])
-if test "$enable_manpage" = "yes"; then
-    MANPAGE='${mandir}/man1/'${PACKAGE_SHORTNAME}.1
-    MANTYPE='nroff'
-else
-    MANPAGE=''
-    MANTYPE=''
-fi
-AC_SUBST(MANPAGE)
-AC_SUBST(MANTYPE)
 
 # Developer options
 # --enable-development implies --enable-core --disable-symlink
@@ -406,14 +434,35 @@ AC_DEFUN(TF_DIRS, [
     fi
 ])
 
-TF_DIRS(with_incdirs,    CPPFLAGS, -I)
-TF_DIRS(with_inclibdirs, CPPFLAGS, -I)
-TF_DIRS(with_inclibpfx,  CPPFLAGS, -I, /include)
+TF_DIRS(
+    [with_incdirs],
+    [CPPFLAGS],
+    [-I])
+TF_DIRS(
+    [with_inclibdirs],
+    [CPPFLAGS],
+    [-I])
+TF_DIRS(
+    [with_inclibpfx],
+    [CPPFLAGS],
+    [-I],
+    [/include])
 
 LIBDIRS=""
-TF_DIRS(with_libdirs,    LIBDIRS, -L)
-TF_DIRS(with_inclibdirs, LIBDIRS, -L)
-TF_DIRS(with_inclibpfx,  LIBDIRS, -L, /lib)
+
+TF_DIRS(
+    [with_libdirs],
+    [LIBDIRS],
+    [-L])
+TF_DIRS(
+    [with_inclibdirs],
+    [LIBDIRS],
+    [-L])
+TF_DIRS(
+    [with_inclibpfx],
+    [LIBDIRS],
+    [-L],
+    [/lib])
 
 dnl Must append LIBDIRS to LDFLAGS now so it's present for AC_CHECK_LIB.
 dnl (LIBDIRS will not work in the OTHER-LIBRARIES argument of AC_CHECK_LIB
@@ -555,6 +604,7 @@ if test "$enable_256colors" = "yes"; then
        	[256 color mode enabled])
 fi
 
+dnl These two checks should be combined and only pass if both are there.
 if test "$enable_widechar" = "yes"; then
     AX_CHECK_ICU(
         [1],
@@ -752,36 +802,6 @@ if test "$enable_inet6"     = "yes"; then
        	[1],
        	[IPV6 networking enabled])
 fi
-if test "$enable_atcp"      = "yes"; then
-    AC_DEFINE(
-        [ENABLE_ATCP],
-       	[1],
-       	[ATCP protcol enabled])
-fi
-if test "$enable_gmcp"      = "yes"; then
-    AC_DEFINE(
-        [ENABLE_GMCP],
-       	[1],
-       	[GMCP protocol enabled])
-fi
-if test "$enable_option102" = "yes"; then
-    AC_DEFINE(
-        [ENABLE_OPTION102],
-       	[1],
-       	[OPTION102 protocol enabled])
-fi
-if test "$enable_history"   = "no"; then
-    AC_DEFINE(
-        [NO_HISTORY],
-       	[1],
-       	[history and recall disabled])
-fi
-if test "$enable_process"   = "no"; then
-    AC_DEFINE(
-        [NO_PROCESS],
-       	[1],
-       	[quote and repeat disabled])
-fi
 
 #################################################################
 # 12. System services
@@ -830,7 +850,7 @@ fi
 dnl The "right" way of using program_transform_name, program_prefix, and
 dnl program_suffix expects you to use AC_ARG_PROGRAM here and do transformation
 dnl in the Makefile, but we want the values now, so we do it ourselves.
-EXENAME="${PACKAGE_SHORTNAME}" PROGNAME="${PACKAGE_SHORTNAME}"
+EXENAME="${PACKAGE_EXE}"
 test "${program_prefix}" != "NONE" && EXENAME="${program_prefix}${EXENAME}"
 test "${program_suffix}" != "NONE" && EXENAME="${EXENAME}${program_suffix}"
 if test "${program_transform_name}" != "NONE"; then
@@ -846,8 +866,17 @@ else
     SYMLINK="$enable_symlink"
 fi
 
+if test "$enable_manpage" = "yes"; then
+    MANPAGE='man1/'${PACKAGE_EXE}.1
+    MANTYPE='nroff'
+else
+    MANPAGE=''
+    MANTYPE=''
+fi
+AC_SUBST(MANPAGE)
+AC_SUBST(MANTYPE)
+
 AC_SUBST(EXENAME)
-AC_SUBST(PROGNAME)
 AC_SUBST(LIBNAME)
 AC_SUBST(SYMLINK)
 
@@ -891,7 +920,7 @@ cat unix/vars.mak src/vars.mak unix/unix.mak src/rules.mak >> src/Makefile
 
 AC_OUTPUT
 
-AC_MSG_NOTICE([
+echo "
 #####################################################
 ## prefix: $prefix
 ## exec_prefix: $exec_prefix
@@ -900,9 +929,9 @@ AC_MSG_NOTICE([
 ## datadir: $datadir
 ## executable: \${bindir}/$EXENAME
 ## library: \${datadir}/$LIBNAME
-## manpage: ${MANPAGE}
+## manpage: ${mandir}/$MANPAGE
 ##
 ## TinyFugue configuration successful.
-## Use "make" to build.
-])
-
+## Use \"make\" to build.
+#####################################################
+"

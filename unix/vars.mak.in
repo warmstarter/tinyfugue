@@ -27,7 +27,7 @@ TF         = ${bindir}/@EXENAME@${X}
 # already exist in the environment.
 TF_LIBDIR  = ${datadir}/@LIBNAME@
 SYMLINK    = @SYMLINK@
-MANPAGE    = ${mandir}/man1/@EXENAME@.1
+MANPAGE    = ${mandir}/@MANPAGE@
 MANTYPE    = @MANTYPE@
 MODE       = @MODE@
 CC         = @CC@
