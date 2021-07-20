@@ -21,13 +21,19 @@ m4_include([m4/ax_compiler_vendor.m4])
 # might be referenced multiple times. This is the canonical place to make
 # those changes, but if they are needed outside this script, they should
 # be referenced through another variable.
-define([VERSION_STRING], [50b8])
-define([URL_STRING], [https://github.com/warmstarter/tinyfugue])
+define(
+    [VERSION_STRING],
+    [50b8])
+
+define(
+    [URL_STRING],
+    [https://github.com/warmstarter/tinyfugue])
 
 ################################################################
 # 2. AC_INIT
 ################################################################
-AC_INIT([TinyFugue],
+AC_INIT(
+    [TinyFugue],
     [VERSION_STRING],
     [URL_STRING][/issues],
     [tf-][VERSION_STRING],
@@ -66,7 +72,8 @@ AC_ARG_ENABLE(
     [version],
     [AS_HELP_STRING(
         [--enable-version],
-        [insert version number into names of installed files])],
+        [insert version number into names of installed files])
+    ],
     [enable_version=${enableval}],
     [enable_version=default])
 
@@ -74,7 +81,8 @@ AC_ARG_ENABLE(
     [symlink],
     [AS_HELP_STRING(
         [--enable-symlink[=NAME]],
-        [make a symlink NAME to the executable])],
+        [make a symlink NAME to the executable])
+    ],
     [enable_symlink=${enableval}],
     [enable_symlink=default])
 
@@ -82,7 +90,8 @@ AC_ARG_ENABLE(
     [core],
     [AS_HELP_STRING(
         [--enable-core],
-        [enable core dumps for debugging])],
+        [enable core dumps for debugging])
+    ],
     [enable_core=${enableval}],
     [enable_core=default])
 
@@ -90,7 +99,8 @@ AC_ARG_ENABLE(
      [ssl],
      [AS_HELP_STRING(
          [--disable-ssl],
-         [disable SSL connections])],
+         [disable SSL connections])
+     ],
      [enable_ssl=${enableval}],
      [enable_ssl=yes])
 
@@ -98,7 +108,8 @@ AC_ARG_ENABLE(
     [getaddrinfo],
     [AS_HELP_STRING(
         [--disable-getaddrinfo],
-        [disable getaddrinfo implies --disable-inet6])],
+        [disable getaddrinfo implies --disable-inet6])
+    ],
     [enable_getaddrinfo=${enableval}],
     [enable_getaddrinfo=default])
 
@@ -106,7 +117,8 @@ AC_ARG_ENABLE(
     [inet6],
     [AS_HELP_STRING(
         [--disable-inet6],
-        [disable IPv6 network support])],
+        [disable IPv6 network support])
+    ],
     [enable_inet6=${enableval}],
     [enable_inet6=yes])
 
@@ -127,7 +139,8 @@ AC_ARG_ENABLE(
     [256colors],
     [AS_HELP_STRING(
         [--disable-256colors],
-        [disable 256 color support])],
+        [disable 256 color support])
+    ],
     [enable_256colors=${enableval}],
     [enable_256colors=yes])
 
@@ -148,7 +161,8 @@ AC_ARG_ENABLE(
     [history],
     [AS_HELP_STRING(
         [--disable-history],
-        [disable /recall and other history features])],
+        [disable /recall and other history features])
+    ],
     [enable_history=${enableval}],
     [enable_history=yes])
 
@@ -156,7 +170,8 @@ AC_ARG_ENABLE(
     [process],
     [AS_HELP_STRING(
         [--disable-process],
-        [disable /quote and repeat])],
+        [disable /quote and repeat])
+    ],
     [enable_process=${enableval}],
     [enable_process=yes])
 
@@ -164,7 +179,8 @@ AC_ARG_ENABLE(
     [widechar],
     [AS_HELP_STRING(
         [--disable-widechar],
-        [disable wide character UTF-8 support])],
+        [disable wide character UTF-8 support])
+    ],
     [enable_widechar=${enableval}],
     [enable_widechar=yes])
 
@@ -172,7 +188,8 @@ AC_ARG_ENABLE(
     [atcp],
     [AS_HELP_STRING(
         [--enable-atcp],
-        [enable ATCP protocol support])],
+        [enable ATCP protocol support])
+    ],
     [enable_atcp=${enableval}],
     [enable_atcp=no])
 
@@ -180,7 +197,8 @@ AC_ARG_ENABLE(
     [gmcp],
     [AS_HELP_STRING(
         [--enable-gmcp],
-        [enable GMCP protocol support])],
+        [enable GMCP protocol support])
+    ],
     [enable_gmcp=${enableval}],
     [enable_gmcp=no])
 
@@ -188,7 +206,8 @@ AC_ARG_ENABLE(
     [option102],
     [AS_HELP_STRING(
         [--enable-option102],
-        [enable option102 protocl support])],
+        [enable option102 protocl support])
+    ],
     [enable_option102=${enableval}],
     [enable_option102=no])
 
@@ -196,7 +215,8 @@ AC_ARG_WITH(
     [incdirs],
     [AS_HELP_STRING(
         [--with-incdirs=DIRS],
-	[search for include files in DIRS])],
+	[search for include files in DIRS])
+    ],
     [],
     [])
 
@@ -204,7 +224,8 @@ AC_ARG_WITH(
     [libdirs],
     [AS_HELP_STRING(
         [--with-libdirs=DIRS],
-     	[search for libraries in DIRS])],
+     	[search for libraries in DIRS])
+    ],
     [],
     [])
 
@@ -212,7 +233,8 @@ AC_ARG_WITH(
     [inclibdirs],
     [AS_HELP_STRING(
         [--with-inclibdirs=DIRS],
-        [same as --with-incdirs=DIRS --with-libdirs=DIRS])],
+        [same as --with-incdirs=DIRS --with-libdirs=DIRS])
+    ],
     [],
     [])
 
@@ -220,7 +242,8 @@ AC_ARG_WITH(
     [inclibpfx],
     [AS_HELP_STRING(
         [--with-inclibpfx=DIRS],
-        [same, but appends '/include' and '/lib'])],
+        [same, but appends '/include' and '/lib'])
+    ],
     [],
     [])
 
@@ -250,12 +273,22 @@ AC_ARG_ENABLE([mmalloc], , , enable_mmalloc=no)
 # 5. Checks for programs, including ${CC} and its ${CFLAGS}
 ################################################################
 
+AC_LANG([C])
 AC_PROG_CC([clang gcc cc])
+AX_COMPILER_VENDOR
+AC_C_INLINE
+AC_EXEEXT
+AC_OBJEXT
+AC_PROG_MAKE_SET
 AC_PROG_EGREP
 AC_PROG_LN_S
-AC_PROG_RANLIB
 AC_PROG_SED
 
+AC_CHECK_PROG(
+    RANLIB,
+    [ranlib],
+    [ranlib],
+    [:])
 
 ### These checks an such should go elsewhere and get cleaned up.
 
@@ -316,29 +349,11 @@ AC_SUBST(UNAME)
 dnl This is used in tfdef.h.in and maybe somewhere else, but it's set for 'generic'
 dnl now so pretty pointless. Circle around and fix all of those.
 
-dnl #OTHER_OBJS=""
-AC_LANG([C])
-dnl AC_REQUIRE_CPP
-AX_COMPILER_VENDOR
-AC_C_INLINE
-
-AC_CHECK_SIZEOF(short)
-AC_CHECK_SIZEOF(int)
-AC_CHECK_SIZEOF(long)
-
-AC_EXEEXT
-AC_OBJEXT
-
-AC_PROG_MAKE_SET
 
 if test "$enable_core" = "no"; then
     AC_CHECK_PROG(STRIP, strip, strip, :)
 fi
 AC_SUBST(STRIP)
-
-dnl Might be redundant witha setting in the header.
-AC_CHECK_PROG(RANLIB, ranlib, ranlib, :)
-
 
 ################################################################
 # 6. Checks for libraries
@@ -485,30 +500,42 @@ if test "$enable_termcap" = "default"; then
 fi
 
 if test "$enable_termcap" = "no"; then
-    AC_DEFINE_UNQUOTED([HARDCODE], [$terminal_hardcode], [termcap disabled - hardcoding terminal])
+    AC_DEFINE_UNQUOTED(
+        HARDCODE,
+       	[$terminal_hardcode],
+       	[termcap disabled - hardcoding terminal])
 else
     if test "$enable_termcap" = "yes"; then enable_termcap=""; fi
-dnl    AC_SEARCH_LIBS(tgetent, $enable_termcap termcap ncurses curses,
-dnl	AC_DEFINE([TERMCAP], [1], [termcap enabled]))
-dnl    AC_DEFINE_UNQUOTED([HARDCODE], [$terminal_hardcode], [termcap enabled - hardcoding terminal])
-dnl    AC_MSG_WARN([Hardcoding terminal codes.])
-    AC_SEARCH_LIBS(tgetent, $enable_termcap termcap ncurses curses,
-        AC_DEFINE(TERMCAP)
-    ,
-        AC_DEFINE_UNQUOTED(HARDCODE, $terminal_hardcode)
-        AC_MSG_WARN([Hardcoding terminal codes.]))
+    AC_SEARCH_LIBS(
+        [tgetent],
+       	[$enable_termcap termcap ncurses curses],
+        [AC_DEFINE(TERMCAP)],
+        [AC_DEFINE_UNQUOTED(
+	    HARDCODE,
+	    [$terminal_hardcode])
+            AC_MSG_WARN([Hardcoding terminal codes.])])
 fi
 dnl XXX check for debian linux's broken termcap
 
 if test "$enable_256colors" = "yes"; then
-    AC_DEFINE([NCOLORS], [256], [256 color mode enabled])
+    AC_DEFINE(
+        NCOLORS,
+       	[256],
+       	[256 color mode enabled])
 fi
 
 if test "$enable_widechar" = "yes"; then
-    AX_CHECK_ICU(1,
-        [AC_DEFINE([WIDECHAR], [1], [widechar unicode enabled])],
+    AX_CHECK_ICU(
+        1,
+        [AC_DEFINE(
+	    WIDECHAR,
+	    [1],
+	    [widechar unicode enabled]
+	)],
         [AC_MSG_WARN([libicuuc not found. disabling widechar support.])])
-    AC_CHECK_HEADERS([wchar.h wctype.h], [],
+    AC_CHECK_HEADERS(
+        [wchar.h wctype.h],
+       	[],
         [AC_MSG_WARN([wchar.h and wctype.h not found, require for widechar unicode support.])])
 fi
 
@@ -604,12 +631,15 @@ AC_EGREP_HEADER(
     [AC_DEFINE(
         NEED_PTEM_H,
        	[1],
-       	[ptem.h needed])
-    ])
+       	[ptem.h needed])])
 
 ################################################################
 # 8. Checks for types
 ################################################################
+
+AC_CHECK_SIZEOF([short])
+AC_CHECK_SIZEOF([int])
+AC_CHECK_SIZEOF([long])
 
 ################################################################
 # 9. Checks for structures
@@ -628,15 +658,19 @@ AC_FUNC_STRFTIME
 
 dnl # h_errno is a variable, not a function.  But AC_CHECK_FUNCS only checks
 dnl # that the symbol is defined, so this works.
-AC_CHECK_FUNCS(h_errno)
+AC_CHECK_FUNCS([h_errno])
 
 dnl # required standard functions
-AC_CHECK_FUNCS(strstr strtol, ,
-    AC_MSG_ERROR([Missing required standard function.]))
+AC_CHECK_FUNCS(
+    [strstr strtol],
+    [],
+    [AC_MSG_ERROR([Missing required standard function.])])
+
 dnl # optional functions
 AC_CHECK_FUNCS(bcopy bzero connect fileno \
     gethostname gethostbyname getipnodebyname \
     getpwnam gettimeofday hstrerror index inet_aton)
+
 dnl # uncommented functions, presumably all optional
 AC_CHECK_FUNCS(kill memcpy memset raise setlocale \
     setrlimit srand srandom strcasecmp strchr \
