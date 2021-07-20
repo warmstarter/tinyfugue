@@ -383,31 +383,48 @@ if test "$ax_cv_c_compiler_vendor" = "gnu"; then
     LDFLAGS="-Wl,--allow-multiple-definition $LDFLAGS"
 fi
 
-dnl Pretty sure this is a hard requirement, double check.
-AC_SEARCH_LIBS(sqrt, m, ,
-   AC_MSG_WARN([TF can not work without math library.]))
+AC_SEARCH_LIBS(
+    [sqrt],
+    [m],
+    [],
+    [AC_MSG_ERROR([TF can not work without math library.])])
 
-AC_SEARCH_LIBS(select, bsd, ,
-    AC_MSG_ERROR([TF can not work without select().]))
+AC_SEARCH_LIBS(
+    [select],
+    [bsd],
+    [],
+    [AC_MSG_ERROR([TF can not work without select().])])
 
 dnl # gethostbyname may not be in default libraries.
 dnl # QNX keeps gethostbyname in lsocket.
-AC_SEARCH_LIBS(gethostbyname, bsd nsl_s nsl resolv socket, ,
-    AC_MSG_WARN([Host name resolution will not be available.]))
+AC_SEARCH_LIBS(
+    [gethostbyname],
+    [bsd nsl_s nsl resolv socket],
+    [],
+    [AC_MSG_WARN([Host name resolution will not be available.])])
 
 dnl ### If -linet exists, assume we need it.
-AC_CHECK_LIB(inet, main)
+AC_CHECK_LIB(
+    [inet],
+    [main])
 
 dnl ### If -lnet exists, assume we need it.
-AC_CHECK_LIB(net, main)
+AC_CHECK_LIB(
+    [net],
+    [main])
 
 dnl ## If we haven't found connect(), look for -lsocket.
 dnl ## Note: on IRIX 5, -lsocket exists, but we mustn't use its gethostbyname().
-AC_SEARCH_LIBS(connect, socket)
+AC_SEARCH_LIBS(
+    [connect],
+    [socket])
 
 dnl ### I'm guessing setlocale() is in libintl on some systems, if not in libc.
-AC_SEARCH_LIBS(setlocale, intl, ,
-    AC_MSG_WARN([Locales will not be supported.]))
+AC_SEARCH_LIBS(
+    [setlocale],
+    [intl],
+    [],
+    [AC_MSG_WARN([Locales will not be supported.])])
 
 dnl ### OpenSSL
 if test "$enable_ssl" = "yes"; then
@@ -495,9 +512,13 @@ if test "$enable_widechar" = "yes"; then
         [AC_MSG_WARN([wchar.h and wctype.h not found, require for widechar unicode support.])])
 fi
 
-AC_CHECK_LIB(z, inflate)
+AC_CHECK_LIB(
+    [z],
+    [inflate])
 
-AC_CHECK_LIB(pcre, pcre_compile)
+AC_CHECK_LIB(
+    [pcre],
+    [pcre_compile])
 
 
 ################################################################
@@ -508,12 +529,16 @@ AC_CHECK_HEADERS([lunistd.h memory.h sys/select.h])
 AC_HEADER_SYS_WAIT
 
 dnl ### For optional language support.
-AC_CHECK_HEADERS([locale.h], ,
-    AC_MSG_WARN([Locales will not be supported.]))
+AC_CHECK_HEADERS(
+    [locale.h],
+    [],
+    [AC_MSG_WARN([Locales will not be supported.])])
 
 dnl ### Find pwd.h
-AC_CHECK_HEADERS([pwd.h], ,
-    AC_MSG_WARN([Filename '~user' expansion will not be supported.]))
+AC_CHECK_HEADERS(
+    [pwd.h],
+    [],
+    [AC_MSG_WARN([Filename '~user' expansion will not be supported.])])
 
 dnl ### Find zlib.h
 AC_CHECK_HEADERS([zlib.h])
@@ -539,15 +564,23 @@ AC_DEFUN(TF_SEARCH_HEADERS, [
 ])
 
 dnl ### Find internet structure header
-TF_SEARCH_HEADERS(NETINET_IN_H, [netinet/in.h sys/in.h sys/netinet/in.h], ,
-    AC_MSG_WARN([I will use my own internet structures.  Good luck.]))
+TF_SEARCH_HEADERS(
+    NETINET_IN_H,
+    [netinet/in.h sys/in.h sys/netinet/in.h],
+    [],
+    [AC_MSG_WARN([I will use my own internet structures.  Good luck.])])
 
 dnl ### Find internet address header
-TF_SEARCH_HEADERS(ARPA_INET_H, [arpa/inet.h sys/inet.h])
+TF_SEARCH_HEADERS(
+    ARPA_INET_H,
+    [arpa/inet.h sys/inet.h])
 
 dnl ### Find netdb header
-TF_SEARCH_HEADERS(NETDB_H, [netdb.h sys/netdb.h], ,
-    AC_MSG_ERROR([can't find netdb.h]))
+TF_SEARCH_HEADERS(
+    NETDB_H,
+    [netdb.h sys/netdb.h],
+    [] ,
+    [AC_MSG_ERROR([can't find netdb.h])])
 
 AC_CACHE_CHECK([whether struct sockaddr has sa_len], tf_cv_sa_len,
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
@@ -560,10 +593,19 @@ if test "${tf_cv_sa_len}" = "yes"; then
 fi
 
 dnl ### Figure out which terminal driver to use.
-AC_CHECK_HEADERS([termios.h termio.h], break)
+AC_CHECK_HEADERS(
+    [termios.h termio.h],
+    [break])
 
 dnl # Some brain damaged systems (Xenix) need <sys/ptem.h> for struct winsize.
-AC_EGREP_HEADER(struct winsize, sys/ptem.h, AC_DEFINE([NEED_PTEM_H], [1], [ptem.h needed]))
+AC_EGREP_HEADER(
+    [struct winsize],
+    [sys/ptem.h],
+    [AC_DEFINE(
+        NEED_PTEM_H,
+       	[1],
+       	[ptem.h needed])
+    ])
 
 ################################################################
 # 8. Checks for types
