@@ -710,6 +710,43 @@ if test "$enable_inet6" = "yes"; then
     done
 fi
 
+if test "$enable_inet6"     = "yes"; then
+    AC_DEFINE(
+        [ENABLE_INET6],
+       	[1],
+       	[IPV6 networking enabled])
+fi
+if test "$enable_atcp"      = "yes"; then
+    AC_DEFINE(
+        [ENABLE_ATCP],
+       	[1],
+       	[ATCP protcol enabled])
+fi
+if test "$enable_gmcp"      = "yes"; then
+    AC_DEFINE(
+        [ENABLE_GMCP],
+       	[1],
+       	[GMCP protocol enabled])
+fi
+if test "$enable_option102" = "yes"; then
+    AC_DEFINE(
+        [ENABLE_OPTION102],
+       	[1],
+       	[OPTION102 protocol enabled])
+fi
+if test "$enable_history"   = "no"; then
+    AC_DEFINE(
+        [NO_HISTORY],
+       	[1],
+       	[history and recall disabled])
+fi
+if test "$enable_process"   = "no"; then
+    AC_DEFINE(
+        [NO_PROCESS],
+       	[1],
+       	[quote and repeat disabled])
+fi
+
 #################################################################
 # 12. System services
 #################################################################
@@ -775,62 +812,6 @@ AC_SUBST(PROGNAME)
 AC_SUBST(LIBNAME)
 AC_SUBST(SYMLINK)
 
-
-dnl Do we need this at all? It's bee commented out forever, so people seem
-dnl to be doings fine without it. Check it's purpose and if it's not better
-dnl handled through something else.
-
-dnl # XXX
-dnl ### Sanity check for filenames (some people do pretty stupid things)
-dnl # The "${SYMLINK}/" is just to make the grep return false if SYMLINK is empty.
-dnl #
-dnl #if echo "$TF"          | egrep "^[^/]" >/dev/null 2>&1 ||
-dnl #   echo "$LIBDIR"      | egrep "^[^/]" >/dev/null 2>&1 ||
-dnl #   echo "${SYMLINK}/"  | egrep "^[^/]" >/dev/null 2>&1
-dnl #then
-dnl #   echo "Don't install files with relative paths or '~'."
-dnl #   echo "Edit unix/Config and try again."
-dnl #   exit 2
-dnl #fi
-dnl #
-dnl ## Don't allow installation in the build tree (people have actually tried this).
-dnl ## The cd;pwd is needed to normalize the directory name in case of links, etc.
-dnl #
-dnl #DIR1=`echo $TF      | sed 's;/[^/]*$;;'`
-dnl #DIR1=`cd $DIR1 && pwd`
-dnl #DIR2=`echo $LIBDIR  | sed 's;/[^/]*$;;'`
-dnl #DIR2=`cd $DIR2 && pwd`
-dnl #DIR3=`echo $SYMLINK | sed 's;/[^/]*$;;'`
-dnl #DIR3=`cd $DIR3 && pwd`
-dnl #
-dnl #if test -z "$DIR1"  || test -z "$DIR2"  || test -z "$DIR3" ; then
-dnl #    echo "Error in directory."
-dnl #    exit 1;
-dnl #fi
-dnl #
-dnl #DIR1=`cd $DIR1 && pwd || { echo "Error in directory $DIR1."; false; }`
-dnl #
-dnl #BUILDTREE=`cd .. && pwd`
-dnl #if echo "${DIR1}/" | egrep "^${BUILDTREE}/" >/dev/null 2>&1 ||
-dnl #   echo "${DIR2}/" | egrep "^${BUILDTREE}/" >/dev/null 2>&1 ||
-dnl #   echo "${DIR3}/" | egrep "^${BUILDTREE}/" >/dev/null 2>&1
-dnl #then
-dnl #    echo
-dnl #    echo 'You can not install files in the build tree,  '
-dnl #    echo "${BUILDTREE}."
-dnl #    echo 'Edit unix/Config and try again.'
-dnl #    exit 2
-dnl #fi
-dnl #
-dnl # Too many people have renamed the distribution directory to "$HOME/tf", and
-dnl # then wondered why they couldn't install the executable as "$HOME/tf".
-dnl #if test -d "${TF}" ; then
-dnl #    echo "\"${TF}\" is a directory; you can not install the executable"
-dnl #    echo 'with the same name.  Either rename the directory, or choose a'
-dnl #    echo 'different name for the executable.'
-dnl #    exit 1
-dnl #fi
-
 MODE=755
 AC_SUBST(MODE)
 
@@ -846,24 +827,6 @@ PATH="$PATH:/bin:/usr/bin:/usr/local/bin:/usr/ucb:/usr/local:/usr/lbin:/etc:/usr
 #################################################################
 dnl ### write variables
 
-if test "$enable_inet6"     = "yes"; then
-    AC_DEFINE([ENABLE_INET6], [1], [IPV6 networking enabled])
-fi
-if test "$enable_atcp"      = "yes"; then
-    AC_DEFINE([ENABLE_ATCP], [1], [ATCP protcol enabled])
-fi
-if test "$enable_gmcp"      = "yes";
-then AC_DEFINE([ENABLE_GMCP], [1], [GMCP protocol enabled])
-fi
-if test "$enable_option102" = "yes";
-then AC_DEFINE([ENABLE_OPTION102], [1], [OPTION102 protocol enabled])
-fi
-if test "$enable_history"   = "no";
-then AC_DEFINE([NO_HISTORY], [1], [history and recall disabled])
-fi
-if test "$enable_process"   = "no";
-then AC_DEFINE([NO_PROCESS], [1], [quote and repeat disabled])
-fi
 
 CPPFLAGS="${CPPFLAGS} -DDATADIR=\${datadir}"
 AC_SUBST(CFLAGS)
