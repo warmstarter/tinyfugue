@@ -531,7 +531,7 @@ if test "$enable_ssl" = "yes"; then
 	else
 	    AC_MSG_RESULT([no])
 	fi
-	AC_CHECK_HEADERS([openssl/ssl.h], ok=1,
+	AC_CHECK_HEADERS([openssl/ssl.h openssl/err.h openssl/x509v3.h], ok=1,
 	    [AC_CHECK_HEADERS([gnutls/openssl.h], [ok=1])])
 	if test "$ok" = "1"; then
 	    AC_DEFINE([HAVE_SSL], [1], [SSL enabled])
