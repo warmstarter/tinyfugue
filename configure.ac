@@ -32,6 +32,7 @@ define(
 ################################################################
 # 2. AC_INIT
 ################################################################
+
 AC_INIT(
     [TinyFugue],
     [VERSION_STRING],
@@ -60,13 +61,11 @@ AC_SUBST([PACKAGE_SHORTNAME])
 dnl would be a really good idea to have this get inserted into files, rather
 dnl than just indiviually maintaining that.
 AC_COPYRIGHT([Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)])
-AC_REVISION([$Revision: 0.20 $])
+AC_REVISION([$Revision: 0.50 $])
 
 ################################################################
 # 4. Process ./configure command line options
 ################################################################
-
-# User installation options
 
 AC_ARG_ENABLE(
     [version],
@@ -156,7 +155,6 @@ AS_HELP_STRING(
     [enable_mailcheck=${enableval}],
     [enable_mailcheck=yes])
 
-# User feature options
 AC_ARG_ENABLE(
     [history],
     [AS_HELP_STRING(
@@ -247,9 +245,9 @@ AC_ARG_WITH(
     [],
     [])
 
-dnl Hidden options.
+# Hidden options.
 
-dnl This should be rewritten.
+# This should be rewritten.
 AC_ARG_ENABLE(
     [manpage],
     [],
@@ -273,7 +271,7 @@ AC_ARG_ENABLE(
     [],
     [enable_development=no])
 
-dnl These mallocs needs to be looked into further so they can actually be supported.
+# These mallocs needs to be looked into further so they can actually be supported.
 AC_ARG_ENABLE(
     [dmalloc],
     [],
@@ -334,8 +332,8 @@ else
 fi
 
 
-dnl -g seems to always be used, might noe be because of here,
-dnl figure that out.
+# -g seems to always be used, might noe be because of here,
+# figure that out.
 
 if test "$enable_core" = "yes"; then
     AC_MSG_NOTICE([Core dumps enabled.])
@@ -366,18 +364,18 @@ if test "$enable_mmalloc" = "yes"; then
        	[GNU malloc enabled])
 fi
 
-dnl This should be placed into src/main.c rather than pulled from it.
-dnl Actually, there's a whole bunch of things in main.c that can be better handled
-dnl by pushing into it. Check out how UNAME is, but also ... do that better.
-dnl PACKAGE_VERSION=`sed -n -e '/Fugue version/s/^.*"\(.*\)".*$/\1/p' src/main.c`
+# This should be placed into src/main.c rather than pulled from it.
+# Actually, there's a whole bunch of things in main.c that can be better handled
+# by pushing into it. Check out how UNAME is, but also ... do that better.
+# PACKAGE_VERSION=`sed -n -e '/Fugue version/s/^.*"\(.*\)".*$/\1/p' src/main.c`
 
-dnl Better question: what is this being used for?
-dnl is there a better way to do this?
+# Better question: what is this being used for?
+# is there a better way to do this?
 UNAME=`{ uname -s && uname -v && uname -r || uname -a; } 2>/dev/null`
 UNAME=`echo $UNAME`  # remove newlines
 AC_SUBST(UNAME)
-dnl This is used in tfdef.h.in and maybe somewhere else, but it's set for 'generic'
-dnl now so pretty pointless. Circle around and fix all of those.
+# This is used in tfdef.h.in and maybe somewhere else, but it's set for 'generic'
+# now so pretty pointless. Circle around and fix all of those.
 
 
 if test "$enable_core" = "no"; then
@@ -393,11 +391,11 @@ AC_SUBST(STRIP)
 # 6. Checks for libraries
 #################################################################
 
-dnl ### Library testing.
-dnl # If libfoo.a make references to libbar.a, the order must be "-lfoo -lbar".
-dnl # So we test incrementally, building the list from right to left.
-dnl # Dynix/ptx needs: -lsocket -linet -lnsl
-dnl # SysV needs: -lsocket -lnsl
+### Library testing.
+# If libfoo.a make references to libbar.a, the order must be "-lfoo -lbar".
+# So we test incrementally, building the list from right to left.
+# Dynix/ptx needs: -lsocket -linet -lnsl
+# SysV needs: -lsocket -lnsl
 
 dnl TF_DIRS(src, dst[, prefix[, suffix]])
 AC_DEFUN(TF_DIRS, [
@@ -444,38 +442,38 @@ AC_SEARCH_LIBS(
     [],
     [AC_MSG_ERROR([TF can not work without select().])])
 
-dnl # gethostbyname may not be in default libraries.
-dnl # QNX keeps gethostbyname in lsocket.
+# gethostbyname may not be in default libraries.
+# QNX keeps gethostbyname in lsocket.
 AC_SEARCH_LIBS(
     [gethostbyname],
     [bsd nsl_s nsl resolv socket],
     [],
     [AC_MSG_WARN([Host name resolution will not be available.])])
 
-dnl ### If -linet exists, assume we need it.
+### If -linet exists, assume we need it.
 AC_CHECK_LIB(
     [inet],
     [main])
 
-dnl ### If -lnet exists, assume we need it.
+### If -lnet exists, assume we need it.
 AC_CHECK_LIB(
     [net],
     [main])
 
-dnl ## If we haven't found connect(), look for -lsocket.
-dnl ## Note: on IRIX 5, -lsocket exists, but we mustn't use its gethostbyname().
+## If we haven't found connect(), look for -lsocket.
+## Note: on IRIX 5, -lsocket exists, but we mustn't use its gethostbyname().
 AC_SEARCH_LIBS(
     [connect],
     [socket])
 
-dnl ### I'm guessing setlocale() is in libintl on some systems, if not in libc.
+### I'm guessing setlocale() is in libintl on some systems, if not in libc.
 AC_SEARCH_LIBS(
     [setlocale],
     [intl],
     [],
     [AC_MSG_WARN([Locales will not be supported.])])
 
-dnl ### OpenSSL
+### OpenSSL
 if test "$enable_ssl" = "yes"; then
     ok=0
     old_LIBS="$LIBS"
@@ -521,11 +519,11 @@ if test "$enable_ssl" = "yes"; then
     fi
 fi
 
-dnl ########### terminal ############
+########### terminal ############
 
-dnl ### test termcap.
-dnl # At least one system (Red Hat Linux) has a broken ncurses and a working
-dnl # termcap, so we try termcap before ncurses.
+### test termcap.
+# At least one system (Red Hat Linux) has a broken ncurses and a working
+# termcap, so we try termcap before ncurses.
 
 terminal_hardcode="TERM_vt100";
 
@@ -549,7 +547,6 @@ else
 	    [$terminal_hardcode])
             AC_MSG_WARN([Hardcoding terminal codes.])])
 fi
-dnl XXX check for debian linux's broken termcap
 
 if test "$enable_256colors" = "yes"; then
     AC_DEFINE(
@@ -589,19 +586,19 @@ AC_CHECK_LIB(
 AC_CHECK_HEADERS([lunistd.h memory.h sys/select.h])
 AC_HEADER_SYS_WAIT
 
-dnl ### For optional language support.
+### For optional language support.
 AC_CHECK_HEADERS(
     [locale.h],
     [],
     [AC_MSG_WARN([Locales will not be supported.])])
 
-dnl ### Find pwd.h
+### Find pwd.h
 AC_CHECK_HEADERS(
     [pwd.h],
     [],
     [AC_MSG_WARN([Filename '~user' expansion will not be supported.])])
 
-dnl ### Find zlib.h
+### Find zlib.h
 AC_CHECK_HEADERS([zlib.h])
 
 dnl TF_SEARCH_HEADERS(SYMBOL, HEADERS... [, DO-IF-FOUND [, DO-IF-NOT-FOUND]])
@@ -624,19 +621,19 @@ AC_DEFUN(TF_SEARCH_HEADERS, [
     unset found
 ])
 
-dnl ### Find internet structure header
+### Find internet structure header
 TF_SEARCH_HEADERS(
     [NETINET_IN_H],
     [netinet/in.h sys/in.h sys/netinet/in.h],
     [],
     [AC_MSG_WARN([I will use my own internet structures.  Good luck.])])
 
-dnl ### Find internet address header
+### Find internet address header
 TF_SEARCH_HEADERS(
     [ARPA_INET_H],
     [arpa/inet.h sys/inet.h])
 
-dnl ### Find netdb header
+### Find netdb header
 TF_SEARCH_HEADERS(
     [NETDB_H],
     [netdb.h sys/netdb.h],
@@ -650,15 +647,18 @@ AC_CACHE_CHECK([whether struct sockaddr has sa_len], tf_cv_sa_len,
         sa.sa_len;]])],[tf_cv_sa_len=yes],[tf_cv_sa_len=no]))
 
 if test "${tf_cv_sa_len}" = "yes"; then
-    AC_DEFINE([HAVE_SOCKADDR_SA_LEN], [1], [struct sockaddr has sa_len])
+    AC_DEFINE(
+        [HAVE_SOCKADDR_SA_LEN],
+       	[1],
+       	[struct sockaddr has sa_len])
 fi
 
-dnl ### Figure out which terminal driver to use.
+### Figure out which terminal driver to use.
 AC_CHECK_HEADERS(
     [termios.h termio.h],
     [break])
 
-dnl # Some brain damaged systems (Xenix) need <sys/ptem.h> for struct winsize.
+# Some brain damaged systems (Xenix) need <sys/ptem.h> for struct winsize.
 AC_EGREP_HEADER(
     [struct winsize],
     [sys/ptem.h],
@@ -687,30 +687,30 @@ AC_CHECK_SIZEOF([long])
 # 11. Checks for library functions
 ################################################################
 
-dnl # SCO keeps strftime() in -lintl
+# SCO keeps strftime() in -lintl
 AC_FUNC_STRFTIME
 
-dnl # h_errno is a variable, not a function.  But AC_CHECK_FUNCS only checks
-dnl # that the symbol is defined, so this works.
+# h_errno is a variable, not a function.  But AC_CHECK_FUNCS only checks
+# that the symbol is defined, so this works.
 AC_CHECK_FUNCS([h_errno])
 
-dnl # required standard functions
+# required standard functions
 AC_CHECK_FUNCS(
     [strstr strtol],
     [],
     [AC_MSG_ERROR([Missing required standard function.])])
 
-dnl # optional functions
+# optional functions
 AC_CHECK_FUNCS(bcopy bzero connect fileno \
     gethostname gethostbyname getipnodebyname \
     getpwnam gettimeofday hstrerror index inet_aton)
 
-dnl # uncommented functions, presumably all optional
+# uncommented functions, presumably all optional
 AC_CHECK_FUNCS(kill memcpy memset raise setlocale \
     setrlimit srand srandom strcasecmp strchr \
     strcmpi strcspn strerror stricmp tzset waitpid)
 
-dnl ########### networking ############
+########### networking ############
 
 if test "$enable_getaddrinfo" = "default"; then
     if test `uname -s` = 'Darwin'; then
@@ -743,6 +743,8 @@ if test "$enable_inet6" = "yes"; then
 	    break],[])
     done
 fi
+
+# These should be in abetter place
 
 if test "$enable_inet6"     = "yes"; then
     AC_DEFINE(
@@ -785,7 +787,7 @@ fi
 # 12. System services
 #################################################################
 
-dnl ### Find mail directory by looking at $MAIL, then in the usual places.
+### Find mail directory by looking at $MAIL, then in the usual places.
 if test "$enable_mailcheck" = "no"; then
     MAILDIR=""
 elif test "$enable_mailcheck" = "yes"; then
@@ -817,9 +819,9 @@ if test -n "$MAILDIR"; then
        	[mail enabled])
 fi
 
-dnl All of this really needs to be rewritten, as there's better ways to do it.
+# All of this really needs to be rewritten, as there's better ways to do it.
 
-dnl ### Figure out names of executable, library directory, and symlink.
+### Figure out names of executable, library directory, and symlink.
 
 if test "$enable_version" != "no" && test "$program_suffix" == "NONE"; then
     program_suffix="-${PACKAGE_VERSION}"
@@ -852,22 +854,22 @@ AC_SUBST(SYMLINK)
 MODE=755
 AC_SUBST(MODE)
 
-dnl ### Make sure the PATH is sane.
-dnl # Ideally, this should be done before the compiler check.  But a compiler
-dnl # found now in the extended PATH won't be found in src/Makefile, because it
-dnl # won't inherit this PATH.
+### Make sure the PATH is sane.
+# Ideally, this should be done before the compiler check.  But a compiler
+# found now in the extended PATH won't be found in src/Makefile, because it
+# won't inherit this PATH.
 PATH="$PATH:/bin:/usr/bin:/usr/local/bin:/usr/ucb:/usr/local:/usr/lbin:/etc:/usr/new:/usr/new/bin:/usr/nbin:/usr/ccs/bin"
-
-
-#################################################################
-# 13. Write out AC_CONFIG_FILES
-#################################################################
+# Honestly, this path is pretty ridiclous
 
 CPPFLAGS="${CPPFLAGS} -DDATADIR=\${datadir}"
 AC_SUBST(CFLAGS)
 AC_SUBST(CPPFLAGS)
 AC_SUBST(LIBS)
 AC_SUBST(OTHER_OBJS)
+
+#################################################################
+# 13. Write out AC_CONFIG_FILES
+#################################################################
 
 dnl Note: autoconf uses <<EOF, so we use <<END instead.
 ### Create src/Makefile from pieces.
