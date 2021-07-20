@@ -15,50 +15,54 @@ dnl
 
 AC_PREREQ([2.69])
 
-dnl m4_ifndef([AC_CONFIG_MACRO_DIRS], [m4_defun([_AM_CONFIG_MACRO_DIRS], [])m4_defun([AC_CONFIG_MACRO_DIRS], [_AM_CONFIG_MACRO_DIRS($@)])])
 m4_include([m4/ax_check_icu.m4])
 m4_include([m4/ax_compiler_vendor.m4])
 
+# These are substitutions to be used within configure.in where something
+# might be referenced multiple times. This is the canonical place to make
+# those changes, but if they are needed outside this script, they should
+# be referenced through another variable.
 define([VERSION_STRING], [50b8])
 define([URL_STRING], [https://github.com/warmstarter/tinyfugue])
 
-dnl Note: autoconf uses <<EOF, so we use <<END instead.
-
-
-dnl ### Initialization variables.
-
-dnl This gets used elsewhere as is, but having issues in the init, needs to get fixed up.
-PACKAGE_SHORTNAME="tf"
-AC_SUBST([PACKAGE_SHORTNAME])
-
+################################################################
+# 2. AC_INIT
+################################################################
 AC_INIT([TinyFugue],
     [VERSION_STRING],
     [URL_STRING][/issues],
     [tf-][VERSION_STRING],
     [URL_STRING])
 
+AC_MSG_NOTICE([Configuring $PACKAGE_STRING])
+
+################################################################
+# 3. Info on the package
+################################################################
+# AC_INIT args set these output variables and preprocessor symbols:
+#     PACKAGE_NAME      <package>     e.g. "TinyFugue"                      
+#     PACKAGE_VERSION   <version>     e.g. "50b8"
+#     PACKAGE_BUGREPORT <bug-report>  e.g. "https://github.com/warmstarter/tinyfugue/issues"
+#     PACKAGE_TARNAME   <tarname>     e.g. "tf-50b8"
+#     PACKAGE_URL       <url>         e.g. "https://github.com/warmstarter/tinyfugue"
+# From them, AC_INIT automatically derives one more:
+#     PACKAGE_STRING    <package> <version>, e.g. "TinyFugue 50b8"
+
+### If we need anything else, it should go here.
+
+dnl This gets used elsewhere as is, but having issues in the init, needs to get fixed up.
+PACKAGE_SHORTNAME="tf"
+AC_SUBST([PACKAGE_SHORTNAME])
+
 dnl would be a really good idea to have this get inserted into files, rather
 dnl than just indiviually maintaining that.
 AC_COPYRIGHT([Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)])
 AC_REVISION([$Revision: 0.20 $])
 
-# Autoconf Initialization
 
-AC_MSG_NOTICE([Configuring $PACKAGE_NAME $PACKAGE_VERSION])
-
-#AC_CONFIG_AUX_DIR
-#AC_REQUIRE_AUX_FILE
-AC_CONFIG_HEADERS([src/tfconfig.h])
-#AC_CONFIG_MACRO_DIR 
-AC_CONFIG_SRCDIR([src/tf.h])
-
-AC_PROG_CC([clang gcc cc])
-AC_PROG_EGREP
-AC_PROG_LN_S
-AC_PROG_RANLIB
-AC_PROG_SED
-
-AC_PREFIX_DEFAULT([/usr/local])
+################################################################
+# 4. Process ./configure command line options
+################################################################
 
 
 # User installation options
@@ -111,12 +115,18 @@ AC_ARG_ENABLE(
     [enable_inet6=${enableval}],
     [enable_inet6=yes])
 
-dnl This was an attemot to make it nice, but really it needs to be fixed also.
-AC_ARG_ENABLE([termcap],
+# These double AS_HELP_STRINGs look kinda ugly. Putting each on one line would fix, consider doing so.
+AC_ARG_ENABLE(
+    [termcap],
     [AS_HELP_STRING(
-        [--disable-termcap --enable-termcap=LIB],
- 	[use hardcoded vt100 codes instead of termcap enable termcap with library LIB (e.g., "ncurses") (needed only if configure guesses incorrectly)])],
-    , enable_termcap=default)
+        [--disable-termcap],
+ 	[use hardcoded vt100 codes instead of termcap])
+AS_HELP_STRING(
+[--enable-termcap=LIB],
+[enable termcap with library LIB (e.g., "ncurses") (needed only if configure guesses incorrectly)])
+    ],
+    [enable_termcap=${enableval}],
+    [enable_termcap=default])
 
 AC_ARG_ENABLE(
     [256colors],
@@ -126,11 +136,17 @@ AC_ARG_ENABLE(
     [enable_256colors=${enableval}],
     [enable_256colors=yes])
 
-AC_ARG_ENABLE([mailcheck],
-[  --disable-mailcheck     disable mail checking
-  --enable-mailcheck=DIR  enable checking for mail in directory DIR
-                          (needed only if configure guesses incorrectly)],
-    , enable_mailcheck=yes)
+AC_ARG_ENABLE(
+    [mailcheck],
+    [AS_HELP_STRING(
+        [--disable-mailcheck],
+        [disable mail checking])
+AS_HELP_STRING(
+[--enable-mailcheck=DIR],
+[enable checking for mail in directory DIR (needed only if configure guesses incorrectly)])
+    ],
+    [enable_mailcheck=${enableval}],
+    [enable_mailcheck=yes])
 
 # User feature options
 AC_ARG_ENABLE(
@@ -218,6 +234,8 @@ AC_ARG_WITH([incdir])       dnl because I never remember if it's singular or plu
 AC_ARG_WITH([libdir])       dnl because I never remember if it's singular or plural
 AC_ARG_WITH([inclibdir])    dnl because I never remember if it's singular or plural
 
+dnl Hidden options.
+
 dnl This should be rewritten.
 AC_ARG_ENABLE([manpage], , , enable_manpage=yes)
 if test "$enable_manpage" = "yes"; then
@@ -238,12 +256,26 @@ AC_ARG_ENABLE([dmalloc], , , enable_dmalloc=no)
 AC_ARG_ENABLE([mmalloc], , , enable_mmalloc=no)
 
 
+#AC_CONFIG_AUX_DIR
+#AC_REQUIRE_AUX_FILE
+AC_CONFIG_HEADERS([src/tfconfig.h])
+#AC_CONFIG_MACRO_DIR 
+AC_CONFIG_SRCDIR([src/tf.h])
 
+AC_PROG_CC([clang gcc cc])
+AC_PROG_EGREP
+AC_PROG_LN_S
+AC_PROG_RANLIB
+AC_PROG_SED
+
+AC_PREFIX_DEFAULT([/usr/local])
+dnl Note: autoconf uses <<EOF, so we use <<END instead.
 dnl Is this used outside for anything important?
 dnl Check on that as it seems unnecessary.
+dnl IN fact, PACKAGE_VERSION is not going to ever alpha, so really this can go.
 if test "$enable_development" = "yes"; then
     AC_MSG_NOTICE([Development version.])
-elif echo $TFVERSION | egrep "alpha" >/dev/null 2>&1; then
+elif echo $PACKAGE_VERSION | egrep "alpha" >/dev/null 2>&1; then
 cat <<END
 This is an alpha version, and so may not be fully tested on some platforms.
 With the new features comes the possibility of new bugs.  If you don't want
@@ -299,7 +331,7 @@ dnl ########### programs ############
 dnl This should be placed into src/main.c rather than pulled from it.
 dnl Actually, there's a whole bunch of things in main.c that can be better handled
 dnl by pushing into it. Check out how UNAME is, but also ... do that better.
-dnl PACKAGE_VERSIONSION=`sed -n -e '/Fugue version/s/^.*"\(.*\)".*$/\1/p' src/main.c`
+dnl PACKAGE_VERSION=`sed -n -e '/Fugue version/s/^.*"\(.*\)".*$/\1/p' src/main.c`
 
 dnl Better question: what is this being used for?
 dnl is there a better way to do this?
@@ -790,6 +822,7 @@ AC_SUBST(CPPFLAGS)
 AC_SUBST(LIBS)
 AC_SUBST(OTHER_OBJS)
 
+dnl Note: autoconf uses <<EOF, so we use <<END instead.
 ### Create src/Makefile from pieces.
 AC_CONFIG_FILES([Makefile unix/vars.mak src/tfdefs.h])
 AC_CONFIG_COMMANDS([default],[
