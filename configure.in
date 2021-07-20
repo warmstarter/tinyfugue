@@ -250,7 +250,11 @@ AC_ARG_WITH(
 dnl Hidden options.
 
 dnl This should be rewritten.
-AC_ARG_ENABLE([manpage], , , enable_manpage=yes)
+AC_ARG_ENABLE(
+    [manpage],
+    [],
+    [],
+    [enable_manpage=yes])
 if test "$enable_manpage" = "yes"; then
     MANPAGE='${mandir}/man1/'${PACKAGE_SHORTNAME}.1
     MANTYPE='nroff'
@@ -263,10 +267,24 @@ AC_SUBST(MANTYPE)
 
 # Developer options
 # --enable-development implies --enable-core --disable-symlink
-AC_ARG_ENABLE([development], , , enable_development=no)
+AC_ARG_ENABLE(
+    [development],
+    [],
+    [],
+    [enable_development=no])
+
 dnl These mallocs needs to be looked into further so they can actually be supported.
-AC_ARG_ENABLE([dmalloc], , , enable_dmalloc=no)
-AC_ARG_ENABLE([mmalloc], , , enable_mmalloc=no)
+AC_ARG_ENABLE(
+    [dmalloc],
+    [],
+    [],
+    [enable_dmalloc=no])
+
+AC_ARG_ENABLE(
+    [mmalloc],
+    [],
+    [],
+    [enable_mmalloc=no])
 
 
 ################################################################
@@ -285,7 +303,7 @@ AC_PROG_LN_S
 AC_PROG_SED
 
 AC_CHECK_PROG(
-    RANLIB,
+    [RANLIB],
     [ranlib],
     [ranlib],
     [:])
@@ -309,7 +327,10 @@ if test "$enable_development" = "yes"; then
 	enable_symlink=no
     fi
 else
-    AC_DEFINE([NDEBUG], [1], [debug disabled])
+    AC_DEFINE(
+        [NDEBUG],
+       	[1],
+       	[debug disabled])
 fi
 
 
@@ -321,19 +342,28 @@ if test "$enable_core" = "yes"; then
     CFLAGS="${CFLAGS} -g"
     STRIP=":"
 else
-    AC_DEFINE([DISABLE_CORE], [1], [core dumps disabled])
+    AC_DEFINE(
+        [DISABLE_CORE],
+       	[1],
+       	[core dumps disabled])
 fi
 
 if test "$enable_dmalloc" = "yes"; then
     AC_MSG_NOTICE([Debug malloc enabled.])
     OTHER_OBJS="$OTHER_OBJS dmalloc.o"
-    AC_DEFINE([USE_DMALLOC], [1], [dmalloc enabled])
+    AC_DEFINE(
+        [USE_DMALLOC],
+       	[1],
+       	[dmalloc enabled])
 fi
 
 if test "$enable_mmalloc" = "yes"; then
     AC_MSG_NOTICE([GNU malloc enabled.])
     CPPFLAGS="${CPPFLAGS} -DUSE_MMALLOC"
-    AC_DEFINE([USE_MMALLOC], [1], [GNU malloc enabled])
+    AC_DEFINE(
+        [USE_MMALLOC],
+       	[1],
+       	[GNU malloc enabled])
 fi
 
 dnl This should be placed into src/main.c rather than pulled from it.
@@ -351,7 +381,11 @@ dnl now so pretty pointless. Circle around and fix all of those.
 
 
 if test "$enable_core" = "no"; then
-    AC_CHECK_PROG(STRIP, strip, strip, :)
+    AC_CHECK_PROG(
+        [STRIP],
+	[strip],
+        [strip],
+       	[:])
 fi
 AC_SUBST(STRIP)
 
@@ -501,7 +535,7 @@ fi
 
 if test "$enable_termcap" = "no"; then
     AC_DEFINE_UNQUOTED(
-        HARDCODE,
+        [HARDCODE],
        	[$terminal_hardcode],
        	[termcap disabled - hardcoding terminal])
 else
@@ -511,7 +545,7 @@ else
        	[$enable_termcap termcap ncurses curses],
         [AC_DEFINE(TERMCAP)],
         [AC_DEFINE_UNQUOTED(
-	    HARDCODE,
+	    [HARDCODE],
 	    [$terminal_hardcode])
             AC_MSG_WARN([Hardcoding terminal codes.])])
 fi
@@ -519,16 +553,16 @@ dnl XXX check for debian linux's broken termcap
 
 if test "$enable_256colors" = "yes"; then
     AC_DEFINE(
-        NCOLORS,
+        [NCOLORS],
        	[256],
        	[256 color mode enabled])
 fi
 
 if test "$enable_widechar" = "yes"; then
     AX_CHECK_ICU(
-        1,
+        [1],
         [AC_DEFINE(
-	    WIDECHAR,
+	    [WIDECHAR],
 	    [1],
 	    [widechar unicode enabled]
 	)],
@@ -592,19 +626,19 @@ AC_DEFUN(TF_SEARCH_HEADERS, [
 
 dnl ### Find internet structure header
 TF_SEARCH_HEADERS(
-    NETINET_IN_H,
+    [NETINET_IN_H],
     [netinet/in.h sys/in.h sys/netinet/in.h],
     [],
     [AC_MSG_WARN([I will use my own internet structures.  Good luck.])])
 
 dnl ### Find internet address header
 TF_SEARCH_HEADERS(
-    ARPA_INET_H,
+    [ARPA_INET_H],
     [arpa/inet.h sys/inet.h])
 
 dnl ### Find netdb header
 TF_SEARCH_HEADERS(
-    NETDB_H,
+    [NETDB_H],
     [netdb.h sys/netdb.h],
     [] ,
     [AC_MSG_ERROR([can't find netdb.h])])
@@ -629,7 +663,7 @@ AC_EGREP_HEADER(
     [struct winsize],
     [sys/ptem.h],
     [AC_DEFINE(
-        NEED_PTEM_H,
+        [NEED_PTEM_H],
        	[1],
        	[ptem.h needed])])
 
@@ -777,7 +811,10 @@ else
     MAILDIR="$enable_mailcheck"
 fi
 if test -n "$MAILDIR"; then
-    AC_DEFINE_UNQUOTED([MAILDIR], ["$MAILDIR"], [mail enabled])
+    AC_DEFINE_UNQUOTED(
+        [MAILDIR],
+       	["$MAILDIR"],
+       	[mail enabled])
 fi
 
 dnl All of this really needs to be rewritten, as there's better ways to do it.
@@ -825,8 +862,6 @@ PATH="$PATH:/bin:/usr/bin:/usr/local/bin:/usr/ucb:/usr/local:/usr/lbin:/etc:/usr
 #################################################################
 # 13. Write out AC_CONFIG_FILES
 #################################################################
-dnl ### write variables
-
 
 CPPFLAGS="${CPPFLAGS} -DDATADIR=\${datadir}"
 AC_SUBST(CFLAGS)
