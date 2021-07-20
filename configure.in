@@ -719,14 +719,12 @@ if test -n "$MAILDIR"; then
     AC_DEFINE_UNQUOTED([MAILDIR], ["$MAILDIR"], [mail enabled])
 fi
 
-
-
 dnl All of this really needs to be rewritten, as there's better ways to do it.
 
 dnl ### Figure out names of executable, library directory, and symlink.
 
 if test "$enable_version" != "no" && test "$program_suffix" == "NONE"; then
-    program_suffix="-${TFVER}"
+    program_suffix="-${PACKAGE_VERSION}"
 fi
 
 dnl The "right" way of using program_transform_name, program_prefix, and
