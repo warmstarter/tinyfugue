@@ -90,9 +90,6 @@ static conString *print_def(TFILE *file, String *buffer, Macro *p);
 static int     rpricmp(const Macro *m1, const Macro *m2);
 static void    nuke_macro(Macro *macro);
 
-
-#define HASH_SIZE 997	/* prime number */
-
 #define MACRO_TEMP	0x01
 #define MACRO_DEAD	0x02
 #define MACRO_HOOK	0x08

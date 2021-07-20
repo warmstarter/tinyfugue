@@ -51,8 +51,6 @@ static void   init_special_variable(Var *var, const char *cval,
 #define findglobalvar(name) \
 	(Var*)hashed_find(name, hash_string(name), var_table)
 
-#define HASH_SIZE 997    /* prime number */
-
 static List localvar[1];          /* local variables */
 static HashTable var_table[1];    /* global variables */
 static int envsize;
