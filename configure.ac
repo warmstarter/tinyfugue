@@ -144,21 +144,6 @@ AC_ARG_ENABLE(
         [disable wide character UTF-8 support])],
     [enable_widechar=${enableval}],
     [enable_widechar=yes])
-dnl These two checks should be combined and only pass if both are there.
-if test "$enable_widechar" = "yes"; then
-    AX_CHECK_ICU(
-        [1],
-        [AC_DEFINE(
-	    [WIDECHAR],
-	    [1],
-	    [widechar unicode enabled]
-	)],
-        [AC_MSG_WARN([libicuuc not found. disabling widechar support.])])
-    AC_CHECK_HEADERS(
-        [wchar.h wctype.h],
-       	[],
-        [AC_MSG_WARN([wchar.h and wctype.h not found, require for widechar unicode support.])])
-fi
 
 # These double AS_HELP_STRINGs look kinda ugly. Putting each on one line would fix, consider doing so.
 AC_ARG_ENABLE(
@@ -569,6 +554,22 @@ if test "$enable_ssl" = "yes"; then
 fi
 
 ########### terminal ############
+
+dnl These two checks should be combined and only pass if both are there.
+if test "$enable_widechar" = "yes"; then
+    AX_CHECK_ICU(
+        [1],
+        [AC_DEFINE(
+	    [WIDECHAR],
+	    [1],
+	    [widechar unicode enabled]
+	)],
+        [AC_MSG_WARN([libicuuc not found. disabling widechar support.])])
+    AC_CHECK_HEADERS(
+        [wchar.h wctype.h],
+       	[],
+        [AC_MSG_WARN([wchar.h and wctype.h not found, require for widechar unicode support.])])
+fi
 
 ### test termcap.
 # At least one system (Red Hat Linux) has a broken ncurses and a working
