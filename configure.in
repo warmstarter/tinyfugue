@@ -237,11 +237,6 @@ AC_ARG_WITH(
     [],
     [])
 
-dnl this seems pretty silly.
-AC_ARG_WITH([incdir])       dnl because I never remember if it's singular or plural
-AC_ARG_WITH([libdir])       dnl because I never remember if it's singular or plural
-AC_ARG_WITH([inclibdir])    dnl because I never remember if it's singular or plural
-
 dnl Hidden options.
 
 dnl This should be rewritten.
@@ -391,18 +386,13 @@ AC_DEFUN(TF_DIRS, [
     fi
 ])
 
-dnl This is making the singular/plural ARG_WITH even mor eof a hassle.
 TF_DIRS(with_incdirs,    CPPFLAGS, -I)
-TF_DIRS(with_incdir,     CPPFLAGS, -I)
 TF_DIRS(with_inclibdirs, CPPFLAGS, -I)
-TF_DIRS(with_inclibdir,  CPPFLAGS, -I)
 TF_DIRS(with_inclibpfx,  CPPFLAGS, -I, /include)
 
 LIBDIRS=""
 TF_DIRS(with_libdirs,    LIBDIRS, -L)
-TF_DIRS(with_libdir,     LIBDIRS, -L)
 TF_DIRS(with_inclibdirs, LIBDIRS, -L)
-TF_DIRS(with_inclibdir,  LIBDIRS, -L)
 TF_DIRS(with_inclibpfx,  LIBDIRS, -L, /lib)
 
 dnl Must append LIBDIRS to LDFLAGS now so it's present for AC_CHECK_LIB.
