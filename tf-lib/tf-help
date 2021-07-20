@@ -9154,6 +9154,7 @@ Special global variables
   [1mgpri[22m=0  Priority of subsequent [1m/gag[22;0ms.  (See: [1m/gag[22;0m)
 
 #hook
+#hookflag
 #%hook
   [1mhook[22m=on
           (flag) Enable [1mhooks[22;0m.  (See: [1mhooks[22;0m, [1m/hook[22;0m, [1m%max_hook[22;0m.) Note that
@@ -9266,6 +9267,7 @@ Special global variables
           See: [1m/log[22;0m, [1mlog_prefix[22;0m [1mftime[22;0m
 
 #lp
+#lpflag
 #%lp
   [1mlp[22m=off  (flag) Displays partial lines as [1mprompts[22;0m, after a short timeout.
           Useful for LP and Diku MUDs.  (See: [1mprompts[22;0m)
@@ -9402,7 +9404,7 @@ Special global variables
           are encouraged to turn this off.  (See: [1mevaluation[22;0m)
 
 #oldstylefg
-#%oldstulefg
+#%oldstylefg
   [1moldstylefg[22m=off
           (flag) If on, used old style fg switching from TF4.
           This does not clear the screen allowing you to see what was in the
@@ -9470,6 +9472,8 @@ Special global variables
           Prefix prepended to lines echoed by [1m%{qecho}[22;0m.
 
 #quiet login
+#quiet_login
+#quietflag
 #quiet
 #%quiet
   [1mquiet[22m=off
