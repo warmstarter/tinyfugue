@@ -125,6 +125,13 @@ using one of these /restrict commands in %{TFLIBDIR}/local.tf:
                      /addworld and the "/world <host> <port>" semantics
                      are disabled.  Implies /restrict file.
 
+If you have write permission in /usr/local/bin and /usr/local/lib, TinyFugue
+will be installed there by default.  Or you can change the locations by using
+the options described above.  The Makefile will then put all files in their
+proper location with the proper permissions.
+
+Some features of TF can be disabled for secure public installation, by using
+the /restrict commands in %{TFLIBDIR}/local.tf.  See ../README.
 
 Terminal Handling
 -----------------
@@ -132,6 +139,10 @@ Terminal Handling
 If the default terminal handling option does not work, tf can be
 configured to use vt100 codes or nothing at all.  See the README
 file in the subdirectory corresponding to your operating system.
+
+On a UNIX-like system, ./configure will try to find a termcap-compatible library
+in this order: the one specified in --enable-termcap=LIB, if any; termcap;
+ncurses; curses.  If none of those work, tf will use hardcoded vt100 codes.
 
 
 Compression
@@ -153,26 +164,6 @@ the %proxy_host variable at runtime.  See "/help proxy".
 Also see the README file in the subdirectory corresponding to your
 operating system to see if tf has transparent firewall support on your
 system.
-
-
-Last Resort
------------
-
-If you have an installation problem or other system-specific problem
-that is not described in this README or the README in the subdirectory
-for your system, contact the person who supports TF on your system.  If
-you have a problem that is not system-related, ask for support on
-http://tinyfugue.sourceforge.net/ or contact the author by email at
-kenkeys@users.sourceforge.net.  Please provide the following information:
-
-    The version of TF (type "/version" in tf).
-    The operating system version (on unix, type "uname -a" in the shell).
-    If tf won't compile, send the output of configure and make (in plaintext
-        form, please).
-    If you have a bug or core, give ALL error messages from tf.
-    If you have a bug or core, describe what you did or what happened
-        before the problem, and if the problem is repeatable.
-    If you have a core file, do NOT send it.
 
 
 Credits
@@ -346,26 +337,6 @@ When you are satisfied it works, do
 to install tf in {FINAL}.
 
 
-Public Installation
--------------------
-
-If you have write permission in /usr/local/bin and /usr/local/lib, TinyFugue
-will be installed there by default.  Or you can change the locations by using
-the options described above.  The Makefile will then put all files in their
-proper location with the proper permissions.
-
-Some features of TF can be disabled for secure public installation, by using
-the /restrict commands in %{TFLIBDIR}/local.tf.  See ../README.
-
-
-Terminal Handling
------------------
-
-On a UNIX-like system, ./configure will try to find a termcap-compatible library
-in this order: the one specified in --enable-termcap=LIB, if any; termcap;
-ncurses; curses.  If none of those work, tf will use hardcoded vt100 codes.
-On CYGWIN, tf will use hardcoded ANSI codes.
-
 
 Installation Problems
 ---------------------
@@ -419,29 +390,4 @@ Solution 1: set the environment variable LD_LIBRARY_PATH to "/usr/local/lib"
 Solution 2: on SunOS, set environment variable LDFLAGS to "-R/usr/local/lib"
   when running ./configure.  On other operating systems, different options
   may be available; see "man ld" (try "-rpath /usr/local/lib").
-
-
-Last Resort XXX
------------
-
-If you think TF won't compile because of a bug or incompatibility with
-your system (you followed all the instructions, and it still won't work),
-visit http://tinyfugue.sourceforge.net or email the author at
-kenkeys@users.sourceforge.net.  Please include the version
-number of TF, and describe the type of system on which you are trying
-to compile, or at the very least, the address of the system.  Use
-"uname -a", if available, to get the system type; if not, look at the
-message you see when you log in.  Also include the output of configure
-and make.  If TF does compile, but has other problems, read "/help bugs"
-before mailing a report.
-
-For bug reports, questions, suggestions, etc., use the contacts above,
-and please provide the following information:
-
-    The version of TF and the operating system (type "/version" in tf).
-    If tf won't compile, send the output of "./configure" and "make".
-    If you have a bug or core, give me all error messages from tf.
-    If you have a bug or core, tell me what you did or what happened
-        before the problem, and if the problem is repeatable.
-    If you have a core, do _not_ send the core file.
 
