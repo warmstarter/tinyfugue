@@ -158,9 +158,6 @@ enum Vars {
 #define async_conn	getintvar(VAR_async_conn)
 #define async_name	getintvar(VAR_async_name)
 #define atcp		getintvar(VAR_atcp)
-#if 0
-# define auto_fg	getintvar(VAR_auto_fg)
-#endif
 #define background	getintvar(VAR_background)
 #define backslash	getintvar(VAR_backslash)
 #define bamf		getintvar(VAR_bamf)

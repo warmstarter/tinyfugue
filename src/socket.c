@@ -1010,14 +1010,6 @@ void main_loop(void)
             break;
         }
 
-#if 0
-        if (fsock && fsock->constate >= SS_ZOMBIE && auto_fg &&
-	    !(fsock->world->screen->nnew || fsock->queue.list.head))
-	{
-            fg_live_sock();
-        }
-#endif
-
         /* garbage collection */
         if (depth == 1) {
             if (sock && sock->constate == SS_DEAD) sock = NULL;

@@ -49,9 +49,6 @@ varflag(VAR_atcp,       "atcp",         TRUE,           NULL)
 varenum(VAR_atcp,       "atcp",         FALSE,          NULL,   enum_off)
 #endif
 varenum(VAR_async_name,	"gethostbyname",TRUE,		NULL,	enum_block)
-#if 0
-varflag(VAR_auto_fg,	"auto_fg",	FALSE,		NULL)
-#endif
 varflag(VAR_background,	"background",	TRUE,		tog_bg)
 varflag(VAR_backslash,	"backslash",	TRUE,		NULL)
 varenum(VAR_bamf,	"bamf",		FALSE,		NULL,	enum_bamf)
