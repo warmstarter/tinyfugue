@@ -29,8 +29,8 @@
 #include <signal.h>	/* for killing resolver child process */
 
 #if WIDECHAR
-#include <unicode/ucnv.h>
-#include <unicode/ustring.h>
+# include <unicode/ucnv.h>
+# include <unicode/ustring.h>
 #endif
 
 #if HAVE_SSL
@@ -104,10 +104,10 @@ struct sockaddr_in {
 #endif
 
 #ifndef INET_ADDRSTRLEN
-#define INET_ADDRSTRLEN 16
+# define INET_ADDRSTRLEN 16
 #endif
 #ifndef INET6_ADDRSTRLEN
-#define INET6_ADDRSTRLEN 46
+# define INET6_ADDRSTRLEN 46
 #endif
 
 #ifdef PLATFORM_UNIX
@@ -117,7 +117,7 @@ struct sockaddr_in {
 #endif
 
 #ifdef NETDB_H
-  #include NETDB_H
+# include NETDB_H
 #endif
 
 #if !HAVE_GAI_STRERROR || !defined(AI_NUMERICHOST) || !defined(EAI_SERVICE)
@@ -277,7 +277,9 @@ typedef enum {
 #define SOCKPROXY	0x04	/* indirect connection through proxy server */
 #define SOCKTELNET	0x08	/* server supports telnet protocol */
 #define SOCKMAYTELNET	0x10	/* server might support telnet protocol */
-#define SOCKCOMPRESS	0x20	/* server has enabled MCCP v1 or v2 */
+#if HAVE_MCCP
+# define SOCKCOMPRESS	0x20	/* server has enabled MCCP v1 or v2 */
+#endif
 #define SOCKALLOCADDRS	0x40	/* addrs allocated by tf, not getaddrinfo */
 #define SOCKECHO	0x80	/* receive all sent text (loopback) */
 
@@ -446,19 +448,23 @@ STATIC_BUFFER(telbuf);
 #define TN_AUTH		((char)37)	/* 1416 - (not used) */
 #define TN_NEW_ENVIRON	((char)39)	/* 1572 - (not used) */
 #define TN_CHARSET	((char)42)	/* 2066 - Charset negotiation */
-/* 85 & 86 are not standard.
- * See http://www.randomly.org/projects/MCCP */
-#define TN_COMPRESS	((char)85)	/* MCCP v1 */
-#define TN_COMPRESS2	((char)86)	/* MCCP v2 */
-/* 200 is not standard.
- * See http://www.ironrealms.com/rapture/manual/files/FeatATCP-txt.html */
-#define TN_ATCP		((char)200)	/* ATCP */
-/* 201 is not standard.
- * See http://www.aardwolf.com/wiki/index.php/Clients/GMCP */
-#define TN_GMCP		((char)201)	/* GMCP */
-/* 102 is not standard.
- * See http://www.aardwolf.com/blog/category/technical */
-#define TN_102		((char)102)	/* Option 102 */
+/* 85 & 86 are not standard. See http://www.randomly.org/projects/MCCP */
+#if HAVE_MCCP
+# define TN_COMPRESS	((char)85)	/* MCCP v1 */
+# define TN_COMPRESS2	((char)86)	/* MCCP v2 */
+#endif
+/* 200 is not standard. See http://www.ironrealms.com/rapture/manual/files/FeatATCP-txt.html */
+#if ENABLE_ACTP
+# define TN_ATCP	((char)200)	/* ATCP */
+#endif
+/* 201 is not standard. See http://www.aardwolf.com/wiki/index.php/Clients/GMCP */
+#if ENABLE_GMCP
+# define TN_GMCP	((char)201)	/* GMCP */
+#endif
+/* 102 is not standard. See http://www.aardwolf.com/blog/category/technical */
+#if ENABLE_OPTION102
+# define TN_102		((char)102)	/* Option 102 */
+#endif
 
 #define UCHAR		unsigned char
 
@@ -723,11 +729,19 @@ void init_sock(void)
     telnet_label[(UCHAR)TN_AUTH]	= "AUTHENTICATION";
     telnet_label[(UCHAR)TN_NEW_ENVIRON]	= "NEW-ENVIRON";
     telnet_label[(UCHAR)TN_CHARSET]	= "CHARSET";
+#if HAV_MCCP
     telnet_label[(UCHAR)TN_COMPRESS]	= "COMPRESS";
     telnet_label[(UCHAR)TN_COMPRESS2]	= "COMPRESS2";
+#endif
+#if ENABLE_ATCP
     telnet_label[(UCHAR)TN_ATCP]	= "ATCP";
+#endif
+#if ENABLE_GMCP
     telnet_label[(UCHAR)TN_GMCP]	= "GMCP";
+#endif
+#if ENABLE_OPTION102
     telnet_label[(UCHAR)TN_102]		= "102";
+#endif
     telnet_label[(UCHAR)TN_EOR]		= "EOR";
     telnet_label[(UCHAR)TN_SE]		= "SE";
     telnet_label[(UCHAR)TN_NOP]		= "NOP";
@@ -2526,8 +2540,10 @@ struct Value *handle_listsockets_command(String *args, int offset)
 #endif
 	    sock->constate == SS_CONNECTED ? 'C' :
 	    '#' /* shouldn't happen */;
+#if HAVE_MCCP
 	if (sock->flags & SOCKCOMPRESS)
 	    state = lcase(state);
+#endif
 	if (!numeric && sock->addr)
 	    sprintf(addrbuf, "%-*.*s %.6s",
 		hostwidth, hostwidth, sock->host, sock->port);
@@ -3074,6 +3090,7 @@ static void telnet_subnegotiation(void)
         Sappendf(telbuf, "%c%c", TN_IAC, TN_SE);
         telnet_send(telbuf);
         break;
+#if HAVE_MCCP
     case TN_COMPRESS:
     case TN_COMPRESS2:
 	if (!TELOPT(xsock, them, *p)) {
@@ -3082,6 +3099,7 @@ static void telnet_subnegotiation(void)
 	}
 	xsock->flags |= SOCKCOMPRESS;
 	break;
+#endif
 #if WIDECHAR
     case TN_CHARSET:
 	if (!TELOPT(xsock, them, *p)) {
