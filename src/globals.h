@@ -159,7 +159,7 @@ enum Vars {
 #define async_name	getintvar(VAR_async_name)
 #define atcp		getintvar(VAR_atcp)
 #if 0
-#define auto_fg		getintvar(VAR_auto_fg)
+# define auto_fg	getintvar(VAR_auto_fg)
 #endif
 #define background	getintvar(VAR_background)
 #define backslash	getintvar(VAR_backslash)
@@ -174,7 +174,7 @@ enum Vars {
 #define clearfull	getintvar(VAR_clearfull)
 #define clock_flag	getintvar(VAR_clock)
 #if WIDECHAR
-#define default_charset	getstrvar(VAR_default_charset)
+# define default_charset	getstrvar(VAR_default_charset)
 #endif
 #define defcompile	getintvar(VAR_defcompile)
 #define emulation 	getintvar(VAR_emulation)

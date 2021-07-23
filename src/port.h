@@ -56,7 +56,7 @@
 
 /* Wide character support */
 #if WIDECHAR
-#include <wctype.h>
+# include <wctype.h>
 #endif
 
 /* standard stuff */
@@ -171,29 +171,29 @@ extern char *sys_errlist[];
  * important when using character sets other than 7-bit ASCII.)
  */
 #if WIDECHAR
-#define is_alnum(c)	iswalnum((wint_t)c)
-#define is_alpha(c)	iswalpha((wint_t)c)
-#define is_cntrl(c)	iswcntrl((wint_t)c)
-#define is_digit(c)	iswdigit((wint_t)c)
-#define is_graph(c)	iswgraph((wint_t)c)
-#define is_lower(c)	iswlower((wint_t)c)
-#define is_print(c)	iswprint((wint_t)c)
-#define is_punct(c)	iswpunct((wint_t)c)
-#define is_space(c)	iswspace((wint_t)c)
-#define is_upper(c)	iswupper((wint_t)c)
-#define is_xdigit(c)	iswxdigit((wint_t)c)
+# define is_alnum(c)	iswalnum((wint_t)c)
+# define is_alpha(c)	iswalpha((wint_t)c)
+# define is_cntrl(c)	iswcntrl((wint_t)c)
+# define is_digit(c)	iswdigit((wint_t)c)
+# define is_graph(c)	iswgraph((wint_t)c)
+# define is_lower(c)	iswlower((wint_t)c)
+# define is_print(c)	iswprint((wint_t)c)
+# define is_punct(c)	iswpunct((wint_t)c)
+# define is_space(c)	iswspace((wint_t)c)
+# define is_upper(c)	iswupper((wint_t)c)
+# define is_xdigit(c)	iswxdigit((wint_t)c)
 #else
-#define is_alnum(c)	isalnum((unsigned char)(c))
-#define is_alpha(c)	isalpha((unsigned char)(c))
-#define is_cntrl(c)	iscntrl((unsigned char)(c))
-#define is_digit(c)	isdigit((unsigned char)(c))
-#define is_graph(c)	isgraph((unsigned char)(c))
-#define is_lower(c)	islower((unsigned char)(c))
-#define is_print(c)	isprint((unsigned char)(c))
-#define is_punct(c)	ispunct((unsigned char)(c))
-#define is_space(c)	isspace((unsigned char)(c))
-#define is_upper(c)	isupper((unsigned char)(c))
-#define is_xdigit(c)	isxdigit((unsigned char)(c))
+# define is_alnum(c)	isalnum((unsigned char)(c))
+# define is_alpha(c)	isalpha((unsigned char)(c))
+# define is_cntrl(c)	iscntrl((unsigned char)(c))
+# define is_digit(c)	isdigit((unsigned char)(c))
+# define is_graph(c)	isgraph((unsigned char)(c))
+# define is_lower(c)	islower((unsigned char)(c))
+# define is_print(c)	isprint((unsigned char)(c))
+# define is_punct(c)	ispunct((unsigned char)(c))
+# define is_space(c)	isspace((unsigned char)(c))
+# define is_upper(c)	isupper((unsigned char)(c))
+# define is_xdigit(c)	isxdigit((unsigned char)(c))
 #endif
 
 
@@ -259,10 +259,10 @@ extern int  srandom(unsigned);
 #endif
 
 #ifndef TRUE
-#define TRUE 1
+# define TRUE 1
 #endif
 #ifndef FALSE
-#define FALSE 0
+# define FALSE 0
 #endif
 
 #endif /* PORT_H */

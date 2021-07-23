@@ -19,7 +19,7 @@
 #include "parse.h"	/* valstd() */
 
 #if WIDECHAR
-#include <unicode/utf8.h>
+# include <unicode/utf8.h>
 #endif
 
 

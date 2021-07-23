@@ -129,10 +129,10 @@ static void save_to_log(History *hist, const conString *str)
    int i_s = 0;
    STATIC_BUFFER(log_buffer);
 
-   //set time to string
+   /* set time to string */
    Stringtrunc(log_buffer, 0);
 
-   //create prefix
+   /* create prefix */
    if (log_prefix) {
        for (i_s = 0; i_s < log_prefix->len; i_s++)
        {

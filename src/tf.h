@@ -18,7 +18,7 @@
 #elif SIZEOF_LONG == 4
     typedef unsigned long attr_t;
 #else
-#   error "no 32 bit integer?"
+# error "no 32 bit integer?"
 #endif
 
 #if NCOLORS == 256 /* character attributes can't fit in 16 bits */
@@ -27,7 +27,7 @@
 # elif SIZEOF_LONG == 4
     typedef unsigned long cattr_t;
 # else
-#   error "no 32 bit integer?"
+#  error "no 32 bit integer?"
 # endif
 #else /* character attributes can fit in 16 bits */
 # if SIZEOF_SHORT == 2
@@ -35,7 +35,7 @@
 # elif SIZEOF_INT == 2
     typedef unsigned int cattr_t;
 # else
-#   error "no 16 bit integer?"
+#  error "no 16 bit integer?"
 # endif
 #endif
 

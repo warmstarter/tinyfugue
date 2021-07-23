@@ -37,10 +37,10 @@
 #include "cmdlist.h"
 
 #if WIDECHAR
-#include <wchar.h>
-#include <unicode/uchar.h>
-#include <unicode/utext.h>
-#include <unicode/ubrk.h>
+# include <wchar.h>
+# include <unicode/uchar.h>
+# include <unicode/utext.h>
+# include <unicode/ubrk.h>
 #endif
 
 #if HAVE_SETLOCALE
@@ -162,9 +162,9 @@ static void  output_scroll(PhysLine *pl);
 static void  (*tp)(const char *str);
 
 #if TERMCAP
-#define tpgoto(seq,x,y)  tp(tgoto(seq, (x)-1+origin, (y)-1+origin))
+# define tpgoto(seq,x,y)  tp(tgoto(seq, (x)-1+origin, (y)-1+origin))
 #else
-#define tpgoto(seq,x,y)  Sappendf(outbuf,seq,(y)-1+origin,(x)-1+origin)
+# define tpgoto(seq,x,y)  Sappendf(outbuf,seq,(y)-1+origin,(x)-1+origin)
 #endif
 
 #define ipos()		xy(ix, iy)

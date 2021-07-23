@@ -382,11 +382,11 @@ static int   ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx);
 #define no_reply(str) telnet_debug("sent", "[no reply (" str ")", 0)
 
 #ifndef CONN_WAIT
-#define CONN_WAIT 400000
+# define CONN_WAIT 400000
 #endif
 
 #ifndef PROC_WAIT
-#define PROC_WAIT 100000
+# define PROC_WAIT 100000
 #endif
 
 #define BUFFSIZE (4*1024)	/* how big are our byte-buffers? */
@@ -3399,10 +3399,10 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
 		    xsock->flags &= ~SOCKCOMPRESS;
 		    break;
 		default:
-#if WIDECHAR
+# if WIDECHAR
 		    inbound_decode_str(xsock->buffer, incomingposttelnet, 
                         incomingFSM, 1);
-#endif
+# endif
 		    flushxsock();
 		    zombiesock(xsock); /* before hook, so constate is correct */
 		    DISCON(xsock->world->name, "inflate",

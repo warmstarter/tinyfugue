@@ -27,7 +27,7 @@
 #include "output.h"	/* columns */
 
 #if WIDECHAR
-#include <unicode/ucnv.h>
+# include <unicode/ucnv.h>
 #endif
 
 #define LW_TABLE	001

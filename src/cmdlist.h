@@ -16,7 +16,7 @@
  */
 
 #if !defined(defcmd)
-#define defcmd(name, func, reserved) \
+# define defcmd(name, func, reserved) \
     extern struct Value *func(String *args, int offset);
 #endif
 
