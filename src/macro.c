@@ -1287,11 +1287,6 @@ static conString *print_def(TFILE *file, String *buffer, Macro *p)
 	}
     }
 
-#if 0 /* obsolete */
-    if (*p->keyname)
-	Sappendf(buffer, "-B'%s' ", p->keyname);
-    else
-#endif
     if (*p->bind)
 	Sappendf(buffer, "-b'%q' ", '\'', ascii_to_print(p->bind)->data);
 
@@ -1372,14 +1367,6 @@ static int list_defs(TFILE *file, Macro *spec, int mflag, ListOpts *listopts)
             }
             if (p->trig.str)
                 Sappendf(buffer, "'%q' ", '\'', p->trig.str);
-#if 0 /* obsolete */
-            if (*p->keyname) {
-		Stringcat(buffer, "(key");
-		if (listopts && listopts->usedflag)
-		    Sappendf(buffer, " %d", p->used[USED_KEY]);
-                Sappendf(buffer, ") '%s' ", p->keyname);
-            } else
-#endif
 	    if (*p->bind) {
 		Stringcat(buffer, "(bind");
 		if (listopts && listopts->usedflag)
