@@ -27,7 +27,8 @@ command.$(O): command.c tfconfig.h tfdefs.h port.h tf.h malloc.h dstring.h \
   globals.h varlist.h enumlist.h hooklist.h util.h pattern.h \
   search.h tfio.h cmdlist.h command.h world.h socket.h \
   output.h attr.h macro.h keyboard.h expand.h signals.h variable.h $(BUILDERS)
-dmalloc.$(O): dmalloc.c $(BUILDERS)
+### Where is this file available and what does it do?
+#dmalloc.$(O): dmalloc.c $(BUILDERS)
 dstring.$(O): dstring.c tfconfig.h tfdefs.h port.h malloc.h tf.h dstring.h \
   globals.h varlist.h enumlist.h hooklist.h signals.h $(BUILDERS)
 expand.$(O): expand.c tfconfig.h tfdefs.h port.h tf.h malloc.h dstring.h \
@@ -62,7 +63,8 @@ main.$(O): main.c tfconfig.h tfdefs.h port.h tf.h malloc.h dstring.h \
   expand.h expr.h process.h $(BUILDERS)
 makehelp.$(O): makehelp.c $(BUILDERS)
 malloc.$(O): malloc.c tfconfig.h tfdefs.h port.h signals.h malloc.h $(BUILDERS)
-myechod.$(O): myechod.c $(BUILDERS)
+### Where is this file available and what does it do?
+#myechod.$(O): myechod.c $(BUILDERS)
 output.$(O): output.c tfconfig.h tfdefs.h port.h tf.h malloc.h dstring.h \
   globals.h varlist.h enumlist.h hooklist.h util.h pattern.h \
   search.h tfio.h socket.h output.h attr.h macro.h tty.h \

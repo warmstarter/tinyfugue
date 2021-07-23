@@ -356,9 +356,9 @@ if test "$enable_development" = "yes"; then
     fi
 else
     AC_DEFINE(
-        [NDEBUG],
-       	[1],
-       	[debug disabled])
+	[NDEBUG],
+	[1],
+	[debug disabled])
 fi
 
 
@@ -371,10 +371,16 @@ if test "$enable_core" = "yes"; then
     STRIP=":"
 else
     AC_DEFINE(
-        [DISABLE_CORE],
-       	[1],
-       	[core dumps disabled])
+	[DISABLE_CORE],
+	[1],
+	[core dumps disabled])
+    AC_CHECK_PROG(
+	[STRIP],
+	[strip],
+	[strip],
+	[:])
 fi
+AC_SUBST(STRIP)
 
 
 # This should be placed into src/main.c rather than pulled from it.
@@ -389,16 +395,6 @@ UNAME=`echo $UNAME`  # remove newlines
 AC_SUBST(UNAME)
 # This is used in tfdef.h.in and maybe somewhere else, but it's set for 'generic'
 # now so pretty pointless. Circle around and fix all of those.
-
-
-if test "$enable_core" = "no"; then
-    AC_CHECK_PROG(
-        [STRIP],
-	[strip],
-        [strip],
-       	[:])
-fi
-AC_SUBST(STRIP)
 
 ################################################################
 # 6. Checks for libraries
