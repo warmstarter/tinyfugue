@@ -1,0 +1,28 @@
+Setup:
+
+   - autoconf
+
+   - ./configure --enable-python
+
+You will of course need python and related packages installed to make this work.
+This will be detailed better as this evolves and more choices are available.
+
+Tested on Debian with these packages:
+
+libpython2.7-dev python-cxx-dev python-2.7 python
+
+Agan, more options in the future, others may work, but not yet tested.
+
+Usage:
+
+   - run TinyFugue (tf) and then 
+       /help tf python
+
+   - scripts are installed in the tf-lib/python directory for a few packaged ones,
+     but you can obviously ad our own.
+
+   - Check out tf-lib/python/urlwatch.py for a simple scripting example. This uses
+     only a tiny fraction of what you can do, but I've been so busy making
+     this patch I haven't had time to write all the scripts I want!
+
+Ron

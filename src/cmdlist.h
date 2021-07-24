@@ -71,6 +71,12 @@ defcmd("LOCALECHO"   , handle_localecho_command   , 0)
 defcmd("LOG"         , handle_log_command         , 0)
 defcmd("PS"          , handle_ps_command          , 0)
 defcmd("PURGE"       , handle_purge_command       , 0)
+#ifdef TFPYTHON
+defcmd("PYTHON"      , handle_python_command      , 0)
+defcmd("PYTHON_CALL" , handle_python_call_command , 0)
+defcmd("PYTHON_KILL" , handle_python_kill_command , 0)
+defcmd("PYTHON_LOAD" , handle_python_load_command , 0)
+#endif
 defcmd("QUIT"        , handle_quit_command        , 0)
 defcmd("QUOTE"       , handle_quote_command       , 0)
 defcmd("RECALL"      , handle_recall_command      , 0)

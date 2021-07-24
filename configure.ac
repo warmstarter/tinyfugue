@@ -16,6 +16,7 @@ AC_PREREQ([2.69])
 
 m4_include([m4/ax_check_icu.m4])
 m4_include([m4/ax_compiler_vendor.m4])
+m4_include([m4/ax_python.m4])
 
 # These are substitutions to be used within configure.in where something
 # might be referenced multiple times. This is the canonical place to make
@@ -136,6 +137,14 @@ if test "$enable_256colors" = "yes"; then
        	[256],
        	[256 color mode enabled])
 fi
+
+AC_ARG_ENABLE(
+    [python],
+    [AS_HELP_STRING(
+        [--enable-python],
+	[enable python interpreter for scripting])],
+    [enable_python=${enableval}],
+    [enable_python=no])
 
 AC_ARG_ENABLE(
     [widechar],
@@ -547,6 +556,16 @@ if test "$enable_ssl" = "yes"; then
 	CFLAGS="$old_CFLAGS"
 	CPPFLAGS="$old_CPPFLAGS"
     fi
+fi
+
+# python interpreter test, quick can dirty for now
+if test "$enable_python" = "yes"; then
+    AX_PYTHON
+    CFLAGS="$CFLAGS -DTFPYTHON"
+    PYTHON_INCLUDE="-I$PYTHON_INCLUDE_DIR"
+    PYTHON_LIB="-l$PYTHON_LIB"
+    AC_SUBST(PYTHON_INCLUDE)
+    AC_SUBST(PYTHON_LIB)
 fi
 
 ########### terminal ############
