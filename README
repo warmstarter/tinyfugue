@@ -2,6 +2,7 @@ TinyFugue 50b8 with numerous patches and improvements
 
 UTF8 support (--enable-widechar=yes)
 PYTHON interpreter support for interfacing with client and macros
+PYTHON 2.7 and 3 are both supported
 /HELP has been spell checked, along with everything else
 HTML documentation and html2tf found and returned to repo
 ANSI log output (/help ansi_log) off by default

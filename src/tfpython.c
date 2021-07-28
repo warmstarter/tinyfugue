@@ -22,7 +22,12 @@ struct module_state {
         PyObject *error;
 };
 
-#define GETSTATE(m) ((struct module_state*)PyModule_GetState(m))
+#if PY_MAJOR_VERSION >= 3
+# define GETSTATE(m) ((struct module_state*)PyModule_GetState(m))
+#else
+# define GETSTATE(m) (&_state)
+static struct module_state _state;
+#endif
 
 static PyObject* tfvar_to_pyvar( const struct Value *rc );
 static struct Value* pyvar_to_tfvar( PyObject *pRc );
@@ -291,6 +296,7 @@ static const char *init_src =
 	"sys.argv=[ 'tf' ]\n"
 ;
 
+#if PY_MAJOR_VERSION >= 3
 static int tf_traverse(PyObject *m, visitproc visit, void *arg) {
     Py_VISIT(GETSTATE(m)->error);
     return 0;
@@ -302,37 +308,50 @@ static int tf_clear(PyObject *m) {
 }
 
 static struct PyModuleDef moduledef = {
-        PyModuleDef_HEAD_INIT,
-        "tf",
-        NULL,
-        sizeof(struct module_state),
-        tfMethods,
-        NULL,
-        tf_traverse,
-        tf_clear,
-        NULL
+    PyModuleDef_HEAD_INIT,
+    "tf",
+    NULL,
+    sizeof(struct module_state),
+    tfMethods,
+    NULL,
+    tf_traverse,
+    tf_clear,
+    NULL
 };
+
+# define INITERROR return NULL
 
 PyMODINIT_FUNC
 PyInit_tf(void)
+#else
+# define INITERROR return
+void
+PyInit_tf(void)
+#endif
 {
     /* Tell it about our tf_eval */
+#if PY_MAJOR_VERSION >= 3
     PyObject *module = PyModule_Create(&moduledef);
+#else
+    PyObject *module = Py_InitModule("tf", tfMethods);
+#endif
 
     if (module == NULL) {
-		eputs( "tf module initialization failed NULL" );
-        return NULL;
+	eputs( "tf module initialization failed NULL" );
+        INITERROR;
     }
 
-	struct module_state *st = GETSTATE(module);
+    struct module_state *st = GETSTATE(module);
 
     st->error = PyErr_NewException("tf.Error", NULL, NULL);
     if (st->error == NULL) {
         Py_DECREF(module);
-		eputs( "tf module initialization failed" );
-        return NULL;
+	eputs( "tf module initialization failed" );
+        INITERROR;
     }
+#if PY_MAJOR_VERSION >= 3
     return module;
+#endif
 }
 
 static void python_init()
@@ -450,7 +469,9 @@ struct Value *handle_python_load_command( String *args, int offset )
 	( buf = Stringnew( NULL, 0, 0 ) )->links++;
 	Sprintf( buf,
 		// if it exists, reload it, otherwise import it
+#if PY_MAJOR_VERSION >= 3
 		"from importlib import reload\n"
+#endif
 		"try:\n"
 		"	reload( %s )\n"
 		"except ( NameError, TypeError ):\n"
