@@ -601,7 +601,7 @@ typedef struct {
     int always_continue;
 } ssl_options_t;
 ssl_options_t ssl_options;
-int ssl_mydata_index;
+int ssl_options_index;
 
 static int ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx)
 {
@@ -619,7 +619,7 @@ static int ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx)
      * and the application specific data stored into the SSL object.
      */
     ssl = X509_STORE_CTX_get_ex_data(ctx, SSL_get_ex_data_X509_STORE_CTX_idx());
-    ssl_options = SSL_get_ex_data(ssl, ssl_mydata_index);
+    ssl_options = SSL_get_ex_data(ssl, ssl_options_index);
     if (ssl_options == NULL) {
 	eprintf("ssl: ssl_options null");
     }
@@ -1412,12 +1412,12 @@ static int opensock(World *world, int flags)
 	SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, ssl_verify_callback);
 	xsock->ssl = SSL_new(ssl_ctx);
 	SSL_CTX_set_verify_depth(ssl_ctx, ssl_depth);
-	ssl_mydata_index = SSL_get_ex_new_index(0, "ssl_mydata index", NULL, NULL, NULL);
+	ssl_options_index = SSL_get_ex_new_index(0, "ssl_options index", NULL, NULL, NULL);
 	ssl_options_t ssl_options;
 	ssl_options.verify_depth = ssl_depth;
 	ssl_options.verbose_mode = ssl_verbose;
 	ssl_options.always_continue = ssl_continue;
-	SSL_set_ex_data(xsock->ssl, ssl_mydata_index, &ssl_options);
+	SSL_set_ex_data(xsock->ssl, ssl_options_index, &ssl_options);
 #if OPENSSL_VERSION_NUMBER >= 0x1000200fL
 	X509_VERIFY_PARAM *param = SSL_get0_param(xsock->ssl);
 	X509_VERIFY_PARAM_set_hostflags(param, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
