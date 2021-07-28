@@ -558,15 +558,15 @@ if test "$enable_ssl" = "yes"; then
     fi
 fi
 
-# python interpreter test, quick andd dirty for now
+# python interpreter test, quick and dirty for now
 if test "$enable_python" = "yes"; then
     AX_PYTHON
     AC_DEFINE(
         [TFPYTHON],
         [1],
         [python scripting enabled])
-    PYTHON_INCLUDE="-I$PYTHON_INCLUDE_DIR"
-    PYTHON_LIB="-l$PYTHON_LIB"
+    PYTHON_INCLUDE="$PYTHON_INCLUDE_DIR"
+    PYTHON_LIB="$PYTHON_LIB"
     AC_SUBST(PYTHON_INCLUDE)
     AC_SUBST(PYTHON_LIB)
 fi
