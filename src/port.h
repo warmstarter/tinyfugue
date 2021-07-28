@@ -236,28 +236,6 @@ extern char *sys_errlist[];
 # endif
 #endif
 
-/* These just prevent warnings during development.  They should not be
- * used in production, since they might conflict with system headers.
- */
-#ifdef TF_IRIX_DECLS
-extern int  kill(pid_t, int);
-extern int  ioctl(int, int, ...);
-extern long random(void);
-extern int  srandom(unsigned);
-#endif
-#ifdef TF_AIX_DECLS
-extern int  strcasecmp(const char *, const char *);
-extern time_t time(time_t *);
-/* extern pid_t wait(int *); */
-extern int socket(int, int, int);
-extern int getsockopt(int, int, int, char *, int *);
-extern int send(int, const char *, int, int);
-extern int recv(int, char *, int, int);
-extern int  ioctl(int, int, ...);
-extern long random(void);
-extern int  srandom(unsigned);
-#endif
-
 #ifndef TRUE
 # define TRUE 1
 #endif

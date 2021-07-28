@@ -254,11 +254,6 @@ static const char *h_errlist[] = {
 # endif
 #endif
 
-
-#ifdef TF_AIX_DECLS
-extern int connect(int, struct sockaddr *, int);
-#endif
-
 /* connection states */
 typedef enum {
     SS_NEW,		/* brand spanking new */
