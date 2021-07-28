@@ -564,7 +564,7 @@ if test "$enable_python" = "yes"; then
     AC_DEFINE(
         [TFPYTHON],
         [1],
-        [python scripting enabled])]
+        [python scripting enabled])
     PYTHON_INCLUDE="-I$PYTHON_INCLUDE_DIR"
     PYTHON_LIB="-l$PYTHON_LIB"
     AC_SUBST(PYTHON_INCLUDE)
