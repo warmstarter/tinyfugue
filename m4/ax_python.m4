@@ -99,11 +99,11 @@ AC_MSG_RESULT([    Binary:      $ax_python_bin])
 AC_MSG_RESULT([    Library:     $ax_python_lib])
 AC_MSG_RESULT([    Include Dir: $ax_python_header])
 if test "x$ax_python_header" != "xno"; then
-  PYTHON_INCLUDE_DIR=$ax_python_header
-  AC_SUBST(PYTHON_INCLUDE_DIR)
+  PYTHON_INCLUDE_DIRS=$ax_python_header
+  AC_SUBST(PYTHON_INCLUDE_DIRS)
 fi
 if test "x$ax_python_lib" != "xno"; then
-  PYTHON_LIB=$ax_python_lib
-  AC_SUBST(PYTHON_LIB)
+  PYTHON_LIBS=$ax_python_lib
+  AC_SUBST(PYTHON_LIBS)
 fi
 ])dnl

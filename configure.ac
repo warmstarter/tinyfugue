@@ -565,10 +565,10 @@ if test "$enable_python" = "yes"; then
         [TFPYTHON],
         [1],
         [python scripting enabled])
-    PYTHON_INCLUDE="$PYTHON_INCLUDE_DIR"
-    PYTHON_LIB="$PYTHON_LIB"
-    AC_SUBST(PYTHON_INCLUDE)
-    AC_SUBST(PYTHON_LIB)
+    PYTHON_INCLUDES="$PYTHON_INCLUDE_DIRS"
+    PYTHON_LIBS="$PYTHON_LIBS"
+    AC_SUBST(PYTHON_INCLUDES)
+    AC_SUBST(PYTHON_LIBS)
 fi
 
 ########### terminal ############

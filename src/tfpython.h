@@ -21,15 +21,12 @@
 #include "variable.h"
 
 #if TFPYTHON
-
-#include "Python.h"
-
+# include "Python.h"
 struct Value *handle_python_function( conString *args );
 struct Value *handle_python_command( String *args, int offset );
 struct Value *handle_python_kill_command( String *args, int offset );
 struct Value *handle_python_call_command( String *args, int offset );
 struct Value *handle_python_load_command( String *args, int offset );
-
-#endif
+# endif
 
 #endif

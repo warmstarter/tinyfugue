@@ -192,7 +192,6 @@ enum Vars {
 #define iecho_attr	getattrvar(VAR_iecho_attr)
 #define info_attr	getattrvar(VAR_info_attr)
 #define insert		getintvar(VAR_insert)
-#define interactive	getintvar(VAR_interactive)
 #define isize		getintvar(VAR_isize)
 #define istrip		getintvar(VAR_istrip)
 #define kbnum		getstrvar(VAR_kbnum)
@@ -268,6 +267,7 @@ enum Vars {
 #define textdiv		getintvar(VAR_textdiv)
 #define textdiv_str	getstrvar(VAR_textdiv_str)
 #define tfhost		getstdvar(VAR_tfhost)
+#define tfinteractive	getintvar(VAR_interactive)
 #define time_format	getstrvar(VAR_time_format)
 #define virtscreen	getintvar(VAR_virtscreen)
 /* visual is special: initial value of -1 indicates it was never explicitly

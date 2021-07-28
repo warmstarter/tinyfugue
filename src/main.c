@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
         set_var_by_id(VAR_visual, autovisual);
 
     /* If %interactive was not explicitly set, set it now. */
-    if (interactive < 0)
+    if (tfinteractive < 0)
         set_var_by_id(VAR_interactive, !no_tty);
 
     if (argc > 0 || worldflag) {

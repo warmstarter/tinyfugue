@@ -245,7 +245,7 @@ static void handle_interrupt(void)
     VEC_CLR(SIGINT, &pending_signals);
     /* so status line macros in setup_screen() aren't gratuitously killed */
 
-    if (!interactive)
+    if (!tfinteractive)
         die("Interrupt, exiting.", 0);
     reset_kbnum();
     fix_screen();
@@ -292,7 +292,7 @@ static void core_handler(int sig)
     setsighandler(sig, core_handler);  /* restore handler (POSIX) */
 
     if (sig == SIGQUIT) {
-	if (interactive) {
+	if (tfinteractive) {
 	    fix_screen();
 #if DISABLE_CORE
 	    puts("SIGQUIT received.  Exit?  (y/n)\r");
@@ -348,7 +348,7 @@ static void core_handler(int sig)
 	}
     }
 
-    if (interactive) {
+    if (tfinteractive) {
 	close_all();
         fputs("\nPress any key.\r\n", stderr);
         fflush(stderr);
@@ -600,7 +600,7 @@ int shell(const char *cmd)
     cbreak_noecho_mode();
     if (result == -1) {
         eprintf("%s", strerror(errno));
-    } else if (shpause && interactive) {
+    } else if (shpause && tfinteractive) {
         puts("\r\n% Press any key to continue tf.\r");
         igetchar();
     }
