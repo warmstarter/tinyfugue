@@ -558,7 +558,7 @@ if test "$enable_ssl" = "yes"; then
     fi
 fi
 
-# python interpreter test, quick can dirty for now
+# python interpreter test, quick andd dirty for now
 if test "$enable_python" = "yes"; then
     AX_PYTHON
     CFLAGS="$CFLAGS -DTFPYTHON"
