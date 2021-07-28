@@ -13,9 +13,9 @@ const int feature_python = TFPYTHON - 0;
 
 // Change this 0 to 1 to add debug printfs
 #if 0
-#define DPRINTF oprintf
+# define DPRINTF oprintf
 #else
-#define DPRINTF(...)
+# define DPRINTF(...)
 #endif
 
 
@@ -275,8 +275,9 @@ static void python_init()
 	if( py_inited )
 		return;
 
-	// Initialize python
-	Py_Initialize();
+	/* Initialize python,
+         * without signal handling */
+	Py_InitializeEx(0);
 	
 	// Tell it about our tf_eval
 	Py_InitModule( "tf", tfMethods );
