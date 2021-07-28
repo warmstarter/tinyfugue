@@ -561,7 +561,10 @@ fi
 # python interpreter test, quick andd dirty for now
 if test "$enable_python" = "yes"; then
     AX_PYTHON
-    CFLAGS="$CFLAGS -DTFPYTHON"
+    AC_DEFINE(
+        [TFPYTHON],
+        [1],
+        [python scripting enabled])]
     PYTHON_INCLUDE="-I$PYTHON_INCLUDE_DIR"
     PYTHON_LIB="-l$PYTHON_LIB"
     AC_SUBST(PYTHON_INCLUDE)
