@@ -4,10 +4,12 @@
 // Copyright 2008 Ron Dippold - Modify at will, just add your changes in README.python
 // -------------------------------------------------------------------------------------
 
-// If this isn't defined, the whole file is null
-#ifdef TFPYTHON
-
 #include "tfpython.h"
+
+const int feature_python = TFPYTHON - 0;
+
+// If this isn't defined, the whole file is null
+#if TFPYTHON
 
 // Change this 0 to 1 to add debug printfs
 #if 0

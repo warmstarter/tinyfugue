@@ -1,9 +1,6 @@
 #ifndef TFPYTHON_H
 #define TFPYTHON_H
 
-#ifdef TFPYTHON
-
-#include "Python.h"
 #include "tfconfig.h"
 #include "port.h"
 #include "tf.h"
@@ -22,6 +19,10 @@
 #include "expand.h"     /* macro_run() */
 #include "signals.h"    /* suspend(), shell() */
 #include "variable.h"
+
+#if TFPYTHON
+
+#include "Python.h"
 
 struct Value *handle_python_function( conString *args );
 struct Value *handle_python_command( String *args, int offset );
