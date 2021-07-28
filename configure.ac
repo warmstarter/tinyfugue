@@ -600,7 +600,9 @@ AC_CHECK_LIB(
 
 AC_CHECK_LIB(
     [pcre],
-    [pcre_compile])
+    [pcre_compile],
+    [],
+    [AC_MSG_ERROR([libpcre is required, but could not be found])])
 
 
 ################################################################
@@ -615,6 +617,11 @@ AC_CHECK_HEADERS(
     [locale.h],
     [],
     [AC_MSG_WARN([Locales will not be supported.])])
+
+AC_CHECK_HEADERS(
+    [pcre.h],
+    [],
+    [AC_MSG_ERROR([pcre.h is required, but could not be found])])
 
 ### Find pwd.h
 AC_CHECK_HEADERS(
