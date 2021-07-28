@@ -18,6 +18,11 @@ const int feature_python = TFPYTHON - 0;
 # define DPRINTF(...)
 #endif
 
+struct module_state {
+        PyObject *error;
+};
+
+#define GETSTATE(m) ((struct module_state*)PyModule_GetState(m))
 
 static PyObject* tfvar_to_pyvar( const struct Value *rc );
 static struct Value* pyvar_to_tfvar( PyObject *pRc );
@@ -198,13 +203,14 @@ static PyObject* tfvar_to_pyvar( const struct Value *rc )
 	}
 }
 
-// Helper - take a python return object and covert it to a tf return object.
-// We supprt strings, integers, booleans (False->0, True->1 ), and floats
+/* Helper - take a python return object and covert it to a tf return object.
+ * We supprt strings, integers, booleans (False->0, True->1 ), floats, and
+ * unicode */
 static struct Value* pyvar_to_tfvar( PyObject *pRc )
 {
 	struct Value *rc;
 	char *cstr;
-	int len; // Py_ssize_t len;
+	Py_ssize_t len; /* retrn as int for tf */
 
 	// can be null if exception was thrown
 	if( !pRc ) {
@@ -213,9 +219,22 @@ static struct Value* pyvar_to_tfvar( PyObject *pRc )
 	}
 
 	// Convert string back into tf string
-	if( PyString_Check( pRc ) && ( PyString_AsStringAndSize( pRc, &cstr, &len ) != -1 ) ) {
+	if( PyBytes_Check( pRc ) && ( PyBytes_AsStringAndSize( pRc, &cstr, &len ) != -1 ) ) {
 		DPRINTF( "  rc string: %s", cstr );
-		rc = newstr( cstr, len );
+		rc = newstr( cstr, (int) len );
+/* TODO: This is WIDECHAR check is likely always going to be true.
+ * In fact, it's likely that if using Python, we must also use
+ * WIDECHAR. Keeping this in fo now, but it should be examined in
+ * relation to the total codebase.
+ */
+#if WIDECHAR
+	} else if( PyUnicode_Check( pRc) ) {
+		PyObject* temp = PyUnicode_AsASCIIString( pRc );
+		PyBytes_AsStringAndSize( temp, &cstr, &len );
+		DPRINTF( "  rc unicode: %s", cstr );
+		rc = newstr( cstr, (int) len );
+		Py_DECREF(temp);
+#endif
 	} else if( PyInt_Check( pRc ) ) {
 		DPRINTF( "  rc int: %ld", PyInt_AsLong( pRc ) );
 		rc = newint( PyInt_AsLong( pRc ) );
@@ -263,6 +282,8 @@ static const char *init_src =
 	"		while '\\n' in self.buf:\n"
 	"			a, self.buf = self.buf.split('\\n',1)\n"
 	"			self.output( a )\n"
+	"	def flush( self ):\n"
+	"		pass\n"
 	"\n"
 	"sys.stdout = __dummyout( None )\n"  	// this could be to tf.out
 	"sys.stderr = __dummyout( tf.err )\n"
@@ -270,17 +291,59 @@ static const char *init_src =
 	"sys.argv=[ 'tf' ]\n"
 ;
 
+static int tf_traverse(PyObject *m, visitproc visit, void *arg) {
+    Py_VISIT(GETSTATE(m)->error);
+    return 0;
+}
+
+static int tf_clear(PyObject *m) {
+    Py_CLEAR(GETSTATE(m)->error);
+    return 0;
+}
+
+static struct PyModuleDef moduledef = {
+        PyModuleDef_HEAD_INIT,
+        "tf",
+        NULL,
+        sizeof(struct module_state),
+        tfMethods,
+        NULL,
+        tf_traverse,
+        tf_clear,
+        NULL
+};
+
+PyMODINIT_FUNC
+PyInit_tf(void)
+{
+    /* Tell it about our tf_eval */
+    PyObject *module = PyModule_Create(&moduledef);
+
+    if (module == NULL) {
+		eputs( "tf module initialization failed NULL" );
+        return NULL;
+    }
+
+	struct module_state *st = GETSTATE(module);
+
+    st->error = PyErr_NewException("tf.Error", NULL, NULL);
+    if (st->error == NULL) {
+        Py_DECREF(module);
+		eputs( "tf module initialization failed" );
+        return NULL;
+    }
+    return module;
+}
+
 static void python_init()
 {
 	if( py_inited )
 		return;
 
-	/* Initialize python,
-         * without signal handling */
+	PyImport_AppendInittab("tf", PyInit_tf);
+
+	/* Initialize python, without signal handling */
 	Py_InitializeEx(0);
-	
-	// Tell it about our tf_eval
-	Py_InitModule( "tf", tfMethods );
 
 	// get the basic modules
 	PyRun_SimpleString( "import os, sys, tf" );
@@ -303,7 +366,6 @@ static void python_init()
 	// These are both borrowed refs, we don't have to DECREF
 	main_module = PyImport_AddModule( "__main__");
 	main_dict = PyModule_GetDict( main_module );
-
 
 	py_inited = 1;
 }
@@ -388,10 +450,11 @@ struct Value *handle_python_load_command( String *args, int offset )
 	( buf = Stringnew( NULL, 0, 0 ) )->links++;
 	Sprintf( buf,
 		// if it exists, reload it, otherwise import it
+		"from importlib import reload\n"
 		"try:\n"
-		"  reload( %s )\n"
+		"	reload( %s )\n"
 		"except ( NameError, TypeError ):\n"
-		"  import %s\n",
+		"	import %s\n",
 		name, name );
 
 	pRc = common_run( buf->data, Py_file_input );

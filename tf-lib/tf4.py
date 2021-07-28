@@ -24,7 +24,8 @@
 #
 # v1.00 - Jan 25 '08 - Initial version
 
-import tf, tfutil
+import tf
+import tfutil
 
 #----------------------------------------------------------
 # A glorious real world - which we're hiding

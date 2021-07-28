@@ -25,6 +25,11 @@
 #define varflag(id, name, ival, func) \
     varcode(id, name, NULL, TYPE_ENUM, 0, enum_flag, ival, 0, func)
 
+/* Some variables have different internal names from their user-facing names.
+ * varlist.h is defining the user-facing names. For internal code use, look
+ * to globals.h to see how they are defined.
+ */
+
 /* These MUST be sorted by name! */
 /*      ID,		NAME,		VALUE,		FUNC,	ENUMS	*/
 
@@ -86,7 +91,7 @@ varenum(VAR_iecho,	"iecho",	0,		NULL,	enum_mecho)
 varstr (VAR_iecho_attr,	"iecho_attr",	"Cred",		ch_attr)
 varstr (VAR_info_attr,	"info_attr",	NULL,		ch_attr)
 varflag(VAR_insert,	"insert",	TRUE,		NULL)
-varflag(VAR_interactive,"tfinteractive",-1,		NULL)
+varflag(VAR_interactive,"interactive",	-1,		NULL)
 varpos (VAR_isize,	"isize",	3,		ch_visual)
 varflag(VAR_istrip,	"istrip",	FALSE,		NULL)
 varstr (VAR_kbnum,	"kbnum",	NULL,		NULL)

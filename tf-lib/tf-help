@@ -2812,7 +2812,7 @@ python()
   For a more complex example, see the included [1mtf-lib/urlwatch.py[22;0m which 
   catches all urls going by and writes a url launching page.
 
-  See [1m/help tf python[22;0m for calling back into TinyFugue.
+  See [1m/help tf python[22;0m for calling back into TinyFugue.
 
 &/python_kill
 
@@ -2901,8 +2901,8 @@ TF Python
   TinyFugue Commands (see each for details):
   [1m/python[22;0m [4mcommand[22;0m
   [1mpython[22;0m([4mcommand[22;0m)
-  [1m/python_load[22;0m [4mmodule[22;0m
-  [1m/python_call[22;0m [4mmodule[22;0m.[4mfunction[22;0m [4margument[22;0m
+  [1m/python_load[22;0m [4mmodule[22;0m
+  [1m/python_call[22;0m [4mmodule[22;0m.[4mfunction[22;0m [4margument[22;0m
   [1m/python_kill[22;0m
 
   [1mCalling back into TinyFugue[22;0m: TF Python provides Python scripts with a 'tf'
@@ -2930,7 +2930,7 @@ TF Python
   [1m/python[22;0m sys.stdout.output = None
   You can do the same with [1msys.stderr.output[22;0m, but use [1mtf.err[22;0m instead.
 
-  See the included [1mtf-lib/urlwatch.py[22;0m and [1mtf-lib/config.py[22;0m for fairly complex
+  See the included [1mtf-lib/urlwatch.py[22;0m and [1mtf-lib/config.py[22;0m for fairly complex
   examples.
 
 

@@ -4,7 +4,11 @@
 #
 # Copyright 2008 Ron Dippold
 
+import curses
+import os
+
 import tf
+import tfutil
 
 # ---------------------------------------------------------------------------
 # Misc helper functions
@@ -357,7 +361,7 @@ class State( object ):
 		Not named def() because that's a Python keyword.
 		"""
 
- 		if name and not name in self.olddef:
+		if name and not name in self.olddef:
 			x = screenscrape( "/list -i -msimple %s" % name )
 			if x:
 				self.olddef[name] = x[0]

@@ -27,6 +27,12 @@ struct Value *handle_python_command( String *args, int offset );
 struct Value *handle_python_kill_command( String *args, int offset );
 struct Value *handle_python_call_command( String *args, int offset );
 struct Value *handle_python_load_command( String *args, int offset );
+# if PY_MAJOR_VERSION >= 3
+  #  define PyInt_Check     PyLong_Check
+  #  define PyInt_FromLong  PyLong_FromLong
+  #  define PyInt_AsLong    PyLong_AsLong
+  #  define PyInt_AS_LONG   PyLong_AS_LONG
 # endif
+#endif
 
 #endif

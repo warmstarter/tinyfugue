@@ -24,6 +24,8 @@
 # - V 2.00 - Jan 09 '08 - Convert to python from tfscript
 # ---------------------------------------------------------------------------
 
+import tf
+
 # -- CONFIGURATION
 
 # You can use '/python_call urlwatch.config <key>=<value>' to change any of
