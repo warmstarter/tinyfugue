@@ -503,19 +503,11 @@ static void init_term(void)
 
         for (i = 0; i < N_KEYCODES; i++) {
             keycodes[i].code = tgetstr(keycodes[i].capname, &area);
-#if 0
-            fprintf(stderr, "(%2s) %-12s = %s\n",
-                keycodes[i].capname, keycodes[i].name,
-                keycodes[i].code ? ascii_to_print(keycodes[i].code)->data : "NULL");
-#endif
         }
 
 	if (!keypad_off) keypad_on = NULL;
 
         if (strcmp(TERM, "xterm") == 0) {
-#if 0	    /* Now that tf has virtual screens, the secondary buffer is ok. */
-            enter_ca_mode = exit_ca_mode = NULL; /* Avoid secondary buffer. */
-#endif
             /* Many old "xterm" termcaps mistakenly omit "cs". */
             if (!set_scroll_region)
                 set_scroll_region = "\033[%i%d;%dr";
@@ -687,9 +679,6 @@ void setup_screen(void)
 	    }
 	}
 	init_line_numbers();
-#if 0
-        outcount = out_bot - out_top + 1;
-#endif
         if (enter_ca_mode) tp(enter_ca_mode);
     
         if (scroll && !(has_scroll_region || (insert_line && delete_line))) {
@@ -1805,10 +1794,6 @@ static int format_statusfield(StatusField *field)
         clock_update.tv_sec = sec + 60 - local->tm_sec;
     }
 
-#if 0
-    if (field->var && !field->var->status)   /* var was unset */
-        field->var = NULL;
-#endif
     output_disabled--;
     return width;
 }
@@ -2722,19 +2707,6 @@ static void attributes_on(attr_t attrs)
     if (attrs & F_HILITE)
         attrs |= hiliteattr;
 
-#if 0
-    if (attr_on) {
-        /* standout, underline, reverse, blink, dim, bold, blank, prot., ACS */
-        tp(tparm(attr_on, 
-            (have_attr & attrs & F_BOLD && !bold),
-            (have_attr & attrs & F_UNDERLINE),
-            (have_attr & attrs & F_REVERSE),
-            (have_attr & attrs & F_FLASH),
-            (have_attr & attrs & F_DIM),
-            (have_attr & attrs & F_BOLD && bold),
-            0, 0, 0));
-        } else
-#endif
     {
         /* Some emulators only show the last, so we do most important last. */
         if (have_attr & attrs & F_DIM)       tp(dim);

@@ -334,9 +334,6 @@ static int   tfgetaddrinfo(const char *nodename, const char *port,
 static int   opensock(World *world, int flags);
 static int   openconn(Sock *new);
 static int   establish(Sock *new);
-#if 0
-static void  fg_live_sock(void);
-#endif
 static void  nuke_dead_socks(void);
 static void  nukesock(Sock *sock);
 static void  handle_prompt(String *str, int offset, int confirmed);
@@ -1529,13 +1526,6 @@ static int openconn(Sock *sock)
     }
 #endif /* NONBLOCKING_GETHOST */
 
-#if 0
-    /* Jump back here if we start a nonblocking connect and then discover
-     * that the platform has a broken read() or select().
-     */
-    retry:
-#endif
-
     if (!xsock->addr) {
 	CONFAILHP(xsock, "no usable addresses");
 	killsock(xsock);
@@ -1622,21 +1612,6 @@ static int openconn(Sock *sock)
         FD_SET(xsock->fd, &readers);
         return 2;
 #endif /* EINPROGRESS */
-
-#if 0  /* this can cause problems on nonbuggy systems, so screw the sysv bug */
-    } else if (can_nonblock && (errno == EAGAIN
-# ifdef EWOULDBLOCK
-                                                || errno == EWOULDBLOCK
-# endif
-                                                                       )) {
-        /* A bug in SVR4.2 causes nonblocking connect() to (sometimes?)
-         * incorrectly fail with EAGAIN.  The only thing we can do about
-         * it is to try a blocking connect().
-         */
-        close(xsock->fd);
-        can_nonblock = FALSE;
-        goto retry; /* try again */
-#endif /* 0 */
     }
 
     /* The connection failed; try the next address. */
@@ -1768,13 +1743,6 @@ static int get_host_address(Sock *sock, const char **what, int *errp)
     hints.ai_family = PF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_NUMERICHOST;
-#if 0 /* AI_ADDRCONFIG is defined on FreeBSD 4.2, but causes an error in
-	 getaddrinfo() (this was fixed by 4.8).  It's not important to
-	 use the flag, so it's easier to not use it and avoid the problem. */
-# ifdef AI_ADDRCONFIG
-    hints.ai_flags |= AI_ADDRCONFIG;
-# endif
-#endif
     *errp = getaddrinfo(sock->host, sock->port, &hints, &sock->addrs);
     *what = NULL;
     if (*errp == 0) return 0;
@@ -2019,16 +1987,7 @@ static int establish(Sock *sock)
 static void killsock(Sock *sock)
 {
     if (sock->constate >= SS_ZOMBIE) return;
-#if 0 /* There may be a disconnect hook AFTER this function... */
-    if (sock == fsock || sock->queue.list.head || sock->world->screen->nnew) {
-	sock->constate = SS_ZOMBIE;
-    } else {
-	sock->constate = SS_DEAD;
-	dead_socks++;
-    }
-#else /* ... so we must unconditionally enter ZOMBIE state. */
     sock->constate = SS_ZOMBIE;
-#endif
     sock->fsastate = '\0';
     sock->attrs = 0;
     VEC_ZERO(&sock->tn_them);
@@ -2121,24 +2080,6 @@ static void nukesock(Sock *sock)
 #endif
     FREE(sock);
 }
-
-#if 0
-static void fg_live_sock(void)
-{
-    /* If the fg sock is dead, find another sock to put in fg.  Since this
-     * is called from main_loop(), xsock must be the same as fsock.  We must
-     * keep it that way.  Note that a user hook in fg_sock() could kill the
-     * new fg sock, so we must loop until the new fg sock stays alive.
-     */
-    while (fsock && (fsock->constate >= SS_ZOMBIE)) {
-        for (xsock = hsock; xsock; xsock = xsock->next) {
-            if (xsock->constate < SS_ZOMBIE)
-		break;
-        }
-        fg_sock(xsock, FALSE);
-    }
-}
-#endif
 
 /* delete all dead sockets */
 static void nuke_dead_socks(void)
@@ -3408,9 +3349,6 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
 		    no_reply("option was already agreed on");
                     CLR_TELOPT(xsock, them_tog, rawchar);
                 } else if (
-#if 0  /* many servers think DO SGA means character-at-a-time mode */
-                    rawchar == TN_SGA ||
-#endif
 #if HAVE_MCCP
 		    (rawchar == TN_COMPRESS && mccp) ||
 		    (rawchar == TN_COMPRESS2 && mccp) ||
@@ -3836,12 +3774,6 @@ static void preferred_telnet_options(void)
 {
     SET_TELOPT(xsock, us_tog, TN_NAWS);
     WILL(TN_NAWS);
-#if 0
-    SET_TELOPT(xsock, us_tog, TN_BINARY);
-    WILL(TN_BINARY);		/* allow us to send 8-bit data */
-    SET_TELOPT(xsock, them_tog, TN_BINARY);
-    DO(TN_BINARY);		/* allow server to send 8-bit data */
-#endif
 }
 
 /* Find the named world (current world if name is blank) or print an error */

@@ -22,18 +22,6 @@
 /* # define _BSD 44 */    /* Needed for nonblocking connect on AIX. */
 #endif
 
-#if 0  /* These cause a few problems, but little benefit, so forget it. */
-/* These aren't necessary, but may improve optimization, etc. */
-# ifdef __GNUC__
-#  define INLINE __inline__
-#  if (__GNUC__ == 2 && __GNUC_MINOR__ >= 5) || (__GNUC__ > 2)
-#   define GNUC_2_5_OR_LATER
-#   define PURE   __attribute__ ((const))
-#   define NORET  __attribute__ ((noreturn))
-#  endif
-# endif
-#endif
-
 #ifndef INLINE
 # define INLINE
 #endif
@@ -44,15 +32,7 @@
 # define NORET
 #endif
 
-#if 0
-# ifdef __GNUC__
-#  define format_printf(fmt, var)     __attribute__((format(printf, fmt, var)))
-# else
 #  define format_printf(fmt, var)     /* empty */
-# endif
-#else
-#  define format_printf(fmt, var)     /* empty */
-#endif
 
 /* Wide character support */
 #if WIDECHAR

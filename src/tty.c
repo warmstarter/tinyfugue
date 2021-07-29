@@ -187,11 +187,6 @@ void cbreak_noecho_mode(void)
     tty.c_cc[VTIME] = 0;
     tty.c_cc[VSTOP] = 0;	/* disable useless key */
     tty.c_cc[VSTART] = 0;	/* disable useless key */
-#if 0
-# ifdef VLNEXT
-    tty.c_cc[VLNEXT] = 0;	/* don't let useless key get caught by tty */
-# endif
-#endif
 # ifdef VDSUSP
     tty.c_cc[VDSUSP] = 0;	/* disable this useless and confusing key */
 # endif

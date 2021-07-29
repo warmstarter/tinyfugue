@@ -251,12 +251,6 @@ int init_pattern_mflag(Pattern *pat, int mflag, int opt)
         if (smatch_check(pat->str)) goto ok;
 	break;
     case MATCH_REGEXP:
-#if 0
-        char *s = pat->str;
-        while (*s == '(' || *s == '^') s++;
-        if (strncmp(s, ".*", 2) == 0)
-            tfwprintf("leading \".*\" in a regexp is inefficient.");
-#endif
 	if ((pat->ri = tf_reg_compile(pat->str, 1))) goto ok;
 	break;
     default:

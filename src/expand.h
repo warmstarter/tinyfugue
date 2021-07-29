@@ -16,14 +16,6 @@
 #define SUB_FULL     2  /* all subs and command execution                    */
 #define SUB_MACRO    3  /* all subs and command execution, from macro        */
 
-#if 0
-typedef struct {
-    Program *prog;
-    int ip;		/* instruction pointer */
-    String *cmd;
-} Process;
-#endif
-
 extern void init_expand(void);
 extern void prog_free(Program *prog);
 extern int prog_run(const Program *prog, const String *args, int offset,

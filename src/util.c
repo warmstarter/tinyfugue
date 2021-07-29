@@ -228,15 +228,6 @@ int enum2int(const char *str, long val, conString *vec, const char *msg)
     return -1;
 }
 
-#if 0 /* not used */
-/* case-insensitive strchr() */
-char *cstrchr(register const char *s, register int c)
-{
-    for (c = lcase(c); *s; s++) if (lcase(*s) == c) return (char *)s;
-    return (c) ? NULL : (char *)s;
-}
-#endif
-
 /* c may be escaped by preceding it with e */
 char *estrchr(register const char *s, register int c, register int e)
 {
@@ -350,10 +341,6 @@ int stringliteral(String *dest, const char **str)
         if (**str == '\\') {
             if ((*str)[1] == quote || (*str)[1] == '\\') {
                 ++*str;
-#if 0
-	    } else if ((*str)[1] == '\n') {
-		/* XXX handle backslash-newline */
-#endif
             } else if ((*str)[1] && pedantic) {
                 tfwprintf("the only legal escapes within this quoted "
 		    "string are \\\\ and \\%c.  \\\\%c is the correct way to "
@@ -361,11 +348,8 @@ int stringliteral(String *dest, const char **str)
 		    quote, (*str)[1], (*str)[1]);
 	    }
         }
-#if 0	/* 4.0 alpha (or earlier) - why? */
-        Stringadd(dest, is_space(**str) ? ' ' : **str);
-#else	/* 5.0 - wanted to allow ^M, ^J, etc in fake_recv() */
+	/* 5.0 - wanted to allow ^M, ^J, etc in fake_recv() */
         Stringadd(dest, **str);
-#endif
     }
     if (!**str) {
         Sprintf(dest, "unmatched %c", quote);
@@ -929,25 +913,6 @@ fail:
 	freeval(val);
     return NULL;
 }
-
-#if 0
-int strtotime(struct timeval *tvp, const char *str, char **endp)
-{
-    Value val[1];
-
-    if (!parsenumber(str, endp, TYPE_DTIME | TYPE_INT, val))
-	return -1;
-    if (val->type & TYPE_DTIME) {
-	*tvp = val->u.tval;
-	return 1;
-    } else {
-	tvp->tv_sec = val->u.ival;
-	tvp->tv_usec;
-	return 0;
-    }
-}
-#endif
-
 
 /* Converts a time-of-day to an absolute time within the last 24h.
  * BUG: doesn't handle switches to/from daylight savings time. (?)

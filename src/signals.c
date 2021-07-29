@@ -30,15 +30,6 @@
 #include "variable.h"
 #include "expand.h" /* current_command */
 
-/* POSIX.1 systems should define WIFEXITED and WEXITSTATUS, taking an |int|
- * parameter, in <sys/wait.h>.  For posix systems, we use them.  For non-posix
- * systems, we use our own.  For systems which falsely claim to be posix,
- * but do not define the wait macros, we use our own.  We can not detect
- * systems which falsely claim to be posix and incorrectly define the wait
- * macros as taking a |union wait| parameter.  The workaround for such systems
- * is to change "#ifdef _POSIX_VERSION" to "#if 0" below.
- */
-
 #include <sys/types.h>
 #if HAVE_SYS_WAIT_H
 # include <sys/wait.h>

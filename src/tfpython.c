@@ -11,6 +11,7 @@ const int feature_python = TFPYTHON - 0;
 // If this isn't defined, the whole file is null
 #if TFPYTHON
 
+/* TODO: do this in another way. */
 // Change this 0 to 1 to add debug printfs
 #if 0
 # define DPRINTF oprintf

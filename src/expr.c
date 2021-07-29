@@ -285,11 +285,6 @@ static const Value *valnum(const Value *val)
     if (val->type & TYPE_STR) {
         if (!val->sval) return NULL;
         if (!parsenumber(val->sval->data, NULL, TYPE_NUM, parsed)) {
-#if 0
-            if (pedantic)
-                tfwprintf("%s",
-                    "non-numeric string value used in numeric context");
-#endif
             return NULL;
         }
 	val = parsed;
@@ -622,14 +617,6 @@ int reduce(opcode_t op, int n)
     case OP_NMATCH: val = newint(smatch_check(opdstd(1)) &&
                         smatch(opdstd(1),opdstd(2))!=0);
                     break;
-#if 0 /* doesn't work right */
-    case '.':	    if (opd(n-0)->count == 1 && (opd(n-0)->type & TYPE_STR))
-			(val = opd(n-0))->count++;
-		    else
-			val = newSstr(opdstr(n-0));
-		    SStringcat(val->sval, opdstr(n-1));
-                    break;
-#endif
     case OP_FUNC:   val = do_function(n);                            break;
     case '!':       val = newint(!opdbool(1));                       break;
     default:        internal_error(__FILE__, __LINE__,

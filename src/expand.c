@@ -485,11 +485,6 @@ Value *prog_interpret(const Program *prog, int in_expr)
 	TFILE *local_tfin, *local_tfout;/* restored after pipes */
 	TFILE *inpipe, *outpipe;	/* pipes between commands */
     } first_frame, *frame;
-#if 0
-    TFILE **filep;
-#define which_tfile_p(c) \
-    (c=='i' ? &tfin : c=='o' ? &tfout : c=='e' ? &tferr : NULL)
-#endif
 
     frame = &first_frame;
     frame->local_tfin = frame->orig_tfin = tfin;
@@ -592,11 +587,6 @@ Value *prog_interpret(const Program *prog, int in_expr)
 	    constr = prog->code[cip].arg.str;
 	    if ((no_arg = !constr)) constr = CS(buf);
 	    if (constr->len || !snarf) {
-#if 0
-		if (/*(subs == SUB_MACRO) &&*//*XXX*/ (mecho > invis_flag))
-		    tfprintf(tferr, "%S%s%S%A", do_mprefix(), "SEND: ", constr,
-			mecho_attr);
-#endif
 		if (!do_hook(H_SEND, NULL, "%S", constr)) {
 		    set_user_result(newint(send_line(constr->data, constr->len,
 			TRUE)));
@@ -694,14 +684,6 @@ Value *prog_interpret(const Program *prog, int in_expr)
 	    frame->local_tfin = tfin;
 	    frame->inpipe = frame->outpipe = NULL;
 	    break;
-#if 0
-	case OP_POPFILE:
-	    filep = which_tfile_p(prog->code[cip].arg.c);
-	    tfclose(*filep);
-	    *filep = (TFILE*)valptr(popval()); /* XXX optimize */
-	    freeval(opd(0));
-	    break;
-#endif
 	case OP_ACMDSUB:
 	case OP_PCMDSUB:
 	    if (op_is_push(op))
