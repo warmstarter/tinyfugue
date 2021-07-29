@@ -33,7 +33,7 @@
 ;;; file compression
 ;; COMPRESS_READ should contain a command that take a filename as an
 ;; argument, and prints its output on stdout.  By default, these macros
-;; are set to '.Z' and 'zcat'.  To use a different program, uncomment the
+;; are set to '.gz' and 'zcat'.  To use a different program, uncomment the
 ;; pair used on your system, or add your own.
 
 ; GNU compression
