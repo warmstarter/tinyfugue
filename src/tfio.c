@@ -256,9 +256,7 @@ TFILE *tfopen(const char *name, const char *mode)
 
         if ((fp = fopen(newname, mode)) != NULL) {  /* test readability */
             fclose(fp);
-#ifdef PLATFORM_UNIX
             Sprintf(buffer, "%s %s 2>/dev/null", prog, newname);
-#endif
             fp = popen(buffer->data, mode);
             type = TF_PIPE;
         }

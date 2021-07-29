@@ -240,7 +240,7 @@ static void handle_interrupt(void)
     VEC_CLR(SIGINT, &pending_signals);
     /* so status line macros in setup_screen() aren't gratuitously killed */
 
-    if (!interactive)
+    if (!tfinteractive)
         die("Interrupt, exiting.", 0);
     reset_kbnum();
     fix_screen();
@@ -287,7 +287,7 @@ static void core_handler(int sig)
     setsighandler(sig, core_handler);  /* restore handler (POSIX) */
 
     if (sig == SIGQUIT) {
-	if (interactive) {
+	if (tfinteractive) {
 	    fix_screen();
 #if DISABLE_CORE
 	    puts("SIGQUIT received.  Exit?  (y/n)\r");
@@ -322,7 +322,6 @@ static void core_handler(int sig)
 #else /* cores are enabled */
 	    fputs("Also, if you can, include a stack trace in your email.\r\n",
 		stderr);
-# ifdef PLATFORM_UNIX
 	    fputs("To get a stack trace, do this:\r\n", stderr);
 	    fputs("cd src\r\n", stderr);
 	    fputs("script\r\n", stderr);
@@ -338,12 +337,11 @@ static void core_handler(int sig)
 	    fputs("Then include the \"typescript\" file in your email.\r\n",
 		stderr);
 	    fputs("\n", stderr);
-# endif /* PLATFORM_UNIX */
 #endif /* DISABLE_CORE */
 	}
     }
 
-    if (interactive) {
+    if (tfinteractive) {
 	close_all();
         fputs("\nPress any key.\r\n", stderr);
         fflush(stderr);
@@ -425,7 +423,7 @@ static FILE *get_dumpfile(void)
     }
 }
 
-#if defined(PLATFORM_UNIX) && HAVE_WAITPID
+#if  HAVE_WAITPID
 static const char *test_exename(const char *template, pid_t pid)
 {
     struct stat statbuf;
@@ -517,10 +515,7 @@ static int debugger_dump(void)
     }
     return 0;
 }
-
-#else /* !PLATFORM_UNIX */
-static int debugger_dump(void) { return 0; }
-#endif /* PLATFORM_UNIX */
+#endif
 
 static void terminate(int sig)
 {
@@ -595,7 +590,7 @@ int shell(const char *cmd)
     cbreak_noecho_mode();
     if (result == -1) {
         eprintf("%s", strerror(errno));
-    } else if (shpause && interactive) {
+    } else if (shpause && tfinteractive) {
         puts("\r\n% Press any key to continue tf.\r");
         igetchar();
     }

@@ -1,0 +1,33 @@
+Setup:
+
+   - autoconf
+
+   - ./configure --enable-python
+
+Python 2.7 or Python 3+ are required for support, as older versions are
+missing certain features that this version of TF is targetting. If you need
+to run Python 2.1-2.6, it's recommended to use the the stock 50b8 with the
+Python patch, available here:
+
+http://sizer99.com/tf/
+
+In the future, Python 2.7 support might be removed if the required featureset
+begins to diverge too much.
+
+To run Python, you will need a few pieces of additional software targetting
+the specific version f Python you wish to run. On Debian for example, these
+would be variants of:
+
+libpython-dev python-cxx-dev python python python-config
+
+Usage:
+
+   - run TinyFugue (tf) and then 
+       /help tf python
+
+   - scripts are installed in the tf-lib/python directory for a few packaged ones,
+     but you can obviously ad our own.
+
+   - Check out tf-lib/python/urlwatch.py for a simple scripting example. This uses
+     only a tiny fraction of what you can do, but I've been so busy making
+     this patch I haven't had time to write all the scripts I want!

@@ -38,6 +38,7 @@
 #include "tty.h"	/* no_tty */
 #include "history.h"	/* log_count */
 #include "world.h"	/* new_world() */
+#include "tfpython.h"
 
 
 #define STACKSIZE 512
@@ -821,11 +822,7 @@ static Value *function_switch(const ExprFunc *func, int n, const char *parent)
 
     int symbol = func - functab;
 
-#ifdef PLATFORM_UNIX
     STATIC_STRING(systype, "unix", 0);
-#else
-    STATIC_STRING(systype, "unknown", 0);
-#endif
 
         switch (symbol) {
 
@@ -945,6 +942,18 @@ static Value *function_switch(const ExprFunc *func, int n, const char *parent)
 	    if (!macro_run(opdstr(n-0), 0, NULL, 0, i, "\bEVAL"))
 		return shareval(val_zero);
 	    return_user_result();
+
+#if TFPYTHON
+        case FN_python:
+		{
+			struct Value *rv = handle_python_function( opdstr(n-0) );
+			if( !rv ) {
+				return shareval(val_zero);
+			} else {
+				return rv;
+			}
+		}
+#endif
 
         case FN_send:
             i = handle_send_function(opdstr(n), (n>1 ? opdstd(n-1) : NULL),

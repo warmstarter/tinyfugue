@@ -25,6 +25,11 @@
 #define varflag(id, name, ival, func) \
     varcode(id, name, NULL, TYPE_ENUM, 0, enum_flag, ival, 0, func)
 
+/* Some variables have different internal names from their user-facing names.
+ * varlist.h is defining the user-facing names. For internal code use, look
+ * to globals.h to see how they are defined.
+ */
+
 /* These MUST be sorted by name! */
 /*      ID,		NAME,		VALUE,		FUNC,	ENUMS	*/
 
@@ -147,11 +152,6 @@ varint (VAR_sigfigs,	"sigfigs",	15,		NULL)
 varflag(VAR_snarf,	"snarf",	FALSE,		NULL)
 varflag(VAR_sockmload,	"sockmload",	FALSE,		NULL)
 varstr (VAR_sprefix,	"sprefix",	NULL,		NULL)
-varstr (VAR_ssl_ca_dir,	"ssl_ca_dir",	NULL,		NULL)
-varstr (VAR_ssl_ca_file,"ssl_ca_file",	NULL,		NULL)
-varflag(VAR_ssl_continue,"ssl_continue",TRUE,		NULL)
-varint (VAR_ssl_depth,	"ssl_depth",	10,		NULL)
-varflag(VAR_ssl_verbose,"ssl_verbose",	TRUE,		NULL)
 varstr (VAR_stat_attr,	"status_attr",	NULL,		ch_status_attr)
 varstr (VAR_stat_fields,"status_fields",NULL,		ch_status_fields)
 varpos (VAR_stat_height,"status_height",1,		ch_status_height)

@@ -1,6 +1,8 @@
 TinyFugue 50b8 with numerous patches and improvements
 
-UTF8 support (--enable-widechar=yes)
+UTF8 support (--enable-widechar=yes) on by default
+PYTHON interpreter support for interfacing with client and macros
+PYTHON 2.7 and 3 are both supported (--enable-python) off by default
 /HELP has been spell checked, along with everything else
 HTML documentation and html2tf found and returned to repo
 ANSI log output (/help ansi_log) off by default
@@ -11,7 +13,6 @@ FG world switching can use TF4 stle (/help oldstylefg) off by default
 @ALERT picks up on messages that could have been lost
 / as a prefix to /command sends to MU, as opposed to ///command
 SSL looks for GNU TLS
-SSL verifies cert chain and check for self-signed, only warn by default
 ATCP protocol support (--enable-atcp=yes) off by default
 GMCP protocol support (--enable-gmcp=yes) off by default
 OPTION 102 protocol support (--enable-option102=yes) off by default

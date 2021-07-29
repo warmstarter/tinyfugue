@@ -29,6 +29,7 @@
 #include "expand.h"     /* macro_run() */
 #include "signals.h"    /* suspend(), shell() */
 #include "variable.h"
+#include "tfpython.h"
 
 int exiting = 0;
 
@@ -215,7 +216,7 @@ struct Value *handle_quit_command(String *args, int offset)
         else return shareval(val_zero);
     }
 
-    if (interactive && have_active_socks() && !yes) {
+    if (tfinteractive && have_active_socks() && !yes) {
 	fix_screen();
 	puts("There are sockets with unseen text.  Really quit tf? (y/N)\r");
 	fflush(stdout);
@@ -482,9 +483,10 @@ struct Value *handle_unlimit_command(String *args, int offset)
  ********************/   
 
 /* Returns -1 if file can't be read, 0 for an error within the file, or 1 for
- * success.
+ * success. If savename!=NULL and the file is found, *savename will be set to
+ * strdup(file->name) and it's up to you to free() it.
  */
-int do_file_load(const char *args, int tinytalk)
+int do_file_load(const char *args, int tinytalk, char **savename)
 {
     AUTO_BUFFER(line);
     AUTO_BUFFER(cmd);
@@ -513,7 +515,7 @@ int do_file_load(const char *args, int tinytalk)
 		    Stringadd(libfile, *path++);
 		}
 		if (!is_absolute_path(libfile->data)) {
-		    tfwprintf("invalid directory in TFPATH: %S", libfile);
+		    tfwprintf((const wchar_t *)"invalid directory in TFPATH: %S", libfile);
 		} else {
 		    Sappendf(libfile, "/%s", args);
 		    file = tfopen(expand_filename(libfile->data), "r");
@@ -521,7 +523,7 @@ int do_file_load(const char *args, int tinytalk)
 	    } while (!file && *path);
 	} else {
 	    if (!is_absolute_path(TFLIBDIR)) {
-		tfwprintf("invalid TFLIBDIR: %s", TFLIBDIR);
+		tfwprintf((const wchar_t *)"invalid TFLIBDIR: %s", TFLIBDIR);
 	    } else {
 		Sprintf(libfile, "%s/%s", TFLIBDIR, args);
 		file = tfopen(expand_filename(libfile->data), "r");
@@ -537,6 +539,8 @@ int do_file_load(const char *args, int tinytalk)
 
     do_hook(H_LOAD, quietload ? NULL : "%% Loading commands from %s.",
         "%s", file->name);
+	if( savename )
+		*savename = strdup( file->name );
     oflush();  /* Load could take awhile, so flush pending output first. */
 
     Stringninit(line, 80);
@@ -578,7 +582,7 @@ int do_file_load(const char *args, int tinytalk)
                 i = line->len - 1;
                 while (i > 0 && is_space(line->data[i])) i--;
                 if (line->data[i] == '\\')
-                    tfwprintf("whitespace following final '\\'");
+                    tfwprintf((const wchar_t *)"whitespace following final '\\'");
             }
         } else {
             last_cmd_line = 0;
@@ -701,7 +705,7 @@ struct Value *handle_load_command(String *args, int offset)
 
     quietload += quiet;
     if (args->len - offset)
-        result = (do_file_load(stripstr(args->data + offset), FALSE) > 0);
+        result = (do_file_load(stripstr(args->data + offset), FALSE, NULL) > 0);
     else eprintf("missing filename");
     quietload -= quiet;
     return newint(result);

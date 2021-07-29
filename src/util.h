@@ -66,6 +66,7 @@ extern const int feature_ATCP;
 extern const int feature_GMCP;
 extern const int feature_OPTION102;
 extern const int feature_process;
+extern const int feature_python;
 extern const int feature_SSL;
 extern const int feature_subsecond;
 extern const int feature_TZ;

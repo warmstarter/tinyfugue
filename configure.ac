@@ -16,6 +16,7 @@ AC_PREREQ([2.69])
 
 m4_include([m4/ax_check_icu.m4])
 m4_include([m4/ax_compiler_vendor.m4])
+m4_include([m4/ax_python.m4])
 
 # These are substitutions to be used within configure.in where something
 # might be referenced multiple times. This is the canonical place to make
@@ -136,6 +137,14 @@ if test "$enable_256colors" = "yes"; then
        	[256],
        	[256 color mode enabled])
 fi
+
+AC_ARG_ENABLE(
+    [python],
+    [AS_HELP_STRING(
+        [--enable-python],
+	[enable python interpreter for scripting])],
+    [enable_python=${enableval}],
+    [enable_python=no])
 
 AC_ARG_ENABLE(
     [widechar],
@@ -536,17 +545,32 @@ if test "$enable_ssl" = "yes"; then
 	AC_CHECK_HEADERS([openssl/ssl.h openssl/err.h openssl/x509v3.h], ok=1,
 	    [AC_CHECK_HEADERS([gnutls/openssl.h], [ok=1])])
 	if test "$ok" = "1"; then
-	    AC_DEFINE([HAVE_SSL], [1], [SSL enabled])
+	    AC_DEFINE(
+                [HAVE_SSL],
+                [1],
+                [SSL enabled])
             AC_CHECK_FUNCS(ERR_peek_error)
 	fi
 	break
     done
     if test "$ok" = "0"; then
-	AC_MSG_RESULT([ssl support will not be enabled.])
+	AC_MSG_WARN([SSL support will not be enabled.])
 	LIBS="$old_LIBS"
 	CFLAGS="$old_CFLAGS"
 	CPPFLAGS="$old_CPPFLAGS"
     fi
+fi
+
+if test "$enable_python" = "yes"; then
+    AX_PYTHON
+    AC_DEFINE(
+        [TFPYTHON],
+        [1],
+        [python scripting enabled])
+    PYTHON_INCLUDES="$PYTHON_INCLUDE_DIRS"
+    PYTHON_LIBS="$PYTHON_LIBS"
+    AC_SUBST(PYTHON_INCLUDES)
+    AC_SUBST(PYTHON_LIBS)
 fi
 
 ########### terminal ############

@@ -39,7 +39,6 @@
 # else
 #  include <openssl/ssl.h>
 #  include <openssl/err.h>
-#  include <openssl/x509v3.h>
 # endif
     SSL_CTX *ssl_ctx;
 #endif
@@ -110,10 +109,8 @@ struct sockaddr_in {
 # define INET6_ADDRSTRLEN 46
 #endif
 
-#ifdef PLATFORM_UNIX
-# if HAVE_WAITPID
-#  define NONBLOCKING_GETHOST
-# endif
+#if HAVE_WAITPID
+# define NONBLOCKING_GETHOST
 #endif
 
 #ifdef NETDB_H
@@ -364,10 +361,6 @@ static void  do_naws(Sock *sock);
 static void  telnet_debug(const char *dir, const char *str, int len);
 static void  preferred_telnet_options(void);
 static void  killsock(Sock *sock);
-#if HAVE_SSL
-static int   ssl_check_cert_verify(Sock *sock);
-static int   ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx);
-#endif
 
 #define zombiesock(sock)	killsock(sock)
 #define flushxsock() \
@@ -525,17 +518,8 @@ do { \
 static void ssl_err(const char *str)
 {
     unsigned long e;
-    e=ERR_get_error();
-    do {
-        const char *msg;
-        if (e) {
-          msg = ERR_error_string(e, NULL);
-	} else {
-          msg = "error";
-        }
-        eprintf("ssl: %s: %s", str, msg);
-        e = ERR_get_error();
-    } while(e);
+    while ((e = ERR_get_error()))
+	eprintf("%s: %s", str, ERR_error_string(e, NULL));
 }
 
 static void ssl_io_err(Sock *sock, int ret, int hook)
@@ -592,77 +576,6 @@ static void ssl_io_err(Sock *sock, int ret, int hook)
     }
 }
 
-/* cert verify, from openssl example eg:
- * https://www.openssl.org/docs/man1.1.0/ssl/SSL_CTX_set_verify.html
- */
-typedef struct {
-    int verbose_mode;
-    int verify_depth;
-    int always_continue;
-} ssl_options_t;
-ssl_options_t ssl_options;
-int ssl_options_index;
-
-static int ssl_verify_callback(int preverify_ok, X509_STORE_CTX *ctx)
-{
-    char buf[256];
-    X509 *err_cert;
-    int err, depth;
-    SSL *ssl;
-    ssl_options_t *ssl_options;
-
-    err_cert = X509_STORE_CTX_get_current_cert(ctx);
-    err = X509_STORE_CTX_get_error(ctx);
-    depth = X509_STORE_CTX_get_error_depth(ctx);
-
-    /* Retrieve the pointer to the SSL of the connection currently treated
-     * and the application specific data stored into the SSL object.
-     */
-    ssl = X509_STORE_CTX_get_ex_data(ctx, SSL_get_ex_data_X509_STORE_CTX_idx());
-    ssl_options = SSL_get_ex_data(ssl, ssl_options_index);
-    if (ssl_options == NULL) {
-	eprintf("ssl: ssl_options null");
-    }
-
-    X509_NAME_oneline(X509_get_subject_name(err_cert), buf, 256);
-
-    /* Catch a too long certificate chain. The depth limit set using
-     * SSL_CTX_set_verify_depth() is by purpose set to "limit+1" so
-     * that whenever the "depth>verify_depth" condition is met, we
-     * have violated the limit and want to log this error condition.
-     * We must do it here, because the CHAIN_TOO_LONG error would not
-     * be found explicitly; only errors introduced by cutting off the
-     * additional certificates would be logged.
-     */
-
-    if (depth > ssl_options->verify_depth) {
-	do_hook(H_PENDING, "%% SSL: cert verify depth exceeded: allowed=%d actual=%d", "%d %d", ssl_options->verify_depth, depth);
-	preverify_ok = 0;
-	err = X509_V_ERR_CERT_CHAIN_TOO_LONG;
-	X509_STORE_CTX_set_error(ctx, err);
-    }
-    if (!preverify_ok) {
-	do_hook(H_PENDING, "%% SSL: cert verify error: err=%d '%s' depth:%d cn:%s", "%d %s %d %s", err, X509_verify_cert_error_string(err), depth, buf);
-    }
-    else if (ssl_options->verbose_mode) {
-	/* eprintf("depth=%d:%s", depth, buf); */
-	do_hook(H_PENDING, "%% SSL: chain: depth:%d cn:%s", "%d %s", depth, buf);
-    }
-
-    /* At this point, err contains the last verification error. We can use
-     * it for something special
-     */
-    if (!preverify_ok && (err == X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT)) {
-	X509_NAME_oneline(X509_get_issuer_name(err_cert), buf, 256);
-	eprintf("issuer= %s", buf);
-    }
-
-    if (ssl_options->always_continue)
-	return 1;
-    else
-	return preverify_ok;
-}
-
 static void init_ssl(void)
 {
     SSL_load_error_strings();
@@ -676,15 +589,6 @@ static void init_ssl(void)
     if (!SSL_CTX_set_cipher_list(ssl_ctx, "ALL")) {
 	ssl_err("SSL_CTX_set_cipher_list");
 	return;
-    }
-    SSL_CTX_set_default_verify_paths(ssl_ctx);
-    if (ssl_ca_file || ssl_ca_dir) {
-	if (SSL_CTX_load_verify_locations(ssl_ctx, ssl_ca_file, ssl_ca_dir) < 1) {
-	    eprintf("ssl: SSL_CTX_load_verify_locations: nothing loaded");
-	    ssl_err("SSL_CTX_load_verify_locations");
-	    eprintf("ssl: SSL_CTX_load_verify_locations: ssl_ca_file=%s", ssl_ca_file);
-	    eprintf("ssl: SSL_CTX_load_verify_locations: ssl_ca_dir=%s", ssl_ca_dir);
-	}
     }
 }
 #endif
@@ -754,6 +658,9 @@ void init_sock(void)
     telnet_label[(UCHAR)TN_DO]		= "DO";
     telnet_label[(UCHAR)TN_DONT]	= "DONT";
     telnet_label[(UCHAR)TN_IAC]		= "IAC";
+#if HAVE_SSL
+    init_ssl();
+#endif
 }
 
 #define set_min_earliest(tv) \
@@ -1146,7 +1053,7 @@ static void wload(World *w)
     const char *mfile;
     if (restriction >= RESTRICT_FILE) return;
     if ((mfile = world_mfile(w)))
-        do_file_load(mfile, FALSE);
+        do_file_load(mfile, FALSE, NULL);
 }
 
 int world_hook(const char *fmt, const char *name)
@@ -1407,22 +1314,7 @@ static int opensock(World *world, int flags)
     if (world->flags & WORLD_ECHO) xsock->flags |= SOCKECHO;
     if ((flags & CONN_SSL) || (world->flags & WORLD_SSL)) {
 #if HAVE_SSL
-	init_ssl();
-	/* Note: set_verify() needs to be called *before* SSL_new() */
-	SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, ssl_verify_callback);
 	xsock->ssl = SSL_new(ssl_ctx);
-	SSL_CTX_set_verify_depth(ssl_ctx, ssl_depth);
-	ssl_options_index = SSL_get_ex_new_index(0, "ssl_options index", NULL, NULL, NULL);
-	ssl_options_t ssl_options;
-	ssl_options.verify_depth = ssl_depth;
-	ssl_options.verbose_mode = ssl_verbose;
-	ssl_options.always_continue = ssl_continue;
-	SSL_set_ex_data(xsock->ssl, ssl_options_index, &ssl_options);
-#if OPENSSL_VERSION_NUMBER >= 0x1000200fL
-	X509_VERIFY_PARAM *param = SSL_get0_param(xsock->ssl);
-	X509_VERIFY_PARAM_set_hostflags(param, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
-	X509_VERIFY_PARAM_set1_host(param, xsock->world->host, 0);
-#endif
 #else
         CONFAIL(xsock, "ssl", "not supported");
 #endif
@@ -1609,12 +1501,10 @@ static int openconn(Sock *sock)
 		CONFAILHP(xsock, gai_strerror(info.err));
             close(xsock->fd);
             xsock->fd = -1;
-# ifdef PLATFORM_UNIX
 	    if (xsock->pid >= 0)
 		if (waitpid(xsock->pid, NULL, 0) < 0)
 		    tfprintf(tferr, "waitpid %ld: %s", xsock->pid, strerror(errno));
 	    xsock->pid = -1;
-# endif /* PLATFORM_UNIX */
             killsock(xsock);
             return 0;
         }
@@ -1625,12 +1515,10 @@ static int openconn(Sock *sock)
 	    read(xsock->fd, (char*)xsock->addrs, info.size);
 	}
         close(xsock->fd);
-# ifdef PLATFORM_UNIX
         if (xsock->pid >= 0)
             if (waitpid(xsock->pid, NULL, 0) < 0)
                tfprintf(tferr, "waitpid: %ld: %s", xsock->pid, strerror(errno));
         xsock->pid = -1;
-# endif /* PLATFORM_UNIX */
         xsock->constate = SS_RESOLVED;
 	for (ai = xsock->addrs; ai; ai = ai->ai_next) {
 	    ai->ai_addr = (struct sockaddr*)((char*)ai + sizeof(*ai));
@@ -1965,8 +1853,7 @@ static int nonblocking_gethost(const char *name, const char *port,
 
     *what = "pipe";
     if (pipe(fds) < 0) return -1;
-
-#ifdef PLATFORM_UNIX
+/* TODO: Check the idnent here after removing PLATFORM_UNIX */
     {
         *what = "fork";
         *pidp = fork();
@@ -1979,7 +1866,6 @@ static int nonblocking_gethost(const char *name, const char *port,
             exit(0);
         }
     }
-#endif
 
     /* failed */
     err = errno;
@@ -2091,7 +1977,6 @@ static int establish(Sock *sock)
 	    killsock(xsock);
 	    return 0;
 	}
-	ssl_check_cert_verify(sock);
     }
 #endif
 
@@ -2131,22 +2016,6 @@ static int establish(Sock *sock)
     }
     return 1;
 }
-
-#if HAVE_SSL
-static int ssl_check_cert_verify(Sock *sock)
-{
-    int ret = 0;
-    long result = SSL_get_verify_result(sock->ssl);
-    if (result == X509_V_OK) {
-	/* The client sent a certificate which verified OK */
-	do_hook(H_PENDING, "%% SSL: cert verified: OK ret=%ld", "%ld", result);
-    }
-    else {
-	do_hook(H_PENDING, "%% SSL: cert verify failed: ERROR err=%ld", "%ld", result);
-    }
-    return ret;
-}
-#endif
 
 /* clear most of sock's fields, but leave it consistent and extant */
 static void killsock(Sock *sock)
@@ -2208,14 +2077,12 @@ static void killsock(Sock *sock)
     }
 #endif
 #ifdef NONBLOCKING_GETHOST
-# ifdef PLATFORM_UNIX
     if (sock->pid >= 0) {
         kill(sock->pid, SIGTERM);
         if (waitpid(sock->pid, NULL, 0) < 0)
             tfprintf(tferr, "waitpid: %ld: %s", sock->pid, strerror(errno));
         sock->pid = -1;
     }
-# endif /* PLATFORM_UNIX */
 #endif /* NONBLOCKING_GETHOST */
     if (sock == fsock)
 	update_status_field(NULL, STAT_WORLD);

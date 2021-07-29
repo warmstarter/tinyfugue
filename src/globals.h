@@ -145,6 +145,10 @@ enum Vars {
 #define getstrvar(id)	((conString*)    strvar(id))
 #define getstdvar(id)	((char*)         (strvar(id) ? strvar(id)->data : NULL))
 
+/* Some variables have different internal names from user-facing  names.
+ * globals.h defines the internal name in relation to the user-facing name
+ */
+
 /* setlocale? */
 #define MAIL		getstdvar(VAR_MAIL)
 #define TERM		getstdvar(VAR_TERM)
@@ -185,14 +189,12 @@ enum Vars {
 #define hilite		getintvar(VAR_hilite)
 #define hiliteattr	getattrvar(VAR_hiliteattr)
 #define histsize	getintvar(VAR_histsize)
-/* hook vs hookflag? */
 #define hookflag	getintvar(VAR_hook)
 #define hpri		getintvar(VAR_hpri)
 #define iecho		getintvar(VAR_iecho)
 #define iecho_attr	getattrvar(VAR_iecho_attr)
 #define info_attr	getattrvar(VAR_info_attr)
 #define insert		getintvar(VAR_insert)
-#define interactive	getintvar(VAR_interactive)
 #define isize		getintvar(VAR_isize)
 #define istrip		getintvar(VAR_istrip)
 #define kbnum		getstrvar(VAR_kbnum)
@@ -204,7 +206,6 @@ enum Vars {
 #define login		getintvar(VAR_login)
 #define log_prefix	getstrvar(VAR_log_prefix)
 #define log_time_format	getstrvar(VAR_log_time_format)
-/* lp vs lpflag? */
 #define lpflag		getintvar(VAR_lp)
 #define lpquote		getintvar(VAR_lpquote)
 #define maildelay	gettimevar(VAR_maildelay)
@@ -233,7 +234,6 @@ enum Vars {
 #define qecho		getintvar(VAR_qecho)
 #define qecho_attr	getattrvar(VAR_qecho_attr)
 #define qprefix		getstrvar(VAR_qprefix)
-/* quiet vs quietflag? */
 #define quietflag	getintvar(VAR_quiet)
 #define quitdone	getintvar(VAR_quitdone)
 #define redef		getintvar(VAR_redef)
@@ -247,11 +247,6 @@ enum Vars {
 #define snarf		getintvar(VAR_snarf)
 #define sockmload	getintvar(VAR_sockmload)
 #define sprefix		getstrvar(VAR_sprefix)
-#define ssl_ca_dir	getstdvar(VAR_ssl_ca_dir)
-#define ssl_ca_file	getstdvar(VAR_ssl_ca_file)
-#define ssl_continue	getintvar(VAR_ssl_continue)
-#define ssl_depth	getintvar(VAR_ssl_depth)
-#define ssl_verbose	getintvar(VAR_ssl_verbose)
 /* stat_* vs status_* ? */
 /* stint_* vs status_* ? */
 #define status_attr	getattrvar(VAR_stat_attr)
@@ -268,6 +263,7 @@ enum Vars {
 #define textdiv		getintvar(VAR_textdiv)
 #define textdiv_str	getstrvar(VAR_textdiv_str)
 #define tfhost		getstdvar(VAR_tfhost)
+#define tfinteractive	getintvar(VAR_interactive)
 #define time_format	getstrvar(VAR_time_format)
 #define virtscreen	getintvar(VAR_virtscreen)
 /* visual is special: initial value of -1 indicates it was never explicitly
