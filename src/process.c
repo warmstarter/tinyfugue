@@ -586,9 +586,7 @@ struct Value *handle_quote_command(String *args, int offset)
         break;
     case P_QSHELL:
         /* null input, and capture stderr */
-#ifdef PLATFORM_UNIX
         Sprintf(newcmd, "{ %s; } </dev/null 2>&1", cmd);
-#endif
 	/* RESTRICT_SHELL is checked by tfopen() */
         if ((input = tfopen(newcmd->data, "p")) == NULL) {
             operror(cmd);

@@ -134,11 +134,7 @@ extern char *sys_errlist[];
 #endif
 
 #if !HAVE_FILENO  /* occurs on at least one pre-POSIX SVr3-like platform */
-# ifdef PLATFORM_UNIX
-#  define fileno(p)  ((p)->_file)
-# else
-   /* Who knows what it should be elsewhere; it should already exist. */
-# endif
+# define fileno(p)  ((p)->_file)
 #endif
 
 #if !HAVE_LOCALE_H

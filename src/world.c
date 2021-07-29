@@ -174,14 +174,12 @@ World *new_world(const char *name, const char *type,
     result->charset = STRDUP(default_charset->data);
 #endif
 
-#ifdef PLATFORM_UNIX
     if (pass && *pass && loadfile && (loadfile->mode & (S_IROTH | S_IRGRP)) &&
         !loadfile->warned)
     {
         tfwprintf("file contains passwords and is readable by others.");
         loadfile->warned++;
     }
-#endif /* PLATFORM_UNIX */
 
     if (is_redef)
         do_hook(H_REDEF, "!Redefined %s %s", "%s %s", "world", result->name);

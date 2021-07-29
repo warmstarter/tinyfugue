@@ -327,7 +327,6 @@ static void core_handler(int sig)
 #else /* cores are enabled */
 	    fputs("Also, if you can, include a stack trace in your email.\r\n",
 		stderr);
-# ifdef PLATFORM_UNIX
 	    fputs("To get a stack trace, do this:\r\n", stderr);
 	    fputs("cd src\r\n", stderr);
 	    fputs("script\r\n", stderr);
@@ -343,7 +342,6 @@ static void core_handler(int sig)
 	    fputs("Then include the \"typescript\" file in your email.\r\n",
 		stderr);
 	    fputs("\n", stderr);
-# endif /* PLATFORM_UNIX */
 #endif /* DISABLE_CORE */
 	}
     }
@@ -430,7 +428,7 @@ static FILE *get_dumpfile(void)
     }
 }
 
-#if defined(PLATFORM_UNIX) && HAVE_WAITPID
+#if  HAVE_WAITPID
 static const char *test_exename(const char *template, pid_t pid)
 {
     struct stat statbuf;
@@ -522,10 +520,7 @@ static int debugger_dump(void)
     }
     return 0;
 }
-
-#else /* !PLATFORM_UNIX */
-static int debugger_dump(void) { return 0; }
-#endif /* PLATFORM_UNIX */
+#endif
 
 static void terminate(int sig)
 {

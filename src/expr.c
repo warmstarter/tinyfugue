@@ -822,11 +822,7 @@ static Value *function_switch(const ExprFunc *func, int n, const char *parent)
 
     int symbol = func - functab;
 
-#ifdef PLATFORM_UNIX
     STATIC_STRING(systype, "unix", 0);
-#else
-    STATIC_STRING(systype, "unknown", 0);
-#endif
 
         switch (symbol) {
 

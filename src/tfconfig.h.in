@@ -12,8 +12,6 @@
  * comment causes problems too.)
  */
 
-#define PLATFORM_UNIX 1
-
 #undef MAILDIR
 #undef pid_t
 #undef size_t

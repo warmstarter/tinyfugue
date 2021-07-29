@@ -109,10 +109,8 @@ struct sockaddr_in {
 # define INET6_ADDRSTRLEN 46
 #endif
 
-#ifdef PLATFORM_UNIX
-# if HAVE_WAITPID
-#  define NONBLOCKING_GETHOST
-# endif
+#if HAVE_WAITPID
+# define NONBLOCKING_GETHOST
 #endif
 
 #ifdef NETDB_H
@@ -1508,12 +1506,10 @@ static int openconn(Sock *sock)
 		CONFAILHP(xsock, gai_strerror(info.err));
             close(xsock->fd);
             xsock->fd = -1;
-# ifdef PLATFORM_UNIX
 	    if (xsock->pid >= 0)
 		if (waitpid(xsock->pid, NULL, 0) < 0)
 		    tfprintf(tferr, "waitpid %ld: %s", xsock->pid, strerror(errno));
 	    xsock->pid = -1;
-# endif /* PLATFORM_UNIX */
             killsock(xsock);
             return 0;
         }
@@ -1524,12 +1520,10 @@ static int openconn(Sock *sock)
 	    read(xsock->fd, (char*)xsock->addrs, info.size);
 	}
         close(xsock->fd);
-# ifdef PLATFORM_UNIX
         if (xsock->pid >= 0)
             if (waitpid(xsock->pid, NULL, 0) < 0)
                tfprintf(tferr, "waitpid: %ld: %s", xsock->pid, strerror(errno));
         xsock->pid = -1;
-# endif /* PLATFORM_UNIX */
         xsock->constate = SS_RESOLVED;
 	for (ai = xsock->addrs; ai; ai = ai->ai_next) {
 	    ai->ai_addr = (struct sockaddr*)((char*)ai + sizeof(*ai));
@@ -1864,8 +1858,7 @@ static int nonblocking_gethost(const char *name, const char *port,
 
     *what = "pipe";
     if (pipe(fds) < 0) return -1;
-
-#ifdef PLATFORM_UNIX
+/* TODO: Check the idnent here after removing PLATFORM_UNIX */
     {
         *what = "fork";
         *pidp = fork();
@@ -1878,7 +1871,6 @@ static int nonblocking_gethost(const char *name, const char *port,
             exit(0);
         }
     }
-#endif
 
     /* failed */
     err = errno;
@@ -2090,14 +2082,12 @@ static void killsock(Sock *sock)
     }
 #endif
 #ifdef NONBLOCKING_GETHOST
-# ifdef PLATFORM_UNIX
     if (sock->pid >= 0) {
         kill(sock->pid, SIGTERM);
         if (waitpid(sock->pid, NULL, 0) < 0)
             tfprintf(tferr, "waitpid: %ld: %s", sock->pid, strerror(errno));
         sock->pid = -1;
     }
-# endif /* PLATFORM_UNIX */
 #endif /* NONBLOCKING_GETHOST */
     if (sock == fsock)
 	update_status_field(NULL, STAT_WORLD);
