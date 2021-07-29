@@ -50,7 +50,7 @@
 
 ;;; file compression
 
-/def -i COMPRESS_SUFFIX = .Z
+/def -i COMPRESS_SUFFIX = .gz
 /def -i COMPRESS_READ = zcat
 
 ;;; High priority for library hooks/triggers.  This is a hack.

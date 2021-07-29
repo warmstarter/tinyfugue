@@ -6839,9 +6839,11 @@ File compression:
   through ${COMPRESS_READ}.  ${COMPRESS_READ} should contain the name of a
   shell command that takes a filename as an argument, and prints its output on
   standard output.  The default values for ${COMPRESS_SUFFIX} and
-  ${COMPRESS_READ} defined in the library are ".Z" and "zcat" for unix, ".zip"
-  and "unzip -p" for os/2.  Undefining ${COMPRESS_SUFFIX} will disable this
-  feature.  Note: [1m/save[22;0m, [1m/saveworld[22;0m, and [1m/log[22;0m do not write compressed files.
+  ${COMPRESS_READ} defined in the library are ".gz" and "zcat"
+
+  Undefining ${COMPRESS_SUFFIX} will disable this feature.
+
+  Note: [1m/save[22;0m, [1m/saveworld[22;0m, and [1m/log[22;0m do not write compressed files.
 
 #retry
 #retry_off
