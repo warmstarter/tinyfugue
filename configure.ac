@@ -590,6 +590,7 @@ else
             AC_MSG_WARN([Hardcoding terminal codes.])])
 fi
 
+# This is a requirement for MCCP, which should be it's own feature.
 AC_CHECK_LIB(
     [z],
     [inflate])
@@ -625,7 +626,7 @@ AC_CHECK_HEADERS(
     [],
     [AC_MSG_WARN([Filename '~user' expansion will not be supported.])])
 
-### Find zlib.h
+# This is a requirement for MCCP, which should be it's own feature.
 AC_CHECK_HEADERS([zlib.h])
 
 dnl TF_SEARCH_HEADERS(SYMBOL, HEADERS... [, DO-IF-FOUND [, DO-IF-NOT-FOUND]])
