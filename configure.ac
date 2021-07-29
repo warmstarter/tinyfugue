@@ -178,34 +178,6 @@ AS_HELP_STRING(
     [enable_mailcheck=yes])
 
 AC_ARG_ENABLE(
-    [history],
-    [AS_HELP_STRING(
-        [--disable-history],
-        [disable /recall and other history features])],
-    [enable_history=${enableval}],
-    [enable_history=yes])
-if test "$enable_history"   = "no"; then
-    AC_DEFINE(
-        [NO_HISTORY],
-       	[1],
-       	[history and recall disabled])
-fi
-
-AC_ARG_ENABLE(
-    [process],
-    [AS_HELP_STRING(
-        [--disable-process],
-        [disable /quote and repeat])],
-    [enable_process=${enableval}],
-    [enable_process=yes])
-if test "$enable_process"   = "no"; then
-    AC_DEFINE(
-        [NO_PROCESS],
-       	[1],
-       	[quote and repeat disabled])
-fi
-
-AC_ARG_ENABLE(
     [atcp],
     [AS_HELP_STRING(
         [--enable-atcp],

@@ -20,22 +20,6 @@
     extern struct Value *func(String *args, int offset);
 #endif
 
-#if NO_PROCESS
-# define handle_kill_command         NULL
-# define handle_ps_command           NULL
-# define handle_quote_command        NULL
-# define handle_repeat_command       NULL
-#endif
-#if NO_HISTORY
-# define handle_histsize_command     NULL
-# define handle_log_command          NULL
-# define handle_recall_command       NULL
-# define handle_recordline_command   NULL
-# define handle_watchdog_command     NULL
-# define handle_watchname_command    NULL
-#endif
-
-
 /* It is IMPORTANT that the commands be sorted by name! */
 /*     name            function                     reserved? */
 defcmd("BEEP"        , handle_beep_command        , 0)

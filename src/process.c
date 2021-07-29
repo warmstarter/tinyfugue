@@ -27,9 +27,6 @@
 #include "output.h"	/* oflush() */
 #include "signals.h"	/* interrupted() */
 
-const int feature_process = !(NO_PROCESS - 0);
-#if !NO_PROCESS
-
 #define P_REPEAT     'R'
 #define P_QFILE      '\''
 #define P_QSHELL     '!'
@@ -593,7 +590,6 @@ struct Value *handle_quote_command(String *args, int offset)
             return shareval(val_zero);
         }
         break;
-#if !NO_HISTORY
     case P_QRECALL:
         oldout = tfout;
         olderr = tferr;
@@ -607,7 +603,6 @@ struct Value *handle_quote_command(String *args, int offset)
             return shareval(val_zero);
         }
         break;
-#endif
     case P_QLOCAL:
         oldout = tfout;
         olderr = tferr;
@@ -666,5 +661,3 @@ struct Value *handle_repeat_command(String *args, int offset)
     return newproc(P_REPEAT, do_repeat, count, "", "", NULL, world,
         Stringnew(ptr, -1, 0), &ptime, DISP_ECHO, delay);
 }
-
-#endif /* NO_PROCESS */
