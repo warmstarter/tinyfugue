@@ -10,4 +10,10 @@ instructions.
 
 Newly added:
 
-    utilities.tf - The TF Mailing List's library of missing functions.
+    utilities.tf
+      - The TF Mailing List's library of missing functions.
+    *.py
+      - Python scripts available with --enable-python
+        These were initially created for Python2, so some might not work if
+        you are using Python3. They are loaded differently.
+        See: /help python
