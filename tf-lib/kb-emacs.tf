@@ -21,11 +21,7 @@
 /def -i -b"^h?"		= /help
 /def -i -b"^h^h"	= /help
 /def -i -b"^x^b"	= /listsockets
-
-/if ( systype() =~ "unix" ) \
-    /def -i -b"^x^d"	= /quote -S -decho !ls -FC%; \
-/endif
-
+/def -i -b"^x^d"	= /quote -S -decho !ls -FC%
 /def -i -b"^x1"		= /visual off
 /def -i -b"^x2"		= /visual on
 /def -i -b"^xk"		= /dc

@@ -50,10 +50,8 @@
 
 ;;; file compression
 
-/if ( systype() =~ "unix" ) \
-    /def -i COMPRESS_SUFFIX = .Z%;\
-    /def -i COMPRESS_READ = zcat%;\
-/endif
+/def -i COMPRESS_SUFFIX = .Z
+/def -i COMPRESS_READ = zcat
 
 ;;; High priority for library hooks/triggers.  This is a hack.
 /set maxpri=2147483647
@@ -495,14 +493,8 @@
 ; the subdirectory).
 
 /if ( TINYPREFIX =~ "" & TINYSUFFIX =~ "" ) \
-;   New-style names make more sense.
     /set TINYPREFIX=~/%; \
     /set TINYSUFFIX=.tf%; \
-;   Old-style names on unix systems, for backward compatibility.
-    /if ( systype() =~ "unix" ) \
-        /set TINYPREFIX=~/tiny.%; \
-        /set TINYSUFFIX=%; \
-    /endif%; \
 /endif
 
 /eval /def -i MACROFILE		= %{TINYPREFIX}macros%{TINYSUFFIX}

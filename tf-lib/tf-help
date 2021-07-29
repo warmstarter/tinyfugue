@@ -5670,10 +5670,6 @@ Information functions
   [1mgethostname[22m()
           (str) Returns the host's name, or an empty string if the host name
           is not available.
-#systype
-#systype()
-  [1msystype[22m()
-          Obsolete (str) System type: "unix" (includes MacOS X) or "unknown"
 #
 
 Other functions
