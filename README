@@ -62,6 +62,9 @@ require some modifications for installation of binary, no way to test.
 SOCKS deprecated as it was broken and mostly removed anyway. Very little
 use in modern world and can be handled by a separate application.
 
+NO_HISTORY and NO_PROCESS deprecated as modern systems can handle them
+just fine.
+
 systype and auto_fg are deprecated
 
 oldstyle filenames are deprecated in favor of newstyle, can always be

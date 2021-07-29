@@ -33,9 +33,6 @@
 #include "variable.h"		/* set_var_by_*() */
 #include "signals.h"		/* interrupted() */
 
-const int feature_history = !(NO_HISTORY - 0);
-#if !NO_HISTORY
-
 #define GLOBALSIZE    5000	/* global history size */
 #define LOCALSIZE     1000	/* local history size */
 #define INPUTSIZE      500	/* command history buffer size */
@@ -866,5 +863,3 @@ long hist_getsize(const struct History *hist)
 {
     return (hist && hist->cq.maxsize) ? hist->cq.maxsize : histsize;
 }
-
-#endif /* NO_HISTORY */
