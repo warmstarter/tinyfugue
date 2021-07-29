@@ -278,7 +278,6 @@ enum Vars {
 #define watchdog	getintvar(VAR_watchdog)
 #define watchname	getintvar(VAR_watchname)
 #define wordpunct	getstdvar(VAR_wordpunct)
-/* wrap vs wrapflag ? */
 #define wrapflag	getintvar(VAR_wrap)
 #define wraplog		getintvar(VAR_wraplog)
 #define wrappunct	getintvar(VAR_wrappunct)

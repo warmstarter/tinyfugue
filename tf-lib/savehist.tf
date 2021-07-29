@@ -10,10 +10,6 @@
 
 /loaded __TFLIB__/savehist.tf
 
-/if (systype() !~ "unix") \
-    /echo -e %% Warning: savehist.tf may not work on non-unix systems.%; \
-/endif
-
 /require textutil.tf
 /require textencode.tf
 /require lisp.tf

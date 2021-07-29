@@ -901,10 +901,8 @@ void main_loop(void)
 		}
             }
 
-#if !NO_PROCESS
             /* other active fds must be from command /quotes. */
             if (count) gettime(&proctime);
-#endif
         }
 
         if (pending_line && read_depth) {    /* end of tf read() */

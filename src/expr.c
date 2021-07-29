@@ -822,8 +822,6 @@ static Value *function_switch(const ExprFunc *func, int n, const char *parent)
 
     int symbol = func - functab;
 
-    STATIC_STRING(systype, "unix", 0);
-
         switch (symbol) {
 
         case FN_test:
@@ -1507,9 +1505,6 @@ static Value *function_switch(const ExprFunc *func, int n, const char *parent)
 
         case FN_nmail:
             return newint(mail_count);
-
-        case FN_systype:
-            return newSstr(systype);
 
         case FN_whatis: {
 	    Value *val = opd(1);
