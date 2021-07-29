@@ -247,11 +247,6 @@ enum Vars {
 #define snarf		getintvar(VAR_snarf)
 #define sockmload	getintvar(VAR_sockmload)
 #define sprefix		getstrvar(VAR_sprefix)
-#define ssl_ca_dir	getstdvar(VAR_ssl_ca_dir)
-#define ssl_ca_file	getstdvar(VAR_ssl_ca_file)
-#define ssl_continue	getintvar(VAR_ssl_continue)
-#define ssl_depth	getintvar(VAR_ssl_depth)
-#define ssl_verbose	getintvar(VAR_ssl_verbose)
 /* stat_* vs status_* ? */
 /* stint_* vs status_* ? */
 #define status_attr	getattrvar(VAR_stat_attr)
