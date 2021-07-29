@@ -251,11 +251,6 @@ static const char *h_errlist[] = {
 # endif
 #endif
 
-
-#ifdef TF_AIX_DECLS
-extern int connect(int, struct sockaddr *, int);
-#endif
-
 /* connection states */
 typedef enum {
     SS_NEW,		/* brand spanking new */
@@ -633,7 +628,7 @@ void init_sock(void)
     telnet_label[(UCHAR)TN_AUTH]	= "AUTHENTICATION";
     telnet_label[(UCHAR)TN_NEW_ENVIRON]	= "NEW-ENVIRON";
     telnet_label[(UCHAR)TN_CHARSET]	= "CHARSET";
-#if HAV_MCCP
+#if HAVE_MCCP
     telnet_label[(UCHAR)TN_COMPRESS]	= "COMPRESS";
     telnet_label[(UCHAR)TN_COMPRESS2]	= "COMPRESS2";
 #endif

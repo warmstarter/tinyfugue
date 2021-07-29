@@ -15,7 +15,7 @@
 # concatenated with all system-specific makefiles.
 
 # Predefined variables:
-#   SYS          - required system type (unix, os2)
+#   SYS          - required system type (unix)
 #   O            - required object suffix (e.g., "o" or "obj")
 #   BUILDERS     - optional list of system-specific dependencies
 

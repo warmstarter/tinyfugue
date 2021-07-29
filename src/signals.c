@@ -30,11 +30,6 @@
 #include "variable.h"
 #include "expand.h" /* current_command */
 
-#ifdef TF_AIX_DECLS
-struct rusage *dummy_struct_rusage;
-union wait *dummy_union_wait;
-#endif
-
 /* POSIX.1 systems should define WIFEXITED and WEXITSTATUS, taking an |int|
  * parameter, in <sys/wait.h>.  For posix systems, we use them.  For non-posix
  * systems, we use our own.  For systems which falsely claim to be posix,
