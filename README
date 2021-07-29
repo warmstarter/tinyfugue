@@ -1,4 +1,50 @@
 TinyFugue 50b8 with numerous patches and improvements
+=====================================================
+
+General feature list and installation follows. The UTF8 section is
+what you probably what everyone should be aware of, so starting with
+it for those that tend to skip reading these.
+
+UTF8 setup information
+======================
+
+UTF8 Widechar support is enabled by default, but you need to install
+libicu to get this to work. It is highly recommended that you use this
+as it makes the game experience much much nicer. If this is working,
+you will notice immediately as the default status line goes from a
+dashed line to a solid line. While I am working on many things with
+this client and happy to take requests or bug reports, proper UTF8
+is my main personal interest.
+
+On Debian this requires the following packages:
+icu-devtools libicu-dev libicu63
+
+You might also need to enable UTF8 support for individual worlds. For
+example, when connecting to a RhostMUSH server, this requires you to
+set:
+
+@toggle me=utf8
+
+There are tends of thousands of characters this enables, and no one
+font supports them all, though the most common core ones tend to be
+supported by all. I've found a powerline patched font gives me the
+best experience, and there are a number of options available here:
+
+https://github.com/powerline/fonts
+
+This site rates the support of various fonts and allows you to test
+specific characters out ahead of time:
+
+https://www.fileformat.info/info/unicode/font/index.htm
+
+Personally, I use DeJa Vu Sans Mono with the powerline patch
+
+Features and Changes in this version
+======================================
+
+This list covers the changes in this version, though some minor details
+might have been missed. It will be cleaned up once we're out of
+pre-release. Game related changes are documented in tf-help
 
 UTF8 support (--enable-widechar=yes) on by default
 PYTHON interpreter support for interfacing with client and macros
@@ -9,7 +55,7 @@ ANSI log output (/help ansi_log) off by default
 LOGs output prefix, such as timestamp (/help log_prefix) off by default
 ERROR output prefix now adjustable (/help error_prefix) '%' by default
 UNNAMED worlds not wrapped in () (/help oldunnamed) no-() by default
-FG world switching can use TF4 stle (/help oldstylefg) off by default
+FG world switching can use TF4 style (/help oldstylefg) off by default
 @ALERT picks up on messages that could have been lost
 / as a prefix to /command sends to MU, as opposed to ///command
 SSL looks for GNU TLS
@@ -62,16 +108,20 @@ require some modifications for installation of binary, no way to test.
 SOCKS deprecated as it was broken and mostly removed anyway. Very little
 use in modern world and can be handled by a separate application.
 
-NO_HISTORY and NO_PROCESS deprecated as modern systems can handle them
-just fine.
+NO_HISTORY and NO_PROCESS options deprecated as modern systems can handle
+them just fine. If you don't use these features, you can simply ignore
+them or use the existing tfrc options to set things like histsize to 0.
 
-systype and auto_fg are deprecated
+systype is deprecated and removed, as all modern platforms support
+unix-like features (this mostly relates to OS/2 deprecation)
+
+auto_fg was already deprecated, now fully removed.
 
 oldstyle filenames are deprecated in favor of newstyle, can always be
-changed manually
+changed manually, newstyle was the default.
 
-bad keyboards no ones uses anymore no longer supported. If needed the
-.tf files can be founds in the git archive
+ancient bad keyboards no ones uses anymore no longer supported. If needed
+the .tf files can be founds in the git archive
 
 ======
 
@@ -95,97 +145,13 @@ Unicode notes:
 ======
 
 
-
-                       INSTALLING TINYFUGUE
-
-TinyFugue can be installed and run on UNIX-like systems, Mac OS X,
-and Win32.  For instructions, see the README file in the appropriate
-directory.  For information on unofficial versions of TF for other
-operating systems, see the TF web page at http://tinyfugue.sourceforge.net/.
-
-"Make" options
---------------
-
-Options are not available on all systems.  To use an option, give it as
-an argument to the installation program (e.g., "make clean").
-
- all		Compile, but do not install (the "install" option should be
-			run later to install the files).
- install	Compile (if you haven't already) and install.  The default
-			installation locations depend on the operating system.
- clean		Remove object files and other junk from source directory.
- uninstall	Remove tf executable, help files, and library from their
-			installed locations.
-
-
-Public Installation
--------------------
-
-Some features of TF can be disabled for secure public installation, by
-using one of these /restrict commands in %{TFLIBDIR}/local.tf:
-
-    /restrict SHELL  Prevents all access to shell or external commands.
-                     Disables TF builtins "/sh" and "/quote !", and
-                     uncompression during /load and /help.
-
-    /restrict FILE   Prevents reading and writing of files.  Disables
-                     TF builtins "/load", "/save", "/saveworld", "/log",
-                     and "/quote '", and sockmload feature.
-                     Implies /restrict shell.
-
-    /restrict WORLD  Prevents the user from defining new worlds and
-                     connecting to undefined worlds.  TF builtins
-                     /addworld and the "/world <host> <port>" semantics
-                     are disabled.  Implies /restrict file.
-
-If you have write permission in /usr/local/bin and /usr/local/lib, TinyFugue
-will be installed there by default.  Or you can change the locations by using
-the options described above.  The Makefile will then put all files in their
-proper location with the proper permissions.
-
-Some features of TF can be disabled for secure public installation, by using
-the /restrict commands in %{TFLIBDIR}/local.tf.  See ../README.
-
-Terminal Handling
------------------
-
-If the default terminal handling option does not work, tf can be
-configured to use vt100 codes or nothing at all.  See the README
-file in the subdirectory corresponding to your operating system.
-
-On a UNIX-like system, ./configure will try to find a termcap-compatible library
-in this order: the one specified in --enable-termcap=LIB, if any; termcap;
-ncurses; curses.  If none of those work, tf will use hardcoded vt100 codes.
-
-
-Compression
------------
-
-If you are short on disk space, you can compress the helpfile and
-library files (except stdlib.tf).  Make sure the COMPRESS_SUFFIX
-and COMPRESS_READ macros are set correctly; set them in the
-%{TFLIBDIR}/local.tf file if needed.  Note that compression can not
-be used if /restrict is used.
-
-
-Firewalls
----------
-
-TF can be made to connect through a generic proxy server by setting
-the %proxy_host variable at runtime.  See "/help proxy".
-
-Also see the README file in the subdirectory corresponding to your
-operating system to see if tf has transparent firewall support on your
-system.
-
-
 Credits
 -------
 
-This fork of TinyFugue is currently being supported by Kruton,
-Sketch, and wstarter. It also includes assorted patches developed
-by various community members in the years since TF saw saw it's
-final release.
+This fork of TinyFugue is currently being maintained by wstarter.
+It also includes assorted patches developed by various community members
+in the years since TF saw saw it's final release. More complete credits
+will be added as this moves out of pre-release
 
 TinyFugue is Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)
 
@@ -209,8 +175,10 @@ tcp.com services.
 ============================================
 TinyFugue for Mac OS X
 
-You must have the developer tools installed on your system.
-Open a shell window, and follow the instructions in unix/README.
+You must have developer tools installed on your system, and of course
+this is setup and used through Terminal or an equivalent program. I
+hear most people think iTerm2 is the way to go, should you want more
+features in your terminal emulator.
 
 ----------------------------------------------------------------
 
@@ -223,13 +191,7 @@ like systems, but it has not yet been tested.
 
 https://docs.microsoft.com/en-us/windows/wsl/install-win10
 
-Once installed, open a shell window, and follow the instructions in
-unix/README.
 ======================================================================
-
-                      TinyFugue for UNIX-like systems
-		            (including MacOS X)
-
 
 Installing TinyFugue
 --------------------
@@ -241,45 +203,41 @@ that works only on STREAMS devices but not terminals.
 
 Installing TinyFugue is quite easy on most Unix-like systems.
 In the top directory, execute these commands:
+  autoconf
   ./configure
+  make
   make install
+      
 The configure script will attempt to figure out everything it needs to
 know about your system and install all files in their proper location.
 If you have any problems, or want to change a default installation
 option, be sure to read the rest of this file.
 
-
 In addition to the usual GNU configure options, TinyFugue's configure script
 has these options:
 
-
+Optional Features:
+  --disable-option-checking  ignore unrecognized --enable/--with options
+  --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
+  --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-version        insert version number into names of installed files
-                          (equivalent to --program-suffix=\"-${TFVER}\")
-  --enable-symlink=NAME make a symlink NAME to the executable
-                          NAME=BINDIR/tf
-  --enable-core           enable debugging core files
-  --disable-ssl           disable SSL support
-  --enable-getaddrinfo    enable getaddrinfo() (if configure complains)
-  --disable-getaddrinfo   disable getaddrinfo() (implies --disable-inet6)
-  --disable-inet6         disable IPv6 support
+  --enable-symlink=NAME   make a symlink NAME to the executable
+  --enable-core           enable core dumps for debugging
+  --disable-ssl           disable SSL connections
+  --disable-getaddrinfo   disable getaddrinfo implies --disable-inet6
+  --disable-inet6         disable IPv6 network support
+  --disable-256colors     disable 256 color support
+  --enable-python         enable python interpreter for scripting
+  --disable-widechar      disable wide character UTF-8 support
   --disable-termcap       use hardcoded vt100 codes instead of termcap
   --enable-termcap=LIB    enable termcap with library LIB (e.g., "ncurses")
                           (needed only if configure guesses incorrectly)
-  --disable-256colors     disable 256 color support (may reduce memory use)
   --disable-mailcheck     disable mail checking
-  --enable-mailcheck=DIR  enable checking for mail in directory DIR
-                          (needed only if configure guesses incorrectly)
-  --disable-history       disable /recall and other history features
-  --disable-process       disable /quote and /repeat
-  --disable-float         disable floating point arithmetic and functions
-  --disable-widechar      disable wide character support (UTF-8)
-  --enable-atcp           enable ATCP support
-  --enable-gmcp           enable GMCP support
-  --enable-option102      enable 102 option support
-  --with-incdirs=DIRS     search for include files in DIRS
-  --with-libdirs=DIRS     search for libraries in DIRS
-  --with-inclibdirs=DIRS  same as --with-incdirs=DIRS --with-libdirs=DIRS
-  --with-inclibpfx=DIRS   same, but appends '/include' and '/lib'
+  --enable-mailcheck=DIR  enable checking for mail in directory DIR (needed
+                          only if configure guesses incorrectly)
+  --enable-atcp           enable ATCP protocol support
+  --enable-gmcp           enable GMCP protocol support
+  --enable-option102      enable option102 protocl support
 
 For a complete list of options, run "./configure --help".
 
@@ -299,7 +257,6 @@ Example:
 If your system has SSL libraries and headers installed in
 /usr/local/SSL/{lib,include}, use the "--with-inclibpfx=/usr/local/SSL"
 option with configure.
-
 
 File Locations
 --------------
@@ -350,57 +307,98 @@ When you are satisfied it works, do
 to install tf in {FINAL}.
 
 
+"Make" options
+--------------
+
+Options are not available on all systems.  To use an option, give it as
+an argument to the installation program (e.g., "make clean").
+
+ all		Compile, but do not install (the "install" option should be
+			run later to install the files).
+ install	Compile (if you haven't already) and install.  The default
+			installation locations depend on the operating system.
+ clean		Remove object files and other junk from source directory.
+ uninstall	Remove tf executable, help files, and library from their
+			installed locations.
+
+
+Public Installation
+-------------------
+
+Some features of TF can be disabled for secure public installation, by
+using one of these /restrict commands in %{TFLIBDIR}/local.tf:
+
+    /restrict SHELL  Prevents all access to shell or external commands.
+                     Disables TF builtins "/sh" and "/quote !", and
+                     uncompression during /load and /help.
+
+    /restrict FILE   Prevents reading and writing of files.  Disables
+                     TF builtins "/load", "/save", "/saveworld", "/log",
+                     and "/quote '", and sockmload feature.
+                     Implies /restrict shell.
+
+    /restrict WORLD  Prevents the user from defining new worlds and
+                     connecting to undefined worlds.  TF builtins
+                     /addworld and the "/world <host> <port>" semantics
+                     are disabled.  Implies /restrict file.
+
+If you have write permission in /usr/local/bin and /usr/local/lib, TinyFugue
+will be installed there by default.  Or you can change the locations by using
+the options described above.  The Makefile will then put all files in their
+proper location with the proper permissions.
+
+Some features of TF can be disabled for secure public installation, by using
+the /restrict commands in %{TFLIBDIR}/local.tf.
+
+Terminal Handling
+-----------------
+
+If the default terminal handling option does not work, tf can be
+configured to use vt100 codes or nothing at all.
+
+On a UNIX-like system, ./configure will try to find a termcap-compatible library
+in this order: the one specified in --enable-termcap=LIB, if any; termcap;
+ncurses; curses.  If none of those work, tf will use hardcoded vt100 codes.
+
+You will be much, much happier not using a hardcoded situation. The proper
+libraries should be available on any modern system. If for some reason you
+find you are stuck in hardcoded mode after having installed appropriate libs,
+create an issue with system details so this can be looked into. hardcoded
+is ancient and undesirable enough that it might likely stop being supported
+in the future.
+
+Compression
+-----------
+
+If you are short on disk space, you can compress the helpfile and
+library files (except stdlib.tf).  Make sure the COMPRESS_SUFFIX
+and COMPRESS_READ macros are set correctly; set them in the
+%{TFLIBDIR}/local.tf file if needed.  Note that compression can not
+be used if /restrict is used.
+
+
+Firewalls
+---------
+
+TF can be made to connect through a generic proxy server by setting
+the %proxy_host variable at runtime.  See "/help proxy".
+
+Also see the README file in the subdirectory corresponding to your
+operating system to see if tf has transparent firewall support on your
+system.
+ 
 
 Installation Problems
 ---------------------
 
 The ./configure script can usually figure out everything it needs to
 know to configure TinyFugue for your unix-like system.  But if it fails
-because your system is brain damaged, you may need to change some environment
+because your system is non-standard, you may need to change some environment
 variables or disable some features.
 
+If you run into issues with a specific platform, please put details into the
+issue tracker. I will work to make everything work more automatically, but
+some issues are outside the scope of TF. Common problems and their fixes will
+be noted.
 
-Problem: On MacOS X, configure fails with the message "configure: error:
-  C compiler cannot create executables".  Also, config.log contains the
-  message "ld: can't locate file for: -lcrt1.o".
-Solution:  The file /usr/lib/crt1.o is missing from your system.  Restore it
-  by reinstalling the DevTools ("Xcode Tools 1.1").  Copying the file
-  from another OSX box also appears to work, but do this at your own risk.
-  See also http://thread.gmane.org/gmane.os.apple.fink.beginners/9914
-
-Problem: On AIX 4.1, a bug in gcc 2.8.0 causes /addworld and some operators to
-  fail with an error like "% internal error: reduce: bad op 037777777703"
-Solution: use a different compiler (cc or xlc) by setting the CC environment
-  variable before running ./configure, or use a different version of gcc
-  (2.7.2 is known to work).
-
-Problem: On OSF/1 with gcc, compile errors involving 'sigval_t',
-  'union sigval', or 'clock_id'.
-Solution: use a different compiler (cc) by setting the CC environment
-  variable before running ./configure.
-
-Problem: With gcc, compile errors involving va_list or __builtin_va_alist.
-Solution: use a different compiler (cc) by setting the CC environment
-  variable before running ./configure.
-
-Problem: Your system is Apollo Domain/OS.
-Solution: in Config: FLAGS='-U__STDC__' (XXX this is wrong XXX)
-
-Problem: On debian linux, undefined references to tgetent, tgetstr, tgetnum,
-  tgoto, tputs.
-Solution: Get an ELF termcap library, or add /usr/i486-linuxaout/bin to your
-  PATH.
-
-Problem: On DYNIX/ptx 4 or later, runtime error saying that -linet is not
-  needed.  (Why do they have it if it's not needed!?)
-Solution: Run ./configure, edit src/Makefile to remove "-linet"
-  from the LIBS line, and run "make".
-
-Problem: when you try to run tf, you get a message like this:
-  ld.so.1: ./tf: fatal: libncurses.so.5: open failed: No such file or directory
-Solution 1: set the environment variable LD_LIBRARY_PATH to "/usr/local/lib"
-  when running tf.
-Solution 2: on SunOS, set environment variable LDFLAGS to "-R/usr/local/lib"
-  when running ./configure.  On other operating systems, different options
-  may be available; see "man ld" (try "-rpath /usr/local/lib").
 
