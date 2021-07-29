@@ -126,13 +126,6 @@ file, $HOME/.tfrc, in which you can put any \fITF\fR commands you
 want executed automatically at startup.  Two of the most useful
 commands to use in a \fITF\fR configuration file are /addworld and /load.
 
-For backward compatibility, \fITF\fR will also try
-to read the \fITinyTalk\fR configuration file.
-Its name defaults to $HOME/.tinytalk, or can be defined by the TINYTALK
-environment variable.
-This file may start with a list of worlds that will be defined as if with
-/addworld.
-
 .SH HISTORY
 Anton Rang (Tarrant) in February of 1990 released \fITinytalk\fR,
 the first Tinyclient with any great number of features, including
@@ -222,7 +215,7 @@ You must use the '*' wildcard explicitly, as in '/hilite hawkeye*'.
 However, /hilite_page and /hilite_whisper macros are provided in the
 default macro library.
 .PP
-The .tinytalk file may not be supported in the future; use .tfrc instead.
+The .tinytalk file is no longer supported, use .tfrc instead.
 .PP
 The '\-' command line option in versions prior to 2.0 is no longer supported,
 and has been replaced with '\-l'.

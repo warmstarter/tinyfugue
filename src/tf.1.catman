@@ -127,11 +127,6 @@ TF(1)                                                                    TF(1)
        automatically at startup.  Two of the most useful commands to use in  a
        [4mTF[24m configuration file are /addworld and /load.
 
-       For  backward compatibility, [4mTF[24m will also try to read the [4mTinyTalk[24m con-
-       figuration file.  Its name  defaults  to  $HOME/.tinytalk,  or  can  be
-       defined by the TINYTALK environment variable.  This file may start with
-       a list of worlds that will be defined as if with /addworld.
-
 
 [1mHISTORY[0m
        Anton Rang (Tarrant) in February of 1990 released [4mTinytalk[24m,  the  first
@@ -222,8 +217,7 @@ TF(1)                                                                    TF(1)
        ever,  /hilite_page  and  /hilite_whisper  macros  are  provided in the
        default macro library.
 
-       The .tinytalk file may not  be  supported  in  the  future;  use  .tfrc
-       instead.
+       The .tinytalk file is no longer supported, use .tfrc instead.
 
        The  '-' command line option in versions prior to 2.0 is no longer sup-
        ported, and has been replaced with '-l'.

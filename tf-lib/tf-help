@@ -10675,8 +10675,6 @@ Keyboard Reading
 &customization
 &customizing
 &tfrc
-&tinytalk
-&.tinytalk
 &.tfrc
 
 .tfrc
@@ -10700,9 +10698,6 @@ Keyboard Reading
 
   [1mTFLIBDIR[22;0m contains a sample "tfrc" file that you may want to copy and modify
   to fit your tastes.
-
-  For backward compatibility, TF will load ~/.tinytalk if it exists.  The use
-  of ~/.tinytalk is discouraged.
 
   See: [1mstartup[22;0m, [1mlibrary[22;0m, [1mspecial variables[22;0m, [1m/load[22;0m
 

@@ -1051,7 +1051,7 @@ static void wload(World *w)
     const char *mfile;
     if (restriction >= RESTRICT_FILE) return;
     if ((mfile = world_mfile(w)))
-        do_file_load(mfile, FALSE, NULL);
+        do_file_load(mfile, NULL);
 }
 
 int world_hook(const char *fmt, const char *name)

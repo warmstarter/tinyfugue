@@ -73,6 +73,8 @@ changed manually
 bad keyboards no ones uses anymore no longer supported. If needed the
 .tf files can be founds in the git archive
 
+.tinytalk deprecated and seemed to be broken anyway.
+
 ======
 
 Unicode notes:

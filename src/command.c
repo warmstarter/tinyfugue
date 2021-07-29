@@ -486,7 +486,7 @@ struct Value *handle_unlimit_command(String *args, int offset)
  * success. If savename!=NULL and the file is found, *savename will be set to
  * strdup(file->name) and it's up to you to free() it.
  */
-int do_file_load(const char *args, int tinytalk, char **savename)
+int do_file_load(const char *args, char **savename)
 {
     AUTO_BUFFER(line);
     AUTO_BUFFER(cmd);
@@ -502,7 +502,7 @@ int do_file_load(const char *args, int tinytalk, char **savename)
         exiting = 0;
 
     file = tfopen(expand_filename(args), "r");
-    if (!file && !tinytalk && errno == ENOENT && !is_absolute_path(args)) {
+    if (!file && errno == ENOENT && !is_absolute_path(args)) {
         /* Relative file was not found, so look in TFPATH or TFLIBDIR. */
 	if (TFPATH && *TFPATH) {
 	    path = TFPATH;
@@ -532,7 +532,7 @@ int do_file_load(const char *args, int tinytalk, char **savename)
     }
 
     if (!file) {
-        if (!tinytalk || errno != ENOENT)
+        if (errno != ENOENT)
             do_hook(H_LOADFAIL, "!%s: %s", "%s %s", args, strerror(errno));
         return -1;
     }
@@ -590,20 +590,8 @@ int do_file_load(const char *args, int tinytalk, char **savename)
         new_cmd = 1;
         if (!cmd->len) continue;
         if (*cmd->data == '/') {
-            tinytalk = FALSE;
             /* Never use SUB_FULL here.  Libraries will break. */
             macro_run(CS(cmd), 0, NULL, 0, SUB_KEYWORD, "\bLOAD");
-        } else if (tinytalk) {
-	    static int warned = 0;
-            Macro *addworld = find_macro("addworld");
-            if (addworld && do_macro(addworld, cmd, 0, USED_NAME, 0) &&
-		!user_result->u.ival && !warned)
-	    {
-		eprintf("(This line was implicitly treated as an /addworld "
-		    "because it occurred before the first '/' line and did not "
-		    "start with a '/', ';', or '#'.)");
-		warned = 1;
-	    }
         } else {
             eprintf("Invalid command. Aborting.");
             error = 1;
@@ -705,7 +693,7 @@ struct Value *handle_load_command(String *args, int offset)
 
     quietload += quiet;
     if (args->len - offset)
-        result = (do_file_load(stripstr(args->data + offset), FALSE, NULL) > 0);
+        result = (do_file_load(stripstr(args->data + offset), NULL) > 0);
     else eprintf("missing filename");
     quietload -= quiet;
     return newint(result);
