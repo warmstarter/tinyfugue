@@ -5480,7 +5480,7 @@ Information functions
 #systype
 #systype()
   [1msystype[22m()
-          (str) System type: "unix" (includes MacOS X) or "unknown"
+          Obsolete (str) System type: "unix" (includes MacOS X) or "unknown"
 #
 
 Other functions

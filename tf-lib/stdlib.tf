@@ -53,9 +53,6 @@
 /if ( systype() =~ "unix" ) \
     /def -i COMPRESS_SUFFIX = .Z%;\
     /def -i COMPRESS_READ = zcat%;\
-/elseif ( systype() =~ "os/2" ) \
-    /def -i COMPRESS_SUFFIX = .zip%;\
-    /def -i COMPRESS_READ = unzip -p%;\
 /endif
 
 ;;; High priority for library hooks/triggers.  This is a hack.
@@ -740,7 +737,6 @@
 ;;; Other standard libraries
 
 /eval /load -q %TFLIBDIR/kbbind.tf
-/eval /if (systype() =~ "os/2") /load -q %TFLIBDIR/kb-os2.tf%; /endif
 /eval /load -q %TFLIBDIR/world-q.tf
 /eval /load -q %TFLIBDIR/color.tf
 /eval /load -q %TFLIBDIR/changes.tf

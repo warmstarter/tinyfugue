@@ -24,8 +24,6 @@
 
 /if ( systype() =~ "unix" ) \
     /def -i -b"^x^d"	= /quote -S -decho !ls -FC%; \
-/elseif ( systype() =~ "os/2" ) \
-    /def -i -b"^x^d"	= /quote -S -decho !dir%; \
 /endif
 
 /def -i -b"^x1"		= /visual off

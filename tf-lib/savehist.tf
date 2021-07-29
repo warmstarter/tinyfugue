@@ -1,4 +1,3 @@
-/set savehist_version=$Id: savehist.tf,v 35000.5 2004/08/04 18:31:51 hawkeye Exp $
 ;;;; Save/restore world histories
 
 ;;;; Typical usage in .tfrc:
