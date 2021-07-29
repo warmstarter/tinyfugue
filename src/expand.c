@@ -1057,7 +1057,7 @@ static void vcode_add(Program *prog, opcode_t op, int use_mark, va_list ap)
     if (!prog->optimize)
 	return;
 
-#if 1 /* optimizer */
+/* optimizer */
 #define inst_is_const(inst) \
     ((inst)->op == OP_PUSH && (inst)->arg.val->type != TYPE_ID)
 
@@ -1233,7 +1233,7 @@ static void vcode_add(Program *prog, opcode_t op, int use_mark, va_list ap)
 	    return;
 	}
     }
-#endif /* optimizer */
+/* !optimizer */
 }
 
 void code_add(Program *prog, opcode_t op, ...)

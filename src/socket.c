@@ -710,7 +710,8 @@ void main_loop(void)
         /* figure out when next event is so select() can timeout then */
         gettime(&now);
         earliest = proctime;
-#if 1 /* XXX debugging */
+
+/* XXX debugging */
 	{
 	    Sock *s;
 	    int n = 0;
@@ -723,7 +724,7 @@ void main_loop(void)
 		socks_with_lines = n;
 	    }
 	}
-#endif
+
 	if (socks_with_lines)
 	    earliest = now;
         if (maillist && tvcmp(&maildelay, &tvzero) > 0) {

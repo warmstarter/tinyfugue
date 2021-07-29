@@ -525,11 +525,10 @@ static void init_term(void)
 
 #endif /* TERMCAP */
 
-#if 1
     /* The insert_start code in iput() is apparently buggy.  Until it is
      * fixed, we ignore the insert_start capability. */
     insert_start = NULL;
-#endif
+
     if (!insert_end) insert_start = NULL;
 
     if (columns <= 0) columns = DEFAULT_COLUMNS;

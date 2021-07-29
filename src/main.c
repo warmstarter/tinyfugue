@@ -243,10 +243,9 @@ int main(int argc, char *argv[])
 
 static void read_configuration(const char *fname)
 {
-#if 1 /* XXX */
+/* XXX */
     if (do_file_load(getvar("TFLIBRARY"), NULL) < 0)
         die("Can't read required library.", 0);
-#endif
 
     if (fname) {
         if (*fname) do_file_load(fname, &main_configfile);
