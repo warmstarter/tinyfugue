@@ -558,7 +558,6 @@ if test "$enable_ssl" = "yes"; then
     fi
 fi
 
-# python interpreter test, quick and dirty for now
 if test "$enable_python" = "yes"; then
     AX_PYTHON
     AC_DEFINE(

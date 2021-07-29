@@ -54,7 +54,7 @@
 #serial 14
 
 AC_DEFUN([AX_PYTHON],
-[AC_MSG_CHECKING(for python build information)
+[AC_MSG_CHECKING([for python build information])
 AC_MSG_RESULT([])
 for python in python3 python3.10 python3.9 python3.8 python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python2 python2.7 python; do
 AC_CHECK_PROGS(PYTHON_BIN, [$python])
