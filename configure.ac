@@ -545,13 +545,16 @@ if test "$enable_ssl" = "yes"; then
 	AC_CHECK_HEADERS([openssl/ssl.h openssl/err.h openssl/x509v3.h], ok=1,
 	    [AC_CHECK_HEADERS([gnutls/openssl.h], [ok=1])])
 	if test "$ok" = "1"; then
-	    AC_DEFINE([HAVE_SSL], [1], [SSL enabled])
+	    AC_DEFINE(
+                [HAVE_SSL],
+                [1],
+                [SSL enabled])
             AC_CHECK_FUNCS(ERR_peek_error)
 	fi
 	break
     done
     if test "$ok" = "0"; then
-	AC_MSG_RESULT([ssl support will not be enabled.])
+	AC_MSG_WARN([SSL support will not be enabled.])
 	LIBS="$old_LIBS"
 	CFLAGS="$old_CFLAGS"
 	CPPFLAGS="$old_CPPFLAGS"
