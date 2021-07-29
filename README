@@ -70,6 +70,9 @@ systype and auto_fg are deprecated
 oldstyle filenames are deprecated in favor of newstyle, can always be
 changed manually
 
+bad keyboards no ones uses anymore no longer supported. If needed the
+.tf files can be founds in the git archive
+
 ======
 
 Unicode notes:

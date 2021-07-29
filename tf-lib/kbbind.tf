@@ -45,16 +45,6 @@
 /~keyseq shift_right	^[[1;2C
 /~keyseq shift_left	^[[1;2D
 
-; Some broken terminal emulators (TeraTerm, NiftyTelnet) send incorrect
-; char sequences for the editor keypad (the 6 keys above the arrow keys).
-; We can't cater to them without breaking keys for users with correct
-; terminal emulators.
-;
-; TeraTerm users should fix their emulators by copying
-; %TFLIBDIR/teraterm.keyboard.cnf to keyboard.cnf in their TeraTerm
-; directory.  Users of either emulator can work around the problem with
-; "/load kb_badterm.tf".
-
 ; Editor Keypad
 /~keyseq insert		^[[2~		^[[L
 /~keyseq delete		^[[3~

@@ -6669,28 +6669,6 @@ Mapping character sequences to Named Keys
   Terminal to send the un-shifted keys to tf by redefining them in Terminal |
   Window Settings | Keyboard.
 
-#teraterm
-#niftytelnet
-#broken emulators
-  Note: some broken terminal emulators (TeraTerm, NiftyTelnet) send incorrect
-  character sequences for the editor keypad (insert, delete, home, end, pgup,
-  pgdn).  For TeraTerm users, the preferred fix is to copy
-  [1m%TFLIBDIR[22;0m/teraterm.keyboard.cnf to KEYBOARD.CNF in their TeraTerm directory;
-  this will help all applications you run within TeraTerm, not just TF.  Users
-  of either terminal emulator may work around the problem with "[1m/load[22;0m
-  kb_badterm.tf".
-#
-
-  Note that before version 3.5 alpha 21 or beta 1, it was usually harmless to
-  "[1m/set[22;0m [1mTERM[22;0m=vt100" on terminals that accepted a superset of vt100 display
-  codes.  However, the termcap key definitions are often different for
-  terminals that are otherwise similar (e.g., vt100 and xterm share many
-  display codes, but the key definitions are different), so setting [1m%TERM[22;0m
-  incorrectly may interfere with the operation of named keys.  Xterm users
-  should also note that since 5.0, TF has its own [1mscrollback[22;0m, and xterm's
-  scrollback will not work properly even if you try to trick TF with
-  [1mTERM[22;0m=vt100.
-
 #kbnum
 
 "Kbnum" argument
