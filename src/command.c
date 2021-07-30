@@ -515,7 +515,7 @@ int do_file_load(const char *args, char **savename)
 		    Stringadd(libfile, *path++);
 		}
 		if (!is_absolute_path(libfile->data)) {
-		    tfwprintf((const wchar_t *)"invalid directory in TFPATH: %S", libfile);
+		    tfwprintf("invalid directory in TFPATH: %S", libfile);
 		} else {
 		    Sappendf(libfile, "/%s", args);
 		    file = tfopen(expand_filename(libfile->data), "r");
@@ -523,7 +523,7 @@ int do_file_load(const char *args, char **savename)
 	    } while (!file && *path);
 	} else {
 	    if (!is_absolute_path(TFLIBDIR)) {
-		tfwprintf((const wchar_t *)"invalid TFLIBDIR: %s", TFLIBDIR);
+		tfwprintf("invalid TFLIBDIR: %s", TFLIBDIR);
 	    } else {
 		Sprintf(libfile, "%s/%s", TFLIBDIR, args);
 		file = tfopen(expand_filename(libfile->data), "r");
@@ -582,7 +582,7 @@ int do_file_load(const char *args, char **savename)
                 i = line->len - 1;
                 while (i > 0 && is_space(line->data[i])) i--;
                 if (line->data[i] == '\\')
-                    tfwprintf((const wchar_t *)"whitespace following final '\\'");
+                    tfwprintf("whitespace following final '\\'");
             }
         } else {
             last_cmd_line = 0;
