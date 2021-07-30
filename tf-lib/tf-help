@@ -6719,10 +6719,12 @@ Other key bindings
 
   Some additional keyboard operations can be defined by [1m/load[22;0ming these library
   files:
-  kb-old.tf
-          keybindings like those in TF 4.0 and earlier
+  kb-bash.tf
+          bash-like keybindings (default through kbbind.tf)
   kb-emacs.tf
           additional emacs-like keybindings
+  kb-old.tf
+          keybindings like those in TF 4.0 and earlier
   kbregion.tf
           cut-and-paste operations
   kbstack.tf
@@ -9754,7 +9756,6 @@ Special global variables
 
 #textdiv
 #separator
-#separator.tf
 #divider
 #=====
 #dividing line
@@ -10853,8 +10854,6 @@ utilities
           [1m/at[22;0m: execute commands at a specified time.
   filexfer.tf
           [1m/putfile[22;0m, [1m/getfile[22;0m: transfer files to/from a mud.
-  kb-os2.tf
-          Extra default key bindings for OS/2 keyboards.
   kbbind.tf
           Default [1mkeybindings[22;0m.
   kbfunc.tf
