@@ -71,7 +71,7 @@ MULTI-address hostname crash issue resolved
 OS X compile issues resolved
 BUFFERS increased to reflect more modern computing resources
 GZIP now standard for file compression (COMPRESS_SUFFIX)
-TF-LIB being maintained as well.
+TF-LIB being updated and modernized (see tf-lib/README)
 
 Plus numerous bug fixes, clean-up, and needed code base
 clean-up and modernization.

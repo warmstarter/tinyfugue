@@ -22,5 +22,31 @@ Newly added:
 
 Removed:
 
-    tintin.tf
-      - Outdated, would server no real use and not worth updating
+Outdated .tf files have been removed.
+Symlinks for old names of .tf files have been removed.
+Scripts should be updated to use the new names.
+Previously both were valid, now only the proper name will work.
+Most are likely already using these new naw names.
+
+If for some reason you need the old names, you can manually create them with
+a symlink: ln -s <canonical name> <legacy name>
+
+Deprecated files can always be found in github epo archive, but are
+likely out-of-date and not supported.
+
+legacy name         canonical name
+-----------------   --------------
+bind-bash.tf        kb-bash.tf
+bind-emacs.tf       kb-emacs.tf
+completion.tf       complete.tf
+factorial.tf        factoral.tf
+file-xfer.tf        filexfer.tf
+local.tf.sample     local-eg.tf
+mylib.tf            utilities.tf
+pref-shell.tf       psh.tf
+replacet.tf         (previously deprecated)
+space_page.tf       spc-page.tf
+speedwalk.tf        spedwalk.tf
+stack_queue.tf      stack-q.tf
+tintint.tf          (reprecated)
+worldqueue.tf        world-q.tf

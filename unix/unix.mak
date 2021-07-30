@@ -98,25 +98,6 @@ LIBRARY $(TF_LIBDIR): ../tf-lib/tf-help ../tf-lib/tf-help.idx
 	cp ../CHANGES $(TF_LIBDIR)
 	chmod $(MODE) $(TF_LIBDIR)/CHANGES; chmod ugo-wx $(TF_LIBDIR)/CHANGES
 	chmod $(MODE) $(TF_LIBDIR)
-	-@cd $(TF_LIBDIR); old=`ls replace.tf 2>/dev/null`; \
-	if [ -n "$$old" ]; then \
-	    echo "## WARNING: Obsolete files found in $(TF_LIBDIR): $$old"; \
-	fi
-	@echo '## Creating links so old library names still work...'
-#	@# note: ln -sf isn't portable.
-	@cd $(TF_LIBDIR); \
-	rm -f bind-bash.tf;    ln -s  kb-bash.tf   bind-bash.tf;    \
-	rm -f bind-emacs.tf;   ln -s  kb-emacs.tf  bind-emacs.tf;   \
-	rm -f completion.tf;   ln -s  complete.tf  completion.tf;   \
-	rm -f factorial.tf;    ln -s  factoral.tf  factorial.tf;    \
-	rm -f file-xfer.tf;    ln -s  filexfer.tf  file-xfer.tf;    \
-	rm -f local.tf.sample; ln -s  local-eg.tf  local.tf.sample; \
-	rm -f mylib.tf;        ln -s  utilities.tf mylib.tf;        \
-	rm -f pref-shell.tf;   ln -s  psh.tf       pref-shell.tf;   \
-	rm -f space_page.tf;   ln -s  spc-page.tf  space_page.tf;   \
-	rm -f speedwalk.tf;    ln -s  spedwalk.tf  speedwalk.tf;    \
-	rm -f stack_queue.tf;  ln -s  stack-q.tf   stack_queue.tf;  \
-	rm -f worldqueue.tf;   ln -s  world-q.tf   worldqueue.tf;
 
 makehelp: makehelp.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o makehelp makehelp.c
