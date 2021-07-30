@@ -16,7 +16,7 @@
  *  MALLOC is like dmalloc, but has file and line built in.
  *
  * Most code will call XMALLOC() (for automatic error checking) or MALLOC()
- * (if it can handle failure itself).  Code may call xmalloc() or dmalloc() 
+ * (if it can handle failure itself).  Code may call xmalloc() or dmalloc()
  * to use nonlocal file and line info.  Code should almost never call
  * mmalloc() or malloc() directly.
  */

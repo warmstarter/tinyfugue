@@ -22,7 +22,7 @@ libpython-dev python-cxx-dev python python python-config
 
 Usage:
 
-   - run TinyFugue (tf) and then 
+   - run TinyFugue (tf) and then
        /help tf python
 
    - scripts are installed in the tf-lib/python directory for a few packaged ones,

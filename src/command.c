@@ -480,7 +480,7 @@ struct Value *handle_unlimit_command(String *args, int offset)
 
 /********************
  * Generic handlers *
- ********************/   
+ ********************/
 
 /* Returns -1 if file can't be read, 0 for an error within the file, or 1 for
  * success. If savename!=NULL and the file is found, *savename will be set to
@@ -676,7 +676,7 @@ struct Value *handle_exit_command(String *args, int offset)
 }
 
 struct Value *handle_load_command(String *args, int offset)
-{                   
+{
     int quiet = 0, result = 0;
     char c;
 

@@ -251,7 +251,7 @@ static void read_configuration(const char *fname)
         if (*fname) do_file_load(fname, &main_configfile);
         return;
     }
-	
+
     (void)(   /* ignore value of expression */
 	/* Try the next file if a file can't be read, but not if there's
 	 * an error _within_ a file. */

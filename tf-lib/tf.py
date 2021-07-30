@@ -19,7 +19,7 @@ def out( argstr ):
 
 def send( text, world="<current>" ):
 	print "tf.send %s |" % test
-	
+
 def world():
 	return "Dummy"
 

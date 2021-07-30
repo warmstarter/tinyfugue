@@ -148,7 +148,7 @@ extern attr_t adj_attr(attr_t base, attr_t adj);
 
 /* Define enumerated constants */
 #define ENUMEXTERN extern
-#define bicode(a, b)  a 
+#define bicode(a, b)  a
 #include "enumlist.h"
 
 extern conString enum_off[];
@@ -162,7 +162,7 @@ extern int do_hook(int indx, const char *fmt, const char *argfmt, ...)
     format_printf(2, 4);
 
 enum Hooks {
-#define gencode(id, type)  H_##id 
+#define gencode(id, type)  H_##id
 #include "hooklist.h"
 #undef gencode
     NUM_HOOKS

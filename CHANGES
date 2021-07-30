@@ -1493,7 +1493,7 @@ Fixed bug in using /recall with wraplog==on (33b7?).
 Fixed minor bug in using "nw" or "se" in map.tf.
 Improved /qmac in quoter.tf.
 
-3.3 beta 9 
+3.3 beta 9
 ----------
 Added help topics for some library utilities.
 In alias.tf, arguments to aliases now make more sense.
@@ -1539,14 +1539,14 @@ Fixed bug in wrapping input with insert=off.
 Fixed small omissions in tf.help.
 Internal changes.
 
-3.3 beta 4 
+3.3 beta 4
 ----------
 Minor fix in idea of current world after /fg in fall-thru triggers/hooks.
 Minor fix for recall messages while logging.
 Fix for empty /cat text.
 Internal changes.
 
-3.3 beta 3 
+3.3 beta 3
 ----------
 In completion.tf, added /complete_input_history (ESC i).
 In lisp.tf, added /unique.
@@ -1588,15 +1588,15 @@ Fixes for bugs and portability.
 Removed %{quoted_args}.
 
 
-3.2 beta 4 
+3.2 beta 4
 ----------
 Fixed a bug that prevented %P subs from working after a regexp trigger.
 
-3.2 beta 3 
+3.2 beta 3
 ----------
 Fixed bug in /hook causing macros to be defined with -t"" -aCred.
 
-3.2 beta 2 
+3.2 beta 2
 ----------
 Fixed fatal bug in /hook.
 
@@ -1628,21 +1628,21 @@ Improved installation portability.
 Increased speed of macro execution by about 15%.
 
 
-3.1 beta 5 
+3.1 beta 5
 ----------
 Fixed divide-by-zero in user expressions.
 Improved error handling for some other expression errors.
 Renamed "signal.h" for stupid compilers.
 
-3.1 beta 4 
+3.1 beta 4
 ----------
 Fixed bug in "[^...]" patterns.
 
-3.1 beta 3 
+3.1 beta 3
 ----------
 Fixed ULTRIX time_t bug (really).
 
-3.1 beta 1 
+3.1 beta 1
 ----------
 New inline nonblocking connect.  Should work automagically on all platforms.
 Added many useful and educational macros in utilities directory.
@@ -1667,7 +1667,7 @@ Fixed mysterious and rare "2" hilite bug (3.0)
 Fixed world leak in /dc on pending socket.
 Other portability stuff.
 
-3.0 beta 2 
+3.0 beta 2
 ----------
 Added time arithmetic in expressions.
 Bug fix: identifiers in expressions can contain '_' characters.
@@ -1682,7 +1682,7 @@ NEW COMMANDS:
 /addlp, /addlpp, /addtelnet, /addtiny, /eval, /export, /expr, /for,
 /if, /let, /not, /rand, /recordline, /restrict, /set, /setenv, /shift,
 /suspend, /telnet, /test, /time, /toggle, /unset, /while.
- 
+
 NEW FEATURES:
 Installation is completely automated and configurable.
 Examples directory.
@@ -1702,13 +1702,13 @@ Added -n option to /send.
 Added -a (append) option to /save and /saveworld.
 Secure public installation with /restrict.
 Allows macros to override builtin commands.  Use "/@name" to call builtin.
- 
+
 NEW RUNTIME OPTIONS:
 Variable-controlled features:  MAIL, TERM, TFCONNECT, TFHELP, TFLIBRARY,
   always_echo, backslash, barattr, bg_output, catch_ctrls, hiliteattr,
   maildelay, max_recur, oldslash, prompt_sec, prompt_usec, refreshtime,
   snarf, sockmload, time_format, wraplog.
- 
+
 FIXES/IMPROVEMENTS:
 Much improved handling of LP/Diku prompts (see "prompts").
 Using RECALLB and RECALLF (^P and ^N) will not destroy current line.
@@ -1737,7 +1737,7 @@ Many portability fixes.
 Many other bug fixes.
 
 
-2.1 beta 2 
+2.1 beta 2
 ----------
 Bug fixes
 
@@ -1757,7 +1757,7 @@ Added -f<file> command line option.
 Bug fixes.
 Removed /stty.
 
-2.0 beta 2 - 7 
+2.0 beta 2 - 7
 --------------
 Bug fixes
 
@@ -1779,16 +1779,16 @@ Removed /tinytalk, /intr, /intrborg, /refill, /core, and /activity
 /listworlds doesn't display passwords unless given -c option
 Bug fixes and optimizations
 
-1.5.5 beta3 
+1.5.5 beta3
 -----------
 Bug fix
 
-1.5.5 beta2 
+1.5.5 beta2
 -----------
 Bug fixes for time.h, killing /repeats, etc.
 Fixed /ps output
 
-1.5.5 beta1 
+1.5.5 beta1
 -----------
 Autologin support for UnterMUD cyberportals, with '/bamf unter' command
 Removed /listbind, /act, /reply, /nointr, /nowrap, /nostty, /nolog,
@@ -1844,7 +1844,7 @@ Bug fix
 ----------
 World macro files changed
 Removed /purgewload, added /sockmload
-Compile-time options: -DSUPPRESS_REDEFS and -DSNARF_BLANKS 
+Compile-time options: -DSUPPRESS_REDEFS and -DSNARF_BLANKS
 Off-by-one bugs in ^N and /watchdog
 Setting off a bound key resets the count for the pager
 Descriptor leak in /kill
@@ -1912,7 +1912,7 @@ Removed /sendtries, /fastquote
 
 1.4.12 beta (1990-12-01)
 -----------
-Bug fixes 
+Bug fixes
 
 1.4.11 beta (1990-11-30)
 -----------
@@ -1990,7 +1990,7 @@ Added multi-mudding, with [ESC]B and [ESC]F
 Allowed running Fugue without connecting
 Represented tabs as '@' to make tab handling work
 
-1.3.0 beta 
+1.3.0 beta
 ----------
 Added /shpause, /addworld, /noworld, /saveworld, /loadworld, /clunused,
   /ptime, /qctries
@@ -1998,7 +1998,7 @@ Allowed config file to begin with commands
 Changed /savedef to save only macros without triggers
 Changed /quote to work without alarm()
 
-1.2.6 beta 
+1.2.6 beta
 ----------
 Bug fixes
 Trigger functions work on basis of hilites first, then gags, then nothing
@@ -2007,27 +2007,27 @@ Added /packet (waits for 512 chars of output before sending packets).
 Expanded /tinytalk to cause /stty, /log, /logme, /login and /quiet flags
   to turn on when called with no arguments.
 
-1.2.5 beta 
+1.2.5 beta
 ----------
 Bug fixes
 /edit allows specifying macros by name, number, or trigger.
 Added -DHARDCODE and non-termcap compile modes
 
-1.2.4 beta 
+1.2.4 beta
 ----------
 Changed /echo to do local echo
 Added /kecho (echoes keyboard input), /techo (echoes trigger input)
 
-1.2.2 beta 
+1.2.2 beta
 ----------
 Added /tinytalk (some tinytalk compatibility), /no<flag> commands
 
-1.2.1 beta 
+1.2.1 beta
 ----------
 Bug fixes
 Added /visual, /gpri, /hpri.
 
-1.2.0 beta 
+1.2.0 beta
 ----------
 Changed code organization
 Added -f switch on /def for function
@@ -2037,7 +2037,7 @@ Allowed unnamed macros
 Added /untrigt; /undeft; /purgedeft; /hn (removes blank line between output
   and divider by holding newlines)
 
-1.1.5 beta 
+1.1.5 beta
 ----------
 Bug fixes
 Removed /nointr, /nolog, /nostty, etc.

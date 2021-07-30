@@ -15,7 +15,7 @@
   <a href="../topics/variables.html">variables</a>.
   Many <a href="../topics/variables.html">variables</a> have a limited
   number of permitted values, with
-  corresponding integer values; these are called enumerated 
+  corresponding integer values; these are called enumerated
   <a href="../topics/variables.html">variables</a>.
   All flags are enumerated <a href="../topics/variables.html">variables</a>
   which can have the values "off" (0)
@@ -201,7 +201,7 @@
       <dd>The name of the TF library directory, which should contain the
       help file (tf-help), the standard library (stdlib.tf), the local
       library (local.tf), and many useful utility files.
-      The default value of 
+      The default value of
       <a href="../topics/special_variables.html#%TFLIBDIR">TFLIBDIR</a>
       is set when TF is installed, but can be overridden by setting it
       in the environment before starting TF.
@@ -240,7 +240,7 @@
       If this is set,
       <a href="../topics/special_variables.html#%TFLIBDIR">%{TFLIBDIR}</a>
       will be ignored by <a href="../commands/load.html">/load</a>, so be
-      sure to include the value of 
+      sure to include the value of
       <a href="../topics/special_variables.html#%TFLIBDIR">%{TFLIBDIR}</a> in
       <a href="../topics/special_variables.html#%TFPATH">%{TFPATH}</a>
       if you want to be able to <a href="../commands/load.html">/load</a>
@@ -266,7 +266,7 @@
 <a name="alert_attr"></a>
 <a name="%alert_attr"></a>
   <dt><b>alert_attr</b>=Br
-      <dd>The 
+      <dd>The
       <a href="../topics/attributes.html">attributes</a> used to display
       <a href="../topics/tfio.html">alert</a> text on the
       <a href="../topics/status_line.html">status line</a>.
@@ -356,7 +356,7 @@
       if off, the window display jumps to the end, showing only the last
       screenfull.  Turning
       <a href="../topics/special_variables.html#%bg_output">%bg_output</a>
-      off is equivalent to always using the -q option with 
+      off is equivalent to always using the -q option with
       <a href="../commands/fg.html">/fg</a>.
       The <a href="../topics/special_variables.html#%bg_output">%bg_output</a>
       flag has no effect on other processing, including
@@ -461,7 +461,7 @@
       <dd> (flag) If on (and
       <a href="../topics/special_variables.html#%emulation">%emulation</a>
       is "print", "ansi_strip", or "ansi_attr"),
-      tabs received from a server are expanded to spaces (according to 
+      tabs received from a server are expanded to spaces (according to
       <a href="../topics/special_variables.html#%tabsize">%tabsize</a>)
       immediately, before any <a href="../topics/triggers.html">trigger</a>
       processing.  If off, tab characters are left in received lines.
@@ -507,7 +507,7 @@
               <dd> Like "print", but ANSI display codes are also removed.
       <dt>ansi_attr:
               <dd> Like "ansi_strip", but ANSI
-              <a href="../topics/attributes.html">display attribute</a> codes 
+              <a href="../topics/attributes.html">display attribute</a> codes
               will be converted to TF's internal format and
               displayed correctly (on any terminal).  Other ANSI display
               codes (e.g., cursor motion) will be removed.  Recommended,
@@ -664,7 +664,7 @@
 <a name="%istrip"></a>
   <dt><b>istrip</b>=off
       <dd> (flag) If on, the meta (high) bit will be stripped from all input
-      characters.  Note that this will prevent 
+      characters.  Note that this will prevent
       <a href="../topics/special_variables.html#%meta_esc">%meta_esc</a>
       and <a href="../topics/locale.html">locales</a> with 8-bit characters
       from working correctly.
@@ -693,7 +693,7 @@
 <a name="kecho_attr"></a>
 <a name="%kecho_attr"></a>
   <dt><b>kecho_attr</b>
-      <dd> Attributes used for lines echoed by 
+      <dd> Attributes used for lines echoed by
       <a href="../topics/special_variables.html#%kecho">%{kecho}</a>.
 
 <p>
@@ -880,7 +880,7 @@
 <a name="mecho_attr"></a>
 <a name="%mecho_attr"></a>
   <dt><b>mecho_attr</b>
-      <dd> Attributes used for lines echoed by 
+      <dd> Attributes used for lines echoed by
       <a href="../topics/special_variables.html#%mecho">%{mecho}</a>.
 
 <p>
@@ -893,7 +893,7 @@
       typed characters with their meta (high) bit set may have the meta bit
       stripped and be prefixed with an ESC character.
       This allows META-x and ESC x to invoke the same keybinding.
-      Possible values of 
+      Possible values of
       <a href="../topics/special_variables.html#%meta_esc">%meta_esc</a>:
       <dl compact>
       <dt>"off" (0):
@@ -921,7 +921,7 @@
 <a name="mprefix"></a>
 <a name="%mprefix"></a>
   <dt><b>mprefix</b>=+
-      <dd> Prefix prepended to lines echoed by 
+      <dd> Prefix prepended to lines echoed by
       <a href="../topics/special_variables.html#%mecho">%{mecho}</a>.
 
 <p>
@@ -1007,7 +1007,7 @@
 <a name="qecho_attr"></a>
 <a name="%qecho_attr"></a>
   <dt><b>qecho_attr</b>
-      <dd> Attributes used for lines echoed by 
+      <dd> Attributes used for lines echoed by
       <a href="../topics/special_variables.html#%qecho">%{qecho}</a>.
 
 <p>
@@ -1078,7 +1078,7 @@
 <a name="secho_attr"></a>
 <a name="%secho_attr"></a>
   <dt><b>secho_attr</b>
-      <dd> Attributes used for lines echoed by 
+      <dd> Attributes used for lines echoed by
       <a href="../topics/special_variables.html#%secho">%{secho}</a>.
 
 <p>
@@ -1098,7 +1098,7 @@
       <dd> The maximum number of significant digits to display when printing a
       floating point number.  Note that 16 or more may introduce rounding
       error.  Also note that some real numbers with up to 6 decimal places are
-      stored with fixed points, not floating points, so are not affected by 
+      stored with fixed points, not floating points, so are not affected by
       <a href="../topics/special_variables.html#%sigfigs">sigfigs</a>
       (or rounding error).
 
@@ -1153,7 +1153,7 @@
 <a name="status_attr"></a>
 <a name="%status_attr"></a>
   <dt><b>status_attr</b>
-      <dd>The 
+      <dd>The
       <a href="../topics/attributes.html">attributes</a> used to display
       the <a href="../topics/status_line.html">status area</a>
       in <a href="../topics/mode.html#visual">visual mode</a>.

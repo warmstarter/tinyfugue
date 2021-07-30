@@ -685,7 +685,7 @@ String *encode_attr(const conString *str, int offset)
     attr_t oldattrs = 0, attrs;
     int i;
     String *new;
-    
+
     new = Stringnew(NULL, str->len+1, 0);
     if (!str->charattrs) {
 	if (str->attrs)
@@ -772,7 +772,7 @@ String *encode_ansi(const conString *str, int offset)
     attr_t oldattrs = 0, attrs;
     int i;
     String *new;
-    
+
     new = Stringnew(NULL, str->len+1, 0);
     if (!str->charattrs) {
 	if (str->attrs)

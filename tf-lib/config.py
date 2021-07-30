@@ -60,7 +60,7 @@ def _find_worldsfile():
 	if WORLDSFILE:
 		WORLDSFILE = os.path.abspath( os.path.expanduser( WORLDSFILE ) )
 	return WORLDSFILE
-	
+
 # ------------------------------------------------------
 # helpers
 # ------------------------------------------------------
@@ -134,7 +134,7 @@ def _save_worlds( wdict ):
 
 	fin = open( fname, "rU" )
 	written = False
-	
+
 	for line in fin:
 		if "addworld" in line:
 			if not written:
@@ -279,7 +279,7 @@ def _worlds( stdscr ):
 			if not SAVED:
 				tf.err( "* Warning: your /worlds haven't been saved yet" )
 			break
-			
+
 		elif c == 'S':
 			if undo:
 				_change_worlds( undo[0][1], wdict )
@@ -303,12 +303,12 @@ def _show_message( window, message, lastmessage ):
 		window.addnstr( 1, 1, " " + message + " "*x, x-2, curses.A_REVERSE )
 		lastmessage = message
 		window.refresh()
-	elif lastmessage:	
+	elif lastmessage:
 		window.addnstr( 1, 1, " "*x, x-2, curses.A_NORMAL )
 		window.refresh()
 		lastmessage = None
 	return None, lastmessage
-			
+
 
 def _worldwin_redraw( window ):
 	lines, cols = window.getmaxyx()
@@ -329,7 +329,7 @@ def _worldwin( parent, lines, cols, y, x ):
 	window.keypad(1)
 
 	_worldwin_redraw( window )
-	
+
 	scrollwin = window.derwin( lines-2, cols, 1, 0 )
 	scrollwin.keypad(1)
 	scrollwin.erase()
@@ -371,7 +371,7 @@ def _drawworlds( wlist, window, wpos, lastwpos ):
 			window.addnstr( "%-10s %-16s %s%-20s %5s" % \
 							( item.name, item.character, ssl, item.host, item.port ),
 							cols, attrib )
-	
+
 	window.move( wpos-top, 0 )
 	window.refresh()
 
@@ -564,7 +564,7 @@ def _editworld( worldwin, worldnames, world ):
 					message = field['validate']( world, worldnames, value )
 					if not message:
 						_setfield( world, field, value )
-						
+
 				else:
 					_setfield( world, field, value )
 				break

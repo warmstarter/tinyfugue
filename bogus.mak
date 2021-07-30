@@ -10,7 +10,7 @@
 
 # Note: the space on the end of the next line is intentional, so it will
 # still work in unix for idiots who got ^M on the end of every line.
-default:  all 
+default:  all
 
 all:
 	@echo :

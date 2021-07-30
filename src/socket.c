@@ -1447,7 +1447,7 @@ static void setupnextconn(Sock *sock)
     if (sock->fd >= 0) {
         FD_CLR(sock->fd, &readers);
         FD_CLR(sock->fd, &writers);
-        close(sock->fd); 
+        close(sock->fd);
         sock->fd = -1;
     }
 retry:
@@ -2920,7 +2920,7 @@ static void telnet_subnegotiation(void)
 	      Sprintf(telbuf, "%c%c%c%c%s%c%c", TN_IAC, TN_SB, TN_CHARSET, '\02', temp_buff, TN_IAC, TN_SE);
 	      /* TODO: Don't reset if we're already using this charset. */
 	      /* XXX: This breaks if we were scanning simbuffer. Dangit. */
-	      inbound_decode_str(xsock->buffer, xsock->incomingposttelnet, 
+	      inbound_decode_str(xsock->buffer, xsock->incomingposttelnet,
 	          xsock->incomingfsm, 1); /* 1; nothing else to convert */
 	      handle_socket_input_queue_lines(xsock);
 	      ucnv_close(xsock->incomingfsm);
@@ -3024,7 +3024,7 @@ static int inbound_decode(String *output, const char *input, const char *iendptr
     int32_t utf8written = 0;
 
     UBool flush = cflush ? TRUE : FALSE;
-    
+
     /* xcharset -> UTF-16 -> UTF-8 */
     ucnv_toUnicode(conv, &optr, oendptr, &iptr, iendptr, NULL, flush, &err16);
 /*
@@ -3035,7 +3035,7 @@ void ucnv_toUnicode 	( 	UConverter *  	converter,
 		const char *  	sourceLimit,
 		int32_t *  	offsets,
 		UBool  	flush,
-		UErrorCode *  	err 
+		UErrorCode *  	err
 	)
 */
     u_strToUTF8(outbufferUTF8, BUFFSIZE*8, &utf8written, outbufferUTF16, (int32_t)(optr - outbufferUTF16), &err8);
@@ -3045,8 +3045,8 @@ char* u_strToUTF8 	( 	char *  	dest,
 		int32_t *  	pDestLength,
 		const UChar *  	src,
 		int32_t  	srcLength,
-		UErrorCode *  	pErrorCode 
-	) 	
+		UErrorCode *  	pErrorCode
+	)
 */
     Stringfncat(output, outbufferUTF8, utf8written);
     if (U_FAILURE(err16) || U_FAILURE(err8))
@@ -3136,7 +3136,7 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
 			return 0;
 		    /* Socket is blocking; EAGAIN and EWOULDBLOCK impossible. */
 #if WIDECHAR
-		    inbound_decode_str(xsock->buffer, incomingposttelnet, 
+		    inbound_decode_str(xsock->buffer, incomingposttelnet,
                         incomingFSM, 1);
 #endif
 		    if (xsock->buffer->len) { /* Destroy the buffers */
@@ -3194,7 +3194,7 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
 		    break;
 		default:
 # if WIDECHAR
-		    inbound_decode_str(xsock->buffer, incomingposttelnet, 
+		    inbound_decode_str(xsock->buffer, incomingposttelnet,
                         incomingFSM, 1);
 # endif
 		    flushxsock();

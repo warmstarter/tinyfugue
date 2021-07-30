@@ -122,9 +122,9 @@ def write_file( ):
 	else:
 		f.write( "<br/>No URLs caught yet.<br/>\n" )
 	f.write( '</body>\n' )
-		
+
 	f.close()
-		
+
 
 def config_massage():
     	"Do a little CONFIG fixup."
@@ -148,14 +148,14 @@ def config( keyval ):
 		config_massage()
 	else:
 		tf.echo( "use: /python_call urlwatch.config <key>=<value>" )
-	
+
 # ---------------------------------------------------------------------------
-# Initialization	
+# Initialization
 # ---------------------------------------------------------------------------
 
 # Do some CONFIG massaging
 config_massage()
-	
+
 # create the trigger
 tf.eval( "/def -mregexp -p9 -F -q -t%s urlwatch = /python_call urlwatch.trigger \\%%*" %
 		 PATTERN.replace('//','///').replace('\\','\\\\')

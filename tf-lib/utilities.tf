@@ -3,7 +3,7 @@
 ; This contains common functions that were missing in the main tf library    ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
-;;; Virtual Array 
+;;; Virtual Array
 ;;;
 ;;; Originally submitted to the Tinyfugue mailing list]
 ;;; by Galvin <kairo at mediaone dot net>
@@ -29,18 +29,18 @@
 ;;; /test put_array('test_array', 2, 'a string')
 ;;; /test echo(get_array('test_array', 1))
 ;;; /test echo(get_array('test_array', 2))
-;;; 
+;;;
 ;;; You should see 367382 and a string echoed to your screen.
-;;; 
+;;;
 ;;; Passing an array to a function
-;;; 
+;;;
 ;;; /def function_array = \
 ;;; /test array1 := get_array({*}, 1) %;\
 ;;; /test array2 := get_array({*}, 2) %;\
 ;;; /test echo(strcat(array1, ':', array2))
-;;; 
+;;;
 ;;; /test function_array('test_array')
-;;; 
+;;;
 ;;; Debugging can be done with /listarray which would return:
 ;;; /listarray test_array
 ;;; test_array[1]:=367382
@@ -48,7 +48,7 @@
 ;;; test_array[3]:=
 ;;;
 ;;; /listarray only lists up till a blank entry,
-;;; I thought about using entry 0 as the # of elements but decided 
+;;; I thought about using entry 0 as the # of elements but decided
 ;;; that some people may want to start arrays from 0 and not 1.
 ;;;
 ;;; Some get_array_count examples:
@@ -56,16 +56,16 @@
 ;;; /test put_array('halloween', 1, 'skeleton')
 ;;; /test put_array('halloween', 2, 'owls')
 ;;; /test put_array('halloween', 3, 'boo!')
-;;; 
+;;;
 ;;; /test echo(get_array_count('halloween', 1))
 ;;; returns 3
 ;;; /test echo(get_array_count('halloween', 2))
 ;;; returns 2
-;;; 
+;;;
 ;;; /test put_2array('double', 1, 1 , 'hmm')
 ;;; /test put_2array('double, 1, 2, 'burp!')
 ;;; /test put_2array('double, 1, 3, 'damn')
-;;; /test echo(get_2array_count('double', 1, 1) 
+;;; /test echo(get_2array_count('double', 1, 1)
 ;;;
 ;----------------------------------------------------------------------------;
 

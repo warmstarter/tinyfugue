@@ -210,7 +210,7 @@ definitions.
 
 <p>
 On recent versions of xterm with the modifyCursorKeys resource, tf can
-recognize when the CTRL, SHIFT, or META modifier is held down while pressing 
+recognize when the CTRL, SHIFT, or META modifier is held down while pressing
 the editor keys (insert, delete, home, end, pgdn, pgup), arrow keys,
 or numbered function keys, and calls
 <code>/key_ctrl_<i>name</i></code>,
@@ -277,7 +277,7 @@ How this works for some specific terminals:
     <a href="../topics/special_variables.html#%keypad">%keypad</a>=on
     and NumLock on gives normal digit/punctuation keys, and there is no way to
     get configuration B.
-    There is also a "VT220 keyboard" option; if that is enabled, 
+    There is also a "VT220 keyboard" option; if that is enabled,
     <a href="../topics/special_variables.html#%keypad">%keypad</a>=on
     and NumLock off gives configuration B, and all other combinations of
     <a href="../topics/special_variables.html#%keypad">%keypad</a>
@@ -319,7 +319,7 @@ How this works for some specific terminals:
 <a name="">
 
 <p>
-In some environments, unnamed key sequences consisting of "^[" (ESC) 
+In some environments, unnamed key sequences consisting of "^[" (ESC)
 followed by one other character
 may also be typed by holding the META key while typing the other character
 instead of typing ESC before the other character.
@@ -399,7 +399,7 @@ Make up and down arrow keys perform input recall only:
     the keypad keys "KP1" (upper left), "KP2" (center), "KP3" (upper right),
       "KP4" (lower left), "KP5" (lower right);
     the arrow keys "Up", "Down", "Right", "Left";
-    and the other keys, 
+    and the other keys,
       "Backspace", "Clear EOL", "Clear EOS", "Clear Screen",
       "Delete", "Delete Line", "Home", "Home Down", "Insert", "Insert Line",
       "PgDn", "PgUp", "Scroll Down", "Scroll Up".
@@ -452,7 +452,7 @@ named key macros according to vt100, vt220, ANSI, and xterm definitions,
 plus OS/2 definitions if running on OS/2,
 as well as the termcap entry corresponding to your
 <a href="../topics/special_vars.html#%TERM">%TERM</a> variable.
-If the named keys on your terminal generate character sequences that 
+If the named keys on your terminal generate character sequences that
 are not recognized by TF, you will need to bind them yourself with
 "<code><a href="../commands/def.html#-b">/def -b</a>'<i>charsequence</i>' =
 /key_<i>name</i></code>".
@@ -471,7 +471,7 @@ Note for Mac OS X Terminal.app users:  by default, Terminal.app traps PageUp
 and PageDown keys itself and does not send them to the application (tf).
 It does however send Shift-PageUp and Shift-PageDown to the application,
 so you can use these to scroll in tf running inside Terminal.
-You can also tell Terminal to send the unshifted keys to tf by 
+You can also tell Terminal to send the unshifted keys to tf by
 redefining them in Terminal | Window Settings | Keyboard.
 
 <p>
@@ -490,7 +490,7 @@ Users of either terminal emulator may work around the problem with
 <a name="">
 
 <p>
-Note that before version 3.5 alpha 21 or beta 1, it was usually harmless to 
+Note that before version 3.5 alpha 21 or beta 1, it was usually harmless to
 "<a href="../commands/set.html">/set</a>
 <a href="../topics/special_variables.html#%TERM">TERM</a>=vt100"
 on terminals that accepted a superset of vt100 display codes.
@@ -512,15 +512,15 @@ ESC followed by an optional "-" and any number of digits sets the global
 variable <a href="../topics/special_variables.html#%kbnum">%kbnum</a>.
 By default, the current
 <a href="../topics/special_variables.html#%kbnum">%kbnum</a>
-value is displayed near the right end of the 
+value is displayed near the right end of the
 <a href="../topics/status_line.html">status line</a>.
-Then, when any other keybinding is typed, 
+Then, when any other keybinding is typed,
 that keybinding may use the value of
 <a href="../topics/special_variables.html#%kbnum">%kbnum</a>.
-Whether the keybinding uses the value or not, 
+Whether the keybinding uses the value or not,
 <a href="../topics/special_variables.html#%kbnum">%kbnum</a> is cleared after
 the keybinding has run.
-Most keybindings that use 
+Most keybindings that use
 <a href="../topics/special_variables.html#%kbnum">%kbnum</a>
 use it as a repeat count.
 For example, typing "<code>ESC 1 2 x</code>" is the same as typing
@@ -563,10 +563,10 @@ calls "<code><a href="../commands/test.html">/test</a>
 
 <p>
 To set <a href="../topics/special_variables.html#%kbnum">%kbnum</a>
-by means other than the default keybindings above, simply 
+by means other than the default keybindings above, simply
 <a href="../commands/set.html">/set</a> it as you would any other variable.
 Once it is set, all typed digits are appended to it.  When any non-digit
-key is typed, that key will be executed, and 
+key is typed, that key will be executed, and
 <a href="../topics/special_variables.html#%kbnum">%kbnum</a> will be cleared.
 <a name="kbnum"></a>
 

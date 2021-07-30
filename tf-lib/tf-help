@@ -2755,17 +2755,17 @@ python()
   [1m/PYTHON[22;0m [<[4mcommand[22;0m>]
 
   This executes a single python expression. It must be an expression with a
-  return code, not a statement. For instance [1m1+1[22;0m is a 
-  expression that returns [1m2[22;0m, but [1mprint(1+1)[22;0m 
-  is a statement and would be illegal. It will convert string, float, integer, 
+  return code, not a statement. For instance [1m1+1[22;0m is a
+  expression that returns [1m2[22;0m, but [1mprint(1+1)[22;0m
+  is a statement and would be illegal. It will convert string, float, integer,
   or boolean return values to equivalent TF values.
 
-  Example:  
+  Example:
 
   [1m/test[22;0m [1mecho[22;0m(python(strcat("'The current world is ", ${world_name},  ".'")))
   The current world is (unnamed1).
 
-  Note that quoting is slightly tricky here - you have to quote once for TF's 
+  Note that quoting is slightly tricky here - you have to quote once for TF's
   sake, then once for python.
 
   This invokes the python interpreter just as if you were entering commands at a
@@ -2776,9 +2776,9 @@ python()
   [1m/python[22;0m tf.out( "Logfiles: " + ", ".join(glob.glob("*.log")) )
   Logfiles: naughty.log, nice.log
 
-  Generally this is only useful in your .tfrc - or other script setup. It is 
-  slow since the command has to be recompiled every time, and you don't get 
-  any return values.  You won't see any output unless there's an error or you 
+  Generally this is only useful in your .tfrc - or other script setup. It is
+  slow since the command has to be recompiled every time, and you don't get
+  any return values.  You won't see any output unless there's an error or you
   explcitly invoke [1mtf.out()[22;0m.
 
   See [1m/python_load[22;0m and [1m/python_call[22;0m instead.
@@ -2795,8 +2795,8 @@ python()
   [1m/python_call[22;0m [4mmodule[22;0m.[4mfunction[22;0m <[4margument[22;0m>
 
   This calls a function in a python module you have loaded with [1m/python_load[22;0m.
-  Since the code is already byte compiled, this is the fastest way to execute 
-  python. And since the entire rest of the line is considered the argument, 
+  Since the code is already byte compiled, this is the fastest way to execute
+  python. And since the entire rest of the line is considered the argument,
   you don't have to worry about quoting issues.
 
   Example:
@@ -2809,7 +2809,7 @@ python()
   comes when using TinyFugue's powerful triggering and matching systems and
   using a different method for each trigger type.
 
-  For a more complex example, see the included [1mtf-lib/urlwatch.py[22;0m which 
+  For a more complex example, see the included [1mtf-lib/urlwatch.py[22;0m which
   catches all urls going by and writes a url launching page.
 
   See [1m/help tf python[22;0m for calling back into TinyFugue.
@@ -2823,7 +2823,7 @@ python()
   [1m/python_kill[22;0m <[4mmodule[22;0m>
 
   This dumps the python interpreter and any loaded python modules. The next
-  time any of the other [1mpython[22;0m commands are used it will be reloaded 
+  time any of the other [1mpython[22;0m commands are used it will be reloaded
   and reinitialized.
 
   This is intended as dead-man switch to prevent a required restart TinyFugue
@@ -2923,7 +2923,7 @@ TF Python
   from TinyFugue by using [1mtf.eval[22;0m.
   Please see [1m/help tf module[22;0m for info on this.
 
-  [1mstdout[22;0m and [1mstderr[22;0m: by default, [1mstdout[22;0m is discarded (so you don't 
+  [1mstdout[22;0m and [1mstderr[22;0m: by default, [1mstdout[22;0m is discarded (so you don't
   see the output of every [1m/python[22;0m command) and [1mstderr[22;0m
   is sent to [1mtferr[22;0m. You can make [1mstdout[22;0m active again with:
   [1m/python[22;0m sys.stdout.output = tf.out and shut it up again with:

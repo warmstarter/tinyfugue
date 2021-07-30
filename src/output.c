@@ -679,7 +679,7 @@ void setup_screen(void)
 	}
 	init_line_numbers();
         if (enter_ca_mode) tp(enter_ca_mode);
-    
+
         if (scroll && !(has_scroll_region || (insert_line && delete_line))) {
             set_var_by_id(VAR_scroll, 0);
         }
@@ -1842,7 +1842,7 @@ void update_status_field(Var *var, stat_id_t internal)
 		    /* do nothing */;
 		else if (field->fmtvar == var)
 		    /* do nothing */;
-		else if (field->attrvar == var) 
+		else if (field->attrvar == var)
 		    field->vattrs = var->val.u.attr;
 		else
 		    continue;
@@ -2366,7 +2366,7 @@ void idel(int place)
     if ((len = place - keyboard_pos) < 0) keyboard_pos = place;
     if (!sockecho()) return;
     if (len < 0) ix += len;
-    
+
     if (!visual) {
 	int prompt_len = prompt ? prompt->len % Wrap : 0;
         if (ix < prompt_len + 1 || need_refresh) {
@@ -2450,7 +2450,7 @@ void idel(int place)
             if (visual && cy < oiey) clear_lines(cy + 1, oiey);
         }
     }
-    
+
     /* restore cursor */
     if (visual) ipos();
     else { bufputnc('\010', cx - ix);  cx = ix; }
@@ -2530,7 +2530,7 @@ int igoto(int place)
             cx += diff;
             if (diff < 0)
                 bufputnc('\010', -diff);
-            else 
+            else
                 ictrl_put(keybuf->data + place - diff, diff);
         }
 

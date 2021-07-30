@@ -65,7 +65,7 @@ class World( object ):
 
 		elif MODE == MODE_MIX:
 			self.check_last()
-			
+
 		tf.out( text )
 
 	def divider( self ):
@@ -93,7 +93,7 @@ class World( object ):
 
 	def dump_buffer( self ):
 		# clean out buffer, no longer active world
-		
+
 		if not self.buffer:
 			return
 		for line in self.buffer:
@@ -110,7 +110,7 @@ class World( object ):
 		self.socket = True
 		if not self in WLIST:
 			WLIST.append( self )
-		
+
 		self.activate() #???
 
 	def disconnect( self, reason ):
@@ -118,7 +118,7 @@ class World( object ):
 			WLIST.remove( self )
 		except ValueError: pass
 		self.socket = False
-		
+
 
 # -----------------------------------------------------------------------------
 # Global data structures
@@ -161,7 +161,7 @@ def _activity_status():
 	else:
 		text = ""
 	tf.eval( "/set _tf4activity="+text )
-	
+
 # ------------------------------------------------------------------------------
 # Our /python_call functions
 # ------------------------------------------------------------------------------
@@ -236,7 +236,7 @@ def fg( argstr ):
 		c = -1
 	elif '>' in opts:
 		c = 1
-		
+
 	if c != 0:
 		if WLIST:
 			if FG in WLIST:
@@ -247,7 +247,7 @@ def fg( argstr ):
 			fg = WDICT['']
 	elif 'n' in opts:
 		fg = WDICT['']
-		
+
 	if fg:
 		fg.activate()
 
@@ -266,7 +266,7 @@ def conhook( argstr ):
 
 	tf.eval( "/@fg _tf4" ) # just in case
 	world.connect()
-		
+
 
 # world disconnected hook
 def dischook( argstr ):
@@ -278,7 +278,7 @@ def dischook( argstr ):
 	if reason != 'tf4':
 		tf.out( "%% Connection to %s closed." % name )
 	world( "-a" )
-	
+
 # connection request - just make sure we start in background
 def connect( argstr ):
 	cmd, opts, argstr = tfutil.cmd_parse( argstr, "lqxfb" )
@@ -340,7 +340,7 @@ switch: Like 'mix' but immediately switches you to whatever world has output.
   Obviously this makes it tough to guarantee that any text you're sending
   will go to the right world unless you do a /send -wfoo text, since it
   could switch just before you hit enter.
- 
+
 off: Turn off TinyFugue 4 emulation mode, revert all your keybindings and
   macro definitions back to the way they were.
 """.split("\n"):
@@ -357,7 +357,7 @@ def tf4( argstr ):
 	argstr = argstr.lower()
 	if not argstr or 'on' in argstr:
 		newmode = MODE_ON
-		
+
 	elif 'help' in argstr:
 		return myhelp()
 
@@ -385,7 +385,7 @@ def tf4( argstr ):
 			MODE = MODE_OFF
 		tf.out( "% tf4 mode is now off. '/tf4' to re-enable it" )
 		return
-		
+
 	if MODE == MODE_OFF:
 		# Create a virtual world to hold our text
 		sockets = tfutil.listsockets()
@@ -413,7 +413,7 @@ def tf4( argstr ):
 			state.define( flags="-p99999 -w_tf4 -ag -mglob -t*" )
 			state.define( body="/python_call tf4.rx $[world_info()] %P1",
 						  flags="-Fpmaxpri -q -mregexp -t(.*)" )
-			
+
 			# add a trigger for anything being sent to the generic world, so we can reroute
 			# it to the right world
 			state.define( body="/python_call tf4.tx %{*}", flags="-pmaxpri -w_tf4 -hSEND" )

@@ -33,9 +33,9 @@
   In <a href="../topics/mode.html#visual">visual</a> mode,
   text sent to the alert stream is displayed briefly on the status line
   <a href="../topics/status_line.html">status line</a>, where it can be
-  seen immediately even if you're at a 
+  seen immediately even if you're at a
   <a href="../commands/more.html">more</a> prompt.
-  The duration of the alert display is determined by 
+  The duration of the alert display is determined by
   <a href="../topics/special_variables.html#%alert_time">%alert_time</a>.
   In <a href="../topics/mode.html#nonvisual">nonvisual</a> mode,
   text sent to the alert stream is redirected to the tferr stream.
@@ -54,7 +54,7 @@
 <p>
   Commands that read input
   (using <a href="../topics/functions.html#tfread">tfread()</a>)
-  read by default from 
+  read by default from
   "<a href="../topics/tfio.html">tfin</a>", which is normally attached
   to the keyboard.
   <a href="../topics/tfio.html">tfin</a> may be redirected with
@@ -63,7 +63,7 @@
 <p>
   All <a href="../topics/tfio.html">streams</a> have a handle which can be
   used as an argument to the <a href="../topics/tfio.html">tfio</a> functions.
-  The handles for 
+  The handles for
   <a href="../topics/tfio.html">tfin</a>,
   <a href="../topics/tfio.html">tfout</a>, and
   <a href="../topics/tfio.html">tferr</a>
@@ -135,7 +135,7 @@
   used on the <a href="../topics/tfio.html">tfout stream</a> (handle "o")
   within a <a href="../topics/macro.html">macro</a> body
   to prevent further output from subsequent commands in that
-  <a href="../topics/macro.html">macro</a> body; closing 
+  <a href="../topics/macro.html">macro</a> body; closing
   the <a href="../topics/tfio.html">tfin stream</a> (handle "i") will
   prevent further reads; and closing
   the <a href="../topics/tfio.html">tferr stream</a> (handle "e") is
@@ -177,7 +177,7 @@
   designated by <i>handle</i>.
   If <i>handle</i> is omitted, the
   <a href="../topics/tfio.html">tfin stream</a> is used.
-  If successful, the line is assigned to <i>variable</i>, and 
+  If successful, the line is assigned to <i>variable</i>, and
   <a href="../topics/functions.html#tfread">tfread()</a> returns the
   (non-negative) length of the line.
   If <i>variable</i> did not already exist, it is created at the global level,

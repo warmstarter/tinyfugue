@@ -64,10 +64,10 @@
   <a href="../topics/hooks.html">hook</a> in a
   <a href="../topics/sockets.html#background">background</a> world), the
   connection proceeds in the background.
-  
+
 <p>
   If a hostname was given, TF must look it up to find one or more
-  <a href="../topics/protocols.html">IPv4</a> 
+  <a href="../topics/protocols.html">IPv4</a>
   or (if your platform supports it)
   <a href="../topics/protocols.html">IPv6</a> addresses.
   If
@@ -87,7 +87,7 @@
   Next, TF tries to open a network connection to the IP address, and prints
   "Trying to connect to <i>world</i>: <i>address</i> <i>port</i>"
   (the PENDING hook).
-  On most platforms, if 
+  On most platforms, if
   <a href="../topics/special_variables.html#%connect">%{connect}</a> is
   "nonblocking" (the default), TF continues running normally while
   the network connection proceeds.
@@ -111,11 +111,11 @@
   <a href="../topics/sockets.html#foreground">foregrounding</a> upon
   successful connection, you can <a href="../commands/def.html">define</a> a
   CONNECT <a href="../topics/hooks.html">hook</a> that calls
-  "<code><a href="../commands/fg.html">/fg</a> 
+  "<code><a href="../commands/fg.html">/fg</a>
   <a href="../topics/substitution.html#%1">%{1}</a></code>".
 
 <p>
-  Even if 
+  Even if
   <a href="../topics/special_variables.html#%gethostbyname">%{gethostbyname}</a>
   and/or <a href="../topics/special_variables.html#%connect">%{connect}</a> are
   "blocking", they can be interrupted with the SIGINT
@@ -139,7 +139,7 @@
   alternate address.
 
 <p>
-  If the network connection is successful, or the 
+  If the network connection is successful, or the
   <a href="../topics/sockets.html">socket</a> is "connectionless",
   these events occur:
 <ul>

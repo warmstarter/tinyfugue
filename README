@@ -210,7 +210,7 @@ In the top directory, execute these commands:
   ./configure
   make
   make install
-      
+
 The configure script will attempt to figure out everything it needs to
 know about your system and install all files in their proper location.
 If you have any problems, or want to change a default installation
@@ -389,7 +389,7 @@ the %proxy_host variable at runtime.  See "/help proxy".
 Also see the README file in the subdirectory corresponding to your
 operating system to see if tf has transparent firewall support on your
 system.
- 
+
 
 Installation Problems
 ---------------------

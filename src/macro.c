@@ -231,7 +231,7 @@ static Macro *macro_spec(String *args, int offset, int *xmflag, ListOpts *listop
     const char *fullOptString = "usSp#c#b:B:E:t:w:h:a:f:P:T:FiIn#1m:q";
     char *optStr = (listopts ? (char *)fullOptString : (char *)fullOptString + 3);
     startopt(CS(args), optStr);
-    // startopt(CS(args), "usSp#c#b:B:E:t:w:h:a:f:P:T:FiIn#1m:q" + (listopts ? 0 : 3)); 
+    // startopt(CS(args), "usSp#c#b:B:E:t:w:h:a:f:P:T:FiIn#1m:q" + (listopts ? 0 : 3));
     while (!error && (opt = nextopt(&ptr, &uval, NULL, &offset))) {
         switch (opt) {
         case 'u':
@@ -619,7 +619,7 @@ Macro *find_hashed_macro(const char *name, unsigned int hash)
 static Macro *match_exact(int hooknum, const char *str, attr_t attrs)
 {
     ListEntry *node;
- 
+
     if (hooknum < 0 && !*str) return NULL;
     for (node = hooknum>=0 ? hooklist[hooknum].head : triglist->head; node;
 	node = node->next)

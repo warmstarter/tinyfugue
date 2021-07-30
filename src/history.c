@@ -149,7 +149,7 @@ static void save_to_log(History *hist, const conString *str)
         SStringcat(log_buffer, (conString *) encode_ansi(str, 0));
     else
         SStringcat(log_buffer, str);
-  
+
     if (wraplog) {
         /* ugly, but some people want it */
 	const char *p = str->data;

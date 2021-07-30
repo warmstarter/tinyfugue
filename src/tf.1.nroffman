@@ -34,7 +34,7 @@ For this reason, I leave some older versions at the site where I distribute
 features but may have fewer bugs than the most recent release.
 
 .SH "COMMAND LINE ARGUMENTS"
-With no arguments, \fITF\fR will 
+With no arguments, \fITF\fR will
 try to connect to the first world defined in the configuration file(s).
 .PP
 With a \fBworld\fR argument, \fITF\fR will try to connect to \fBworld\fR,

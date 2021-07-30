@@ -277,7 +277,7 @@ static void handle_input_string(const char *input, unsigned int len)
 	    keyboard_pos += extra;
 	}
         Stringncat(keybuf, input, len);
-    }                      
+    }
     keyboard_pos += len;
     iput(putlen);
 }
@@ -318,7 +318,7 @@ struct Value *handle_dokey_command(String *args, int offset)
         SStringocat(Stringcpy(buffer, "dokey_"), CS(args), offset);
         if ((macro = find_macro(buffer->data)))
             return newint(do_macro(macro, NULL, 0, USED_NAME, 0));
-        else eprintf("No editing function %s", args->data + offset); 
+        else eprintf("No editing function %s", args->data + offset);
         return shareval(val_zero);
     }
 

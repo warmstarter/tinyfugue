@@ -57,7 +57,7 @@ static int envsize;
 static int envmax;
 static int setting_nearest = 0;
 
-#define bicode(a, b)  b 
+#define bicode(a, b)  b
 #include "enumlist.h"
 
 static conString enum_mecho[]	= {

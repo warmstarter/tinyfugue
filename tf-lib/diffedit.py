@@ -72,11 +72,11 @@ Other functions:
    /python_call diffedit.lastdir <directory>
        Set where the diffedit keeps the last known version of each file for a
 	   <world>_<remote> to compare new versions against. Default: /tmp/diffedit
-   /python_call diffedit.tabsize 8 
+   /python_call diffedit.tabsize 8
        Set the tab to space expansion size. 0 means no expansion. Default: 4
    /python_call diffedit.lines_per_second 100
        Set lines per second to send if no -<size>. Default: 50
-   
+
 """.split("\n"):
 		tf.out( line )
 
@@ -102,7 +102,7 @@ class uploader( object ):
 
 	def __init__( self, remote, name2, raw=False ):
 		self.world = tf.world()
-		
+
 		self.remote = remote
 		self.name2 = name2
 
@@ -161,7 +161,7 @@ class uploader( object ):
 		self.up = self.chunks( lps, cmds )
 		self.lines_sent, self.lines_sent0 = 0, 0
 		self.progress_size = prog
-		
+
 		self.upload_chunk()
 
 	# returns lps chunks of cmds at a time - or all if no chunking
@@ -249,7 +249,7 @@ class up_lsedit( uploader ):
 					yield self.lines2[i-1]
 
 		yield ".end"
-			
+
 #
 # muf uploader
 #
@@ -269,11 +269,11 @@ class up_muf( uploader ):
 				for i in xrange( pos2, pos2+n ):
 					yield self.lines2[i-1]
 				yield "."
-				
+
 		yield "c"
 		yield "q"
 
-			
+
 # -----------------------------------------------------
 # Main logic
 # -----------------------------------------------------
@@ -296,7 +296,7 @@ def abort( argstr ):
 # start a new upload
 def upload( argstr ):
 
-	# 
+	#
 	# argument parsing is much larger than actual logic!
 	#
 
@@ -382,7 +382,7 @@ def upload( argstr ):
 
 	# only do the rest if we need to
 	if diffs:
-		
+
 		# generate the editor commands
 		cmds = editor.generate_commands( editor.massage_opcodes( diffs ) )
 
@@ -390,7 +390,7 @@ def upload( argstr ):
 		editor.upload_commands( lps, prog, cmds )
 
 	else:
-		
+
 		# all done
 		editor.lines_sent = 0
 		editor.done()

@@ -1,46 +1,46 @@
 <title>TinyFugue: /cat</title>
-<!--"@/cat"--> 
+<!--"@/cat"-->
 <h1>/cat</h1>
 
 <p>
-  Usage: 
+  Usage:
 
 <p>
   <a href="../commands/cat.html">/CAT</a> [%]<br>
 <hr>
 
 <p>
-  Concatenates (puts together) all subsequent lines until a line containing a 
-  single "." is typed.  If the argument "%" is given, a "%;" sequence is 
-  appended to each intermediate line.  The concatenated result is then 
-  executed as a single line.  
+  Concatenates (puts together) all subsequent lines until a line containing a
+  single "." is typed.  If the argument "%" is given, a "%;" sequence is
+  appended to each intermediate line.  The concatenated result is then
+  executed as a single line.
 
 <p>
-  The concatenated result is stored in the input 
-  <a href="../topics/history.html">history</a> as a single line, so 
-  intermediate lines can not be recalled separately.  
+  The concatenated result is stored in the input
+  <a href="../topics/history.html">history</a> as a single line, so
+  intermediate lines can not be recalled separately.
 
 <p>
-  Example: 
+  Example:
 <pre>
   <a href="../commands/cat.html">/cat</a> %
   :foo
   :bar
   :baz
-  . 
+  .
 </pre>
 
 <p>
-  This produces: 
+  This produces:
 <pre>
   :foo%;:bar%;:baz
 </pre>
 
 <p>
-  If the <a href="../topics/special_variables.html#%sub">%{sub}</a> flag is 
-  set on, this will <a href="../topics/evaluation.html">expand</a> to three 
-  lines ":foo", ":bar" and ":baz" and be sent to the 
-  <a href="../topics/sockets.html">socket</a>.  
+  If the <a href="../topics/special_variables.html#%sub">%{sub}</a> flag is
+  set on, this will <a href="../topics/evaluation.html">expand</a> to three
+  lines ":foo", ":bar" and ":baz" and be sent to the
+  <a href="../topics/sockets.html">socket</a>.
 
 <p>
   See:
@@ -50,7 +50,7 @@
   <a href="../topics/history.html">history</a>
 
 <p>
-<!-- END --> 
+<!-- END -->
 <hr>
   <a href="./">Back to index</a><br>
   <a href="http://tinyfugue.sourceforge.net/">Back to tf home page</a>

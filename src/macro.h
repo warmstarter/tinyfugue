@@ -18,7 +18,7 @@ extern int    macro_equal(Macro *m1, Macro *m2);
 extern int    hookname2int(const char *name);
 unsigned int  macro_hash(const char *name);
 extern Macro *find_hashed_macro(const char *name, unsigned int hash);
-extern Macro *find_num_macro(int num); 
+extern Macro *find_num_macro(int num);
 extern int    add_new_macro(const char *trig, const char *binding,
                  const hookvec_t *hook, const char *hargs, const char *body,
                  int pri, int prob, attr_t attr, int invis, int mflag);

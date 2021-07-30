@@ -180,7 +180,7 @@ const char *checkstring(const char *s) {
 	    break;
 	}
     }
- 
+
 exit:
     setsighandler(SIGBUS, old_sigbus_handler);
     setsighandler(SIGSEGV, old_sigsegv_handler);

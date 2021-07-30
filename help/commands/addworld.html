@@ -1,6 +1,6 @@
 <title>TinyFugue: /addworld</title>
-<!--"@/addworld"--> 
-<!--"@addworld()"--> 
+<!--"@/addworld"-->
+<!--"@addworld()"-->
 <h1>addworld()</h1>
 
 <p>
@@ -12,15 +12,15 @@
   [, <i>char</i>, <i>pass</i> [, <i>file</i> [, <i>flags</i> [, <i>srchost</i>]]]]])<br>
 
 <p>
-  Command usage: 
+  Command usage:
 
 <p>
-  <a href="../commands/addworld.html">/ADDWORLD</a> [-pxe] [-T<i>type</i>] [-s<i>srchost</i>] 
-  <i>name</i> [<i>char</i> <i>pass</i>] <i>host</i> <i>port</i> 
+  <a href="../commands/addworld.html">/ADDWORLD</a> [-pxe] [-T<i>type</i>] [-s<i>srchost</i>]
+  <i>name</i> [<i>char</i> <i>pass</i>] <i>host</i> <i>port</i>
   [<i>file</i>]<br>
-  <a href="../commands/addworld.html">/ADDWORLD</a> [-T<i>type</i>] [-s<i>srchost</i>] 
+  <a href="../commands/addworld.html">/ADDWORLD</a> [-T<i>type</i>] [-s<i>srchost</i>]
   <i>name</i><br>
-  <a href="../commands/addworld.html">/ADDWORLD</a> [-T<i>type</i>] DEFAULT 
+  <a href="../commands/addworld.html">/ADDWORLD</a> [-T<i>type</i>] DEFAULT
   [<i>char</i> <i>pass</i> [<i>file</i>]]<br>
 <hr>
 
@@ -92,54 +92,54 @@
   </dl>
 
 <p>
-  The library pre-defines WORLD and LOGIN hooks for 
+  The library pre-defines WORLD and LOGIN hooks for
   types that match these
   <a href="../topics/patterns.html#glob">glob patterns</a>:
 
 <p>
   <dl>
-  <dt>(none) 
+  <dt>(none)
           <dd>TinyMUD <a href="../topics/login.html">login</a> format
           ("connect <i>char</i> <i>pass</i>"), the value of
           <a href="../topics/special_variables.html#%lp">lp</a> is not changed.
 
 <p>
-  <dt>tiny, tiny.* 
+  <dt>tiny, tiny.*
           <dd>TinyMUD <a href="../topics/login.html">login</a> format
           ("connect <i>char</i> <i>pass</i>"),
           <a href="../topics/special_variables.html#%lp">lp</a>=off.
 
 <p>
-  <dt>lp, lp.* 
-  <dt>diku, diku.* 
-  <dt>aber, aber.* 
+  <dt>lp, lp.*
+  <dt>diku, diku.*
+  <dt>aber, aber.*
           <dd>LP/Diku <a href="../topics/login.html">login</a> format
           (sends <i>char</i> and <i>pass</i> on separate lines),
           <a href="../topics/special_variables.html#%lp">lp</a>=on.
-          For servers that send unterminated prompts.  
+          For servers that send unterminated prompts.
 
 <p>
-  <dt>lpp, lpp.* 
-          <dd>LP/Diku <a href="../topics/login.html">login</a> format, 
+  <dt>lpp, lpp.*
+          <dd>LP/Diku <a href="../topics/login.html">login</a> format,
           <a href="../topics/special_variables.html#%lp">lp</a>=off.
           For MUDs that use GOAHEAD or EOR
           <a href="../topics/prompt_protocol.html">prompt protocol</a>.
 
 <p>
-  <dt>telnet, telnet.* 
+  <dt>telnet, telnet.*
           <dd>Telnet <a href="../topics/login.html">login</a> format
           (sends <i>char</i> and <i>pass</i> when "login:" and "password:"
           prompts are received),
-          <a href="../topics/special_variables.html#%lp">lp</a>=on, 
-          <a href="../commands/localecho.html">/localecho</a> on.  
-          For any line-by-line telnet service.  
+          <a href="../topics/special_variables.html#%lp">lp</a>=on,
+          <a href="../commands/localecho.html">/localecho</a> on.
+          For any line-by-line telnet service.
   </dl>
 <p>
-  You can define your own world types for use in other triggers or hooks.  If 
+  You can define your own world types for use in other triggers or hooks.  If
   you use names that match the
   <a href="../topics/patterns.html#glob">glob</a>
-  patterns above, the standard library 
-  hooks will still work.  For example, if you did: 
+  patterns above, the standard library
+  hooks will still work.  For example, if you did:
 
 <pre>
   <a href="../commands/test.html">/test</a> <a href="../commands/addworld.html">addworld</a>("Cave", "tiny.muck.",     "cave.tcp.com", 2283, <i>char</i>, <i>pass</i>)
@@ -149,9 +149,9 @@
 </pre>
 
   then tiny-style <a href="../topics/login.html">autologin</a> would still
-  work (using the library hooks), and 
+  work (using the library hooks), and
   you could also define your own <a href="../topics/triggers.html">triggers</a>
-  and <a href="../topics/hooks.html">hooks</a> specific to TinyMUCKs or 
+  and <a href="../topics/hooks.html">hooks</a> specific to TinyMUCKs or
   TinyMOOs (e.g., "<code><a href="../commands/def.html">/def</a>
   <a href="../commands/def.html#-T">-T</a>tiny.muck.*</code>")
   or to worlds that support MSP regardless of their server type
@@ -164,19 +164,19 @@
   Any <i>type</i> is valid, but is only useful if it is matched by a
   "<a href="../commands/def.html#-T">-T<i>type</i></a>" option of a
   <a href="../topics/hooks.html">hook</a> or
-  <a href="../topics/triggers.html">trigger</a>.  
+  <a href="../topics/triggers.html">trigger</a>.
 
 <p>
   If <a href="../commands/addworld.html">addworld()</a> with a password is
   executed from a file that has permissions making it readable by others,
-  it will produce a warning.  You should change the file 
-  permissions to prevent other people from reading your password.  
+  it will produce a warning.  You should change the file
+  permissions to prevent other people from reading your password.
 
 <p>
-  See: <a href="../topics/worlds.html">worlds</a>, 
-  <a href="../commands/connect.html">/connect</a>, 
-  <a href="../commands/fg.html">/fg</a>, 
-  <a href="../commands/unworld.html">/unworld</a>, 
+  See: <a href="../topics/worlds.html">worlds</a>,
+  <a href="../commands/connect.html">/connect</a>,
+  <a href="../commands/fg.html">/fg</a>,
+  <a href="../commands/unworld.html">/unworld</a>,
   <a href="../topics/tools.html">/edworld</a>,
   <a href="../commands/telnet.html">/telnet</a>
 

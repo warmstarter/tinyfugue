@@ -24,7 +24,7 @@ def visual():
 	"""
 	if visual is off, returns 0, otherwise returns number of input lines
 	"""
-	
+
 	if tf.getvar( "visual", "off" ) == "on":
 		return tf.getvar( "isize", 3 )
 	else:
@@ -113,7 +113,7 @@ def cmd_unparse( cmd, optsdict, argstr ):
 
 	tfutil.cmd_unparse( '/recall', { 'w':'foo', '#':'12' }, '300' )
 	/recall -wfoo -12 300
-	
+
 	tfutil.cmd_unparse( '', { 'i':'', 'q':'' ], '300' )
 	-q -i 300
 	"""
@@ -129,7 +129,7 @@ def cmd_unparse( cmd, optsdict, argstr ):
 	if argstr.startswith('-'):
 		fullcmd.append( '-' )
 	fullcmd.append( argstr )
-	
+
 	return ' '.join( fullcmd )
 
 # ---------------------------------------------------------------------------
@@ -207,7 +207,7 @@ class World( object ):
 			for key in World.KEYS:
 				setattr( self, key, getattr( arg, key, '' ) )
 			return
-			
+
 		# empty string
 		if not arg:
 			for key in World.KEYS:
@@ -280,10 +280,10 @@ class World( object ):
 			/test addworld( ... )
 		line, otherwise it will return an
 			/addworld ...
-	    
+
 		If full is False then it will just return the addworld( ... ) part
 		without the /test or the ... without the /addworld.
-		
+
 		"""
 
 		which = self.category()
@@ -305,7 +305,7 @@ class World( object ):
 			cmd = [ '/addworld' ]
 		else:
 			cmd = []
-		
+
 		if which==World.NORMAL and self.flags:
 			cmd.append( '-' + self.flags )
 		if self.type:
@@ -323,7 +323,7 @@ class World( object ):
 			cmd.append( self.file )
 
 		return ' '.join( cmd )
-		
+
 
 # ---------------------------------------------------------
 # State class
@@ -341,7 +341,7 @@ class State( object ):
 	def setvar( self, var, value ):
 		"""
 		old = State.setvar( <var>, <value> )
-		
+
 		set TF variable <var> to <value>, returns the old value.
 		Saves the old value for when reverting State.
 		"""
@@ -371,7 +371,7 @@ class State( object ):
 
 		n = tf.eval( "/def %s %s = %s" % ( flags, name, eval_escape(body) ) )
 		self.newdef.append( n )
-		
+
 		return n
 
 	def bind( self, key, body="", flags="" ):
@@ -384,7 +384,7 @@ class State( object ):
 
 		if not key:
 			raise Exception( "tfutil.bind: empty key name" )
-		
+
 		if not key in self.oldkey:
 			x = screenscrape( "/list -i -msimple -b'%s'" % key )
 			if x:
@@ -396,7 +396,7 @@ class State( object ):
 
 		n = tf.eval( "/def %s %s = %s" % ( flags, key, eval_escape(body) ) )
 		self.newkey.append( n )
-		
+
 		return n
 
 	def status( self, argstr ):
@@ -408,7 +408,7 @@ class State( object ):
 		if not argstr.startswith("/"):
 			argstr = "/status_"+argstr
 		tf.eval( argstr )
-		
+
 
 	def lose_changes( self ):
 		"""
@@ -449,7 +449,7 @@ class State( object ):
 		# revert status line
 		if self.status_saved:
 			tf.eval( "/status_restore _tf4status" )
-		
+
 		# now forget all our changes
 		self.lose_changes()
 

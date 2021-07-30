@@ -221,7 +221,7 @@ static struct Value* pyvar_to_tfvar( PyObject *pRc )
 	// can be null if exception was thrown
 	if( !pRc ) {
 		PyErr_Print();
-		return newstr( "", 0 );  
+		return newstr( "", 0 );
 	}
 
 	// Convert string back into tf string
@@ -453,7 +453,7 @@ struct Value *handle_python_kill_command( String *args, int offset )
 	return newint( 0 );
 }
 
-// Import/reload a python module	  
+// Import/reload a python module
 struct Value *handle_python_load_command( String *args, int offset )
 {
 	PyObject *pRc;
@@ -463,7 +463,7 @@ struct Value *handle_python_load_command( String *args, int offset )
 
 	if( !py_inited )
 		python_init();
-	
+
 	DPRINTF( "handle_python_load_command: %s", name );
 
 	// module could invoke tf.eval, so mark it as used

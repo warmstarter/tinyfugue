@@ -683,7 +683,7 @@ void free_util(void)
  *                 || first   | new     | mtime same   | mtime changed
  * Timestamps      || test    | file    | as last test | since last test
  * ================++=========+=========+==============+=================
- * mtime <  atime  || 0,mail  | 0       | 0            | 0      
+ * mtime <  atime  || 0,mail  | 0       | 0            | 0
  * mtime == atime  || 0,mail  | 1,hook% | same         | 0
  * mtime >  atime  || 0,mail  | 1,hook  | 1            | 1,hook
  *
@@ -698,7 +698,7 @@ void free_util(void)
  * before and after shell() and suspend().  There is no way to avoid
  * it if mail is read in an unrelated process (e.g, another window).
  *
- * Note that mail readers can write to the mail file, causing a change 
+ * Note that mail readers can write to the mail file, causing a change
  * in size, a change in mtime, and mtime==atime.
  */
 void check_mail(void)

@@ -272,7 +272,7 @@
 	      the <i>number</i>th parenthesized subexpression of the
 	      <a href="../topics/patterns.html#regexp">regexp</a>.
 	  </dl>
-	  
+
           If <i>part</i> is omitted it defaults to 0.
           If <i>part</i> is a number and
 	  there are multiple matches in the text, the
@@ -384,7 +384,7 @@
 --> do_follow = go <a href="../topics/substitution.html#%Pn">%P1</a>
 </pre>
   Note the <a href="../topics/substitution.html">substitutions</a> that
-  occurred:  
+  occurred:
   "<a href="../topics/substitution.html#%n">%{1}</a>" was replaced with the
   first (and only) argument;
   each "<a href="../topics/substitution.html#\">\\</a>" was replaced with "\";
@@ -400,7 +400,7 @@
 <pre>
   ^Joe goes ([a-z]*)\.$
 </pre>
-  which will only match on worlds whose type matches the 
+  which will only match on worlds whose type matches the
   <a href="../topics/patterns.html#regexp">regexp pattern</a> "^tiny".
 
 <p>
@@ -410,7 +410,7 @@
 <pre>
   go north
 </pre>
-  Note how 
+  Note how
   "<a href="../topics/substitution.html#%Pn">%P1</a>" was substituted
   with the text matched by the first set of parentheses (in this case,
   "north").

@@ -3,7 +3,7 @@
  * Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)
  *
  * Usage: html2tf FILE...
- * Converts each FILE and prints the result on stdout. 
+ * Converts each FILE and prints the result on stdout.
  *
  * <!-- END -->		Everything after this is ignored.
  * <!--"@...">		Converted to "&..." on a line by itself (tf topic).

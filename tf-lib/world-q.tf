@@ -1,6 +1,6 @@
 ;;;; Active worlds
 ;;; If you like to connect to a lot of worlds at the same time, you may find
-;;; these macros useful.  Typing ESC-w will almost always fg the world you 
+;;; these macros useful.  Typing ESC-w will almost always fg the world you
 ;;; want.
 
 ;;; Whenever activity occurs in a background world, these macros will add

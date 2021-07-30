@@ -94,7 +94,7 @@ LIBRARY $(TF_LIBDIR): ../tf-lib/tf-help ../tf-lib/tf-help.idx
 	cp $$files $(TF_LIBDIR); \
 	cd $(TF_LIBDIR); \
 	chmod $(MODE) $$files; chmod ugo-wx $$files
-	-rm -f $(TF_LIBDIR)/CHANGES 
+	-rm -f $(TF_LIBDIR)/CHANGES
 	cp ../CHANGES $(TF_LIBDIR)
 	chmod $(MODE) $(TF_LIBDIR)/CHANGES; chmod ugo-wx $(TF_LIBDIR)/CHANGES
 	chmod $(MODE) $(TF_LIBDIR)

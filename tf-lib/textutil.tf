@@ -114,7 +114,7 @@
         /test tfwrite({*}, _line), tfwrite(_line)%; \
     /done
 
-; ... %| /fmt 
+; ... %| /fmt
 ; copies input to output, with adjacent non-blank lines joined
 /def -i fmt = \
     /let _line=%; \
