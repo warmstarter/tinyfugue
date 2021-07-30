@@ -304,6 +304,7 @@ AC_LANG([C])
 AC_PROG_CC([clang gcc cc])
 AX_COMPILER_VENDOR
 AC_C_INLINE
+AC_HEADER_STDC
 AC_EXEEXT
 AC_OBJEXT
 AC_PROG_MAKE_SET
@@ -606,7 +607,7 @@ AC_CHECK_LIB(
 # 7. Checks for headers
 ################################################################
 
-AC_CHECK_HEADERS([lunistd.h memory.h sys/select.h])
+AC_CHECK_HEADERS([unistd.h memory.h sys/select.h])
 AC_HEADER_SYS_WAIT
 
 ### For optional language support.
