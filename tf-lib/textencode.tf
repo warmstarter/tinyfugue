@@ -1,4 +1,3 @@
-;;;; $Id: textencode.tf,v 35000.2 2003/12/08 03:47:03 hawkeye Exp $
 ;;;; Encode/decode text to/from a form containing only letters, digits, and
 ;;;; underscores.
 
