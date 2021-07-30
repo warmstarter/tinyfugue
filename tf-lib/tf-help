@@ -10837,7 +10837,6 @@ triggers
 &/psh
 &space_page
 &/speedwalk
-&tintin
 &/watch
 &utilities
 
@@ -10850,7 +10849,8 @@ utilities
 
   alias.tf
           [1m/alias[22;0m, etc: create commands without '/'.
-  at.tf   [1m/at[22;0m: execute commands at a specified time.
+  at.tf
+          [1m/at[22;0m: execute commands at a specified time.
   filexfer.tf
           [1m/putfile[22;0m, [1m/getfile[22;0m: transfer files to/from a mud.
   kb-os2.tf
@@ -10859,9 +10859,11 @@ utilities
           Default [1mkeybindings[22;0m.
   kbfunc.tf
           Macros used by kbbind.tf.
-  map.tf  Mapping commands (like tintin).
-  psh.tf  [1m/psh[22;0m: like [1m/sh[22;0m, but uses your favorite shell.
-  [1mquoter.tf[22;0m
+  map.tf
+         Mapping commands (like tintin).
+  psh.tf
+         [1m/psh[22;0m: like [1m/sh[22;0m, but uses your favorite shell.
+  quoter.tf
           Various quoting [1mmacros[22;0m.
   rwho.tf
           Remote WHO from a mudwho server.
@@ -10873,9 +10875,10 @@ utilities
           Spelling checker.
   tick.tf
           Diku tick counter (like tintin).
-  tintin.tf
-          tintin-like commands.
-  tr.tf   [1m/tr[22;0m: character translation
+  tr.tf
+          [1m/tr[22;0m: character translation
+  utilities.tf
+          TF community library of 'missing' functions. Extensive.
   watch.tf
           [1m/watch[22;0m: Watch for a particular player.
 
