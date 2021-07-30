@@ -70,7 +70,7 @@ AC_SUBST([PACKAGE_EXE])
 dnl would be a really good idea to have this get inserted into files, rather
 dnl than just indiviually maintaining that.
 AC_COPYRIGHT([Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)])
-AC_REVISION([$Revision: 0.50 $])
+AC_REVISION([$Revision: 0.51 $])
 
 ################################################################
 # 4. Process ./configure command line options
@@ -724,7 +724,7 @@ AC_CHECK_FUNCS([h_errno])
 
 # required standard functions
 AC_CHECK_FUNCS(
-    [strstr strtol],
+    [strstr],
     [],
     [AC_MSG_ERROR([Missing required standard function.])])
 
