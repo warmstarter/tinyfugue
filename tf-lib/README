@@ -31,7 +31,7 @@ Most are likely already using these new naw names.
 If for some reason you need the old names, you can manually create them with
 a symlink: ln -s <canonical name> <legacy name>
 
-Deprecated files can always be found in github epo archive, but are
+Deprecated files can always be found in github repo archive, but are
 likely out-of-date and not supported.
 
 legacy name         canonical name
@@ -41,12 +41,14 @@ bind-emacs.tf       kb-emacs.tf
 completion.tf       complete.tf
 factorial.tf        factoral.tf
 file-xfer.tf        filexfer.tf
+finger.tf           (deprecated)
 local.tf.sample     local-eg.tf
 mylib.tf            utilities.tf
 pref-shell.tf       psh.tf
-replacet.tf         (previously deprecated)
+replace.tf          (previously deprecated)
+rwho.tf             (deprecated)
 space_page.tf       spc-page.tf
 speedwalk.tf        spedwalk.tf
 stack_queue.tf      stack-q.tf
-tintint.tf          (reprecated)
-worldqueue.tf        world-q.tf
+tintint.tf          (deprecated)
+worldqueue.tf       world-q.tf
