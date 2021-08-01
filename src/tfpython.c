@@ -11,14 +11,6 @@ const int feature_python = TFPYTHON - 0;
 // If this isn't defined, the whole file is null
 #if TFPYTHON
 
-/* TODO: do this in another way. */
-// Change this 0 to 1 to add debug printfs
-#if 0
-# define DPRINTF oprintf
-#else
-# define DPRINTF(...)
-#endif
-
 struct module_state {
         PyObject *error;
 };
@@ -194,17 +186,17 @@ static PyObject* tfvar_to_pyvar( const struct Value *rc )
 	switch( rc->type ) {
 	case TYPE_INT:
 	case TYPE_POS:
-		DPRINTF( "TYPE_INT: %d", rc->u.ival );
+		tfpywprintf( "TYPE_INT: %d", rc->u.ival );
 		return Py_BuildValue( "i", rc->u.ival );
 	case TYPE_FLOAT:
-		DPRINTF( "TYPE_FLOAT: %f", rc->u.fval );
+		tfpywprintf( "TYPE_FLOAT: %f", rc->u.fval );
 		return Py_BuildValue( "f", rc->u.fval );
 	case TYPE_STR:
 	case TYPE_ENUM:
-		DPRINTF( "TYPE_STR: %s", rc->sval->data );
+		tfpywprintf( "TYPE_STR: %s", rc->sval->data );
 		return Py_BuildValue( "s", rc->sval->data );
 	default:
-		DPRINTF( "TYPE ??? %d", rc->type );
+		tfpywprintf( "TYPE ??? %d", rc->type );
 		Py_RETURN_NONE;
 	}
 }
@@ -226,7 +218,7 @@ static struct Value* pyvar_to_tfvar( PyObject *pRc )
 
 	// Convert string back into tf string
 	if( PyBytes_Check( pRc ) && ( PyBytes_AsStringAndSize( pRc, &cstr, &len ) != -1 ) ) {
-		DPRINTF( "  rc string: %s", cstr );
+		tfpywprintf( "  rc string: %s", cstr );
 		rc = newstr( cstr, (int) len );
 /* TODO: This is WIDECHAR check is likely always going to be true.
  * In fact, it's likely that if using Python, we must also use
@@ -237,24 +229,24 @@ static struct Value* pyvar_to_tfvar( PyObject *pRc )
 	} else if( PyUnicode_Check( pRc) ) {
 		PyObject* temp = PyUnicode_AsASCIIString( pRc );
 		PyBytes_AsStringAndSize( temp, &cstr, &len );
-		DPRINTF( "  rc unicode: %s", cstr );
+		tfpywprintf( "  rc unicode: %s", cstr );
 		rc = newstr( cstr, (int) len );
 		Py_DECREF(temp);
 #endif
 	} else if( PyInt_Check( pRc ) ) {
-		DPRINTF( "  rc int: %ld", PyInt_AsLong( pRc ) );
+		tfpywprintf( "  rc int: %ld", PyInt_AsLong( pRc ) );
 		rc = newint( PyInt_AsLong( pRc ) );
 	} else if( PyLong_Check( pRc ) ) {
-		DPRINTF( "  rc long: %ld", PyLong_AsLong( pRc ) );
+		tfpywprintf( "  rc long: %ld", PyLong_AsLong( pRc ) );
 		rc = newint( PyLong_AsLong( pRc ) );
 	} else if( PyFloat_Check( pRc ) ) {
-		DPRINTF( "  rc float: %lf", PyFloat_AsDouble( pRc ) );
+		tfpywprintf( "  rc float: %lf", PyFloat_AsDouble( pRc ) );
 		rc = newfloat( PyFloat_AsDouble( pRc ) );
 	} else if( PyBool_Check( pRc ) ) {
-		DPRINTF( "  rc bool: %lf", pRc == Py_True ? 1 : 0 );
+		tfpywprintf( "  rc bool: %lf", pRc == Py_True ? 1 : 0 );
 		rc = newint( pRc == Py_True ? 1 : 0 );
 	} else {
-		DPRINTF( "  rc None" );
+		tfpywprintf( "  rc None" );
 		rc = newstr( "", 0 );
 	}
 	Py_DECREF( pRc );
@@ -414,7 +406,7 @@ struct Value *handle_python_call_command( String *args, int offset )
 	if( !py_inited )
 		python_init();
 
-	DPRINTF( "handle_python_call_command: %s", args->data + offset );
+	tfpywprintf( "handle_python_call_command: %s", args->data + offset );
 
 	// Look for string splitting function name and arguments
 	funcstr = strdup( args->data + offset );
@@ -464,7 +456,7 @@ struct Value *handle_python_load_command( String *args, int offset )
 	if( !py_inited )
 		python_init();
 
-	DPRINTF( "handle_python_load_command: %s", name );
+	tfpywprintf( "handle_python_load_command: %s", name );
 
 	// module could invoke tf.eval, so mark it as used
 	( buf = Stringnew( NULL, 0, 0 ) )->links++;
@@ -499,7 +491,7 @@ struct Value *handle_python_command( String *args, int offset )
 	if( !py_inited )
 		python_init();
 
-	DPRINTF( "handle_python_command: %s", args->data + offset );
+	tfpywprintf( "handle_python_command: %s", args->data + offset );
 	pRc = common_run( args->data + offset, Py_single_input );
 	return pyvar_to_tfvar( pRc );
 }
@@ -511,7 +503,7 @@ struct Value *handle_python_function( conString *args )
 	if( !py_inited )
 		python_init();
 
-	DPRINTF( "handle_python_expression: %s", args->data );
+	tfpywprintf( "handle_python_expression: %s", args->data );
 	pRc = common_run( args->data, Py_eval_input );
 	return pyvar_to_tfvar( pRc );
 }

@@ -49,6 +49,7 @@ pre-release. Game related changes are documented in tf-help
 UTF8 support (--enable-widechar=yes) on by default
 PYTHON interpreter support for interfacing with client and macros
 PYTHON 2.7 and 3 are both supported (--enable-python) off by default
+PYTHON interpreter debugger available (/help tfpy_debug) off by default
 /HELP has been spell checked, along with everything else
 HTML documentation and html2tf found and returned to repo
 ANSI log output (/help ansi_log) off by default

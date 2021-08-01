@@ -264,6 +264,9 @@ enum Vars {
 #define textdiv_str	getstrvar(VAR_textdiv_str)
 #define tfhost		getstdvar(VAR_tfhost)
 #define tfinteractive	getintvar(VAR_interactive)
+#if TFPYTHON
+# define tfpy_debug	getintvar(VAR_tfpy_debug)
+#endif
 #define time_format	getstrvar(VAR_time_format)
 #define virtscreen	getintvar(VAR_virtscreen)
 /* visual is special: initial value of -1 indicates it was never explicitly
