@@ -3222,8 +3222,8 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
 #if WIDECHAR
 		    inbound_decode_str(xsock->buffer, incomingposttelnet,
                         incomingFSM, 0);
-		    handle_socket_input_queue_lines(xsock);
 #endif
+		    handle_socket_input_queue_lines(xsock);
 		    queue_socket_line(xsock, CS(xsock->buffer), xsock->buffer->len, F_SERVPROMPT);
 		    Stringtrunc(xsock->buffer, 0);
                     break;
