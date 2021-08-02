@@ -249,7 +249,7 @@ static struct Value* pyvar_to_tfvar( PyObject *pRc )
 		tfpywprintf( "  rc None" );
 		rc = newstr( "", 0 );
 	}
-	Py_DECREF( pRc );
+	Py_DECREF( pRc ); /* TODO: while pRc can be null above, can it get here null? If not, change to Py_XDECREF */
 
 	// And return
 	return rc;

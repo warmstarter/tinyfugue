@@ -1820,7 +1820,6 @@ static int nonblocking_gethost(const char *name, const char *port,
 
     *what = "pipe";
     if (pipe(fds) < 0) return -1;
-/* TODO: Check the idnent here after removing PLATFORM_UNIX */
     {
         *what = "fork";
         *pidp = fork();
