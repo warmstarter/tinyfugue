@@ -9207,10 +9207,10 @@ Special global variables
 
 #default_charset
 #%default_charset
-  [1mdefault_charset[22m=US-ASCII
+  [1mdefault_charset[22m=UTF-8
           Set the default character set for newly created [1mworlds[22;0m. For use with
           MUDs that do not negotiate the character set they use. Changing
-          this does not alter the character sets of any worlds.
+          this does not alter the character sets of any connected worlds.
 
 #defcompile
 #%defcompile
