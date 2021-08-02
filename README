@@ -128,6 +128,11 @@ the .tf files can be founds in the git archive
 
 .tinytalk deprecated and seemed to be broken anyway.
 
+RECEIVELIMIT check no longer works, as there's really no meaningful way to do
+it. This number was raised so high for servers using 102+ACTP+etc.. That it's
+no longer meaningful. On some servers 256+ bytes is broken subnegotiation,
+on others 32K+ is broken subnegotiation. Likely someday it will be 64K+.
+
 ======
 
 Unicode notes:
