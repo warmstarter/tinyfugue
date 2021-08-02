@@ -47,6 +47,7 @@ might have been missed. It will be cleaned up once we're out of
 pre-release. Game related changes are documented in tf-help
 
 UTF8 support (--enable-widechar=yes) on by default
+UTF8 now default_charset when UTF8 compiled (previously US-ASCII)
 PYTHON interpreter support for interfacing with client and macros
 PYTHON 2.7 and 3 are both supported (--enable-python) off by default
 PYTHON interpreter debugger available (/help tfpy_debug) off by default
