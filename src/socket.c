@@ -3242,20 +3242,11 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
                 case TN_GA: case TN_EOR:
                     /* This is definitely a prompt. */
                     telnet_recv(rawchar, 0);
-#if PROMPT_WTFA
 # if WIDECHAR
 		    inbound_decode_str(xsock->buffer, incomingposttelnet,
                         incomingFSM, 0);
-		    handle_socket_input_queue_lines(xsock);
 # endif
-#else
-# if WIDECHAR
-		    inbound_decode_str(xsock->buffer, incomingposttelnet,
-                        incomingFSM, 0);
-# else
 		    handle_socket_input_queue_lines(xsock);
-# endif
-#endif
 		    queue_socket_line(xsock, CS(xsock->buffer), xsock->buffer->len, F_SERVPROMPT);
 		    Stringtrunc(xsock->buffer, 0);
                     break;
