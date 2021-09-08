@@ -58,9 +58,6 @@ srcdist: ./src/tf.1.catman
 help ./tf-lib/tf-help ./tf-lib/tf-help.idx: __always__
 	if test -d ./help; then cd ./help; $(MAKE); fi
 
-bogus-makefile:
-	cp bogus.mak Makefile
-
 disthelp: distclean
 	ln -s help tf-$(TFVER)-help
 	tar -zcf tf-$(TFVER)-help.tar.gz tf-$(TFVER)-help/. \
@@ -71,7 +68,7 @@ disthelp: distclean
 	rm tf-$(TFVER)-help
 	mv tf-$(TFVER)-help.tar.gz ..
 
-dist: srcdist distclean disthelp help bogus-makefile configure
+dist: srcdist distclean disthelp help configure
 	chmod -R ugo+r .
 	cd ..; tar -zcf tf-$(TFVER).tar.gz -X tf-$(TFVER)/EXCLUDE tf-$(TFVER)
 	cd ..; zip -qlr tf-$(TFVER).zip tf-$(TFVER) \
