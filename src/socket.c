@@ -1402,10 +1402,12 @@ static int opensock(World *world, int flags)
 static const char *printai(struct addrinfo *ai, const char *fmt_hp)
 {
     static char buf[1024];
-    static char hostbuf[INET6_ADDRSTRLEN+1];
     const void *hostaddr = NULL;
     unsigned short port = 0;
     const char *host = NULL;
+#if ENABLE_INET6
+    static char hostbuf[INET6_ADDRSTRLEN+1];
+#endif
 
     if (!fmt_hp) fmt_hp = "%s %d";
 
