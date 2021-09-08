@@ -41,22 +41,13 @@
 
 const char sysname[] = UNAME;
 
-/* For customized versions, please add a unique identifier (e.g., your initials)
- * to the version number, and put a brief description of the modifications
- * in the mods[] string.
- */
 const char version[] =
 #if DEVELOPMENT
     "DEVELOPMENT VERSION: "
 #endif
     "TinyFugue version 5.0 beta 8";
 
-const char mods[] = "";
-
-const char copyright[] =
-    "Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)";
-
-const char contrib[] = "";
+const char copyright[] = "Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)";
 
 int restriction = 0;
 int debug = 0;
@@ -153,8 +144,6 @@ int main(int argc, char *argv[])
     oputs(version);
     oputs(copyright);
     oputs("Type `/help copyright' for more information.");
-    if (*contrib) oputs(contrib);
-    if (*mods) oputs(mods);
     oprintf("Using PCRE version %s", pcre_version());
     oputs("Type `/help', `/help topics', or `/help intro' for help.");
     oputs("Type `/quit' to quit tf.");

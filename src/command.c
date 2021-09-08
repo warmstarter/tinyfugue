@@ -274,8 +274,6 @@ struct Value *handle_version_command(String *args, int offset)
 {
     oprintf("%% %s.", version);
     oprintf("%% %s.", copyright);
-    if (*contrib) oprintf("%% %s", contrib);
-    if (*mods)    oprintf("%% %s", mods);
     if (*sysname) oprintf("%% Built for %s", sysname);
     return shareval(val_one);
 }
