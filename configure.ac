@@ -181,43 +181,51 @@ AC_ARG_ENABLE(
     [atcp],
     [AS_HELP_STRING(
         [--enable-atcp],
-        [enable ATCP protocol support])],
+        [enable ATCP support])],
     [enable_atcp=${enableval}],
     [enable_atcp=no])
 if test "$enable_atcp"      = "yes"; then
     AC_DEFINE(
         [ENABLE_ATCP],
        	[1],
-       	[ATCP protcol enabled])
+       	[ATCP enabled])
 fi
 
 AC_ARG_ENABLE(
     [gmcp],
     [AS_HELP_STRING(
         [--enable-gmcp],
-        [enable GMCP protocol support])],
+        [enable GMCP support])],
     [enable_gmcp=${enableval}],
     [enable_gmcp=no])
 if test "$enable_gmcp"      = "yes"; then
     AC_DEFINE(
         [ENABLE_GMCP],
        	[1],
-       	[GMCP protocol enabled])
+       	[GMCP enabled])
 fi
 
 AC_ARG_ENABLE(
     [option102],
     [AS_HELP_STRING(
         [--enable-option102],
-        [enable option102 protocl support])],
+        [enable option102 support])],
     [enable_option102=${enableval}],
     [enable_option102=no])
 if test "$enable_option102" = "yes"; then
     AC_DEFINE(
         [ENABLE_OPTION102],
        	[1],
-       	[OPTION102 protocol enabled])
+       	[OPTION102 enabled])
 fi
+
+AC_ARG_ENABLE(
+    [mccp],
+    [AS_HELP_STRING(
+        [--enable-mccp],
+        [enable MCCP support])],
+    [enable_mccp=${enableval}],
+    [enable_mccp=no])
 
 AC_ARG_WITH(
     [incdirs],
@@ -591,10 +599,19 @@ else
             AC_MSG_WARN([Hardcoding terminal codes.])])
 fi
 
-# This is a requirement for MCCP, which should be it's own feature.
-AC_CHECK_LIB(
-    [z],
-    [inflate])
+
+# this can be cleaned up a bit, but basically works.
+if test "$enable_mccp" = "yes"; then
+    AC_CHECK_LIB(
+        [z],
+        [inflate],
+        [AC_DEFINE(MCCP)],
+        [AC_MSG_ERROR([libz is required for mccp support, but could not be found])])
+    AC_CHECK_HEADERS(
+        [zlib.h],
+        [AC_DEFINE(MCCP)],
+        [AC_MSG_ERROR([zlib.h is required for mccp support, but could not be found])])
+fi
 
 AC_CHECK_LIB(
     [pcre],
@@ -626,9 +643,6 @@ AC_CHECK_HEADERS(
     [pwd.h],
     [],
     [AC_MSG_WARN([Filename '~user' expansion will not be supported.])])
-
-# This is a requirement for MCCP, which should be it's own feature.
-AC_CHECK_HEADERS([zlib.h])
 
 dnl TF_SEARCH_HEADERS(SYMBOL, HEADERS... [, DO-IF-FOUND [, DO-IF-NOT-FOUND]])
 dnl Searches for each header in HEADERS, and defines SYMBOL to the first one
