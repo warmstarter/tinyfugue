@@ -29,8 +29,6 @@
 #define NETDB_H 0
 #define HAVE_PWD_H 0
 #define NEED_PTEM_H 0
-#define HAVE_ZLIB_H 0
-#define HAVE_LIBZ 0
 #define HAVE_SSL 0
 #define HAVE_GNUTLS_OPENSSL_H 0
 
@@ -89,10 +87,9 @@
 #define ENABLE_ATCP 0
 #define ENABLE_GMCP 0
 #define ENABLE_OPTION102 0
+#define HAVE_MCCP 0
 
 #define TFPYTHON 0
-
-#define HAVE_MCCP (HAVE_ZLIB_H && HAVE_LIBZ)
 
 #undef inline
 

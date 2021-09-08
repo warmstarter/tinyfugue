@@ -98,9 +98,10 @@ FG world switching can use TF4 style (/help oldstylefg) off by default
 @ALERT picks up on messages that could have been lost
 / as a prefix to /command sends to MU, as opposed to ///command
 SSL looks for GNU TLS
-ATCP protocol support (--enable-atcp=yes) off by default
-GMCP protocol support (--enable-gmcp=yes) off by default
-OPTION 102 protocol support (--enable-option102=yes) off by default
+ATCP support (--enable-atcp=yes) off by default
+GMCP support (--enable-gmcp=yes) off by default
+OPTION 102 support (--enable-option102=yes) off by default
+MCCP supprt (--enable-mccp) changed to off by default
 MCCP protocol lockup issue resolved
 RFC 2066 compliance for Telnet Charset Negotiation
 PCRE unbundled and now can use system libraries
