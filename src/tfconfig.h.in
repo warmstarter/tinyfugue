@@ -87,9 +87,8 @@
 #define ENABLE_ATCP 0
 #define ENABLE_GMCP 0
 #define ENABLE_OPTION102 0
-#define HAVE_MCCP 0
-
-#define TFPYTHON 0
+#define ENABLE_MCCP 0
+#define ENABLE_PYTHON 0
 
 #undef inline
 

@@ -153,7 +153,7 @@ extern void   tfprintf(TFILE *file, const char *fmt, ...)
 extern void   eprefix(String *buffer);
 extern void   eprintf(const char *fmt, ...) format_printf(1, 2);
 extern void   tfwprintf(const char *fmt, ...) format_printf(1, 2);
-#if TFPYTHON
+#if ENABLE_PYTHON
 extern void   tfpywprintf(const char *fmt, ...) format_printf(1, 2);
 #endif
 extern char   igetchar(void);
