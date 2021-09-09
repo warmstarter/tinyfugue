@@ -433,7 +433,7 @@ STATIC_BUFFER(telbuf);
 # define TN_COMPRESS2	((char)86)	/* MCCP v2 */
 #endif
 /* 200 is not standard. See http://www.ironrealms.com/rapture/manual/files/FeatATCP-txt.html */
-#if ENABLE_ACTP
+#if ENABLE_ATCP
 # define TN_ATCP	((char)200)	/* ATCP */
 #endif
 /* 201 is not standard. See http://www.aardwolf.com/wiki/index.php/Clients/GMCP */

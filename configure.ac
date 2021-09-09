@@ -602,9 +602,9 @@ fi
 
 # this can be cleaned up a bit, but basically works.
 if test "$enable_mccp" = "yes"; then
-    AC_CHECK_LIB(
-        [z],
+    AC_SEARCH_LIBS(
         [inflate],
+        [z],
         [AC_DEFINE(ENABLE_MCCP)],
         [AC_MSG_ERROR([libz is required for mccp support, but could not be found])])
     AC_CHECK_HEADERS(
@@ -613,9 +613,9 @@ if test "$enable_mccp" = "yes"; then
         [AC_MSG_ERROR([zlib.h is required for mccp support, but could not be found])])
 fi
 
-AC_CHECK_LIB(
-    [pcre],
+AC_SEARCH_LIBS(
     [pcre_compile],
+    [pcre],
     [],
     [AC_MSG_ERROR([libpcre is required, but could not be found])])
 
