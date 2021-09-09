@@ -70,7 +70,7 @@ AC_SUBST([PACKAGE_EXE])
 dnl would be a really good idea to have this get inserted into files, rather
 dnl than just indiviually maintaining that.
 AC_COPYRIGHT([Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)])
-AC_REVISION([$Revision: 0.51 $])
+AC_REVISION([$Revision: 0.60 $])
 
 ################################################################
 # 4. Process ./configure command line options
@@ -104,7 +104,7 @@ AC_ARG_ENABLE(
      [ssl],
      [AS_HELP_STRING(
          [--disable-ssl],
-         [disable SSL connections])],
+         [disable SSL support])],
      [enable_ssl=${enableval}],
      [enable_ssl=yes])
 
@@ -120,7 +120,7 @@ AC_ARG_ENABLE(
     [inet6],
     [AS_HELP_STRING(
         [--disable-inet6],
-        [disable IPv6 network support])],
+        [disable IPV66 support])],
     [enable_inet6=${enableval}],
     [enable_inet6=yes])
 
@@ -128,7 +128,7 @@ AC_ARG_ENABLE(
     [256colors],
     [AS_HELP_STRING(
         [--disable-256colors],
-        [disable 256 color support])],
+        [disable 256 COLOR support])],
     [enable_256colors=${enableval}],
     [enable_256colors=yes])
 if test "$enable_256colors" = "yes"; then
@@ -142,7 +142,7 @@ AC_ARG_ENABLE(
     [python],
     [AS_HELP_STRING(
         [--enable-python],
-	[enable python interpreter for scripting])],
+	[enable PYTHON scripting])],
     [enable_python=${enableval}],
     [enable_python=no])
 
@@ -209,7 +209,7 @@ AC_ARG_ENABLE(
     [option102],
     [AS_HELP_STRING(
         [--enable-option102],
-        [enable option102 support])],
+        [enable OPTION102 support])],
     [enable_option102=${enableval}],
     [enable_option102=no])
 if test "$enable_option102" = "yes"; then
@@ -460,7 +460,7 @@ AC_SEARCH_LIBS(
     [select],
     [bsd],
     [],
-    [AC_MSG_ERROR([TF can not work without select().])])
+    [AC_MSG_ERROR([TF can not work without select function.])])
 
 # gethostbyname may not be in default libraries.
 # QNX keeps gethostbyname in lsocket.
