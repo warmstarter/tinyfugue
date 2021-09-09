@@ -545,7 +545,7 @@ fi
 if test "$enable_python" = "yes"; then
     AX_PYTHON
     AC_DEFINE(
-        [TFPYTHON],
+        [ENABLE_PYTHON],
         [1],
         [python scripting enabled])
     PYTHON_INCLUDES="$PYTHON_INCLUDE_DIRS"
@@ -605,11 +605,11 @@ if test "$enable_mccp" = "yes"; then
     AC_CHECK_LIB(
         [z],
         [inflate],
-        [AC_DEFINE(MCCP)],
+        [AC_DEFINE(ENABLE_MCCP)],
         [AC_MSG_ERROR([libz is required for mccp support, but could not be found])])
     AC_CHECK_HEADERS(
         [zlib.h],
-        [AC_DEFINE(MCCP)],
+        [AC_DEFINE(ENABLE_MCCP)],
         [AC_MSG_ERROR([zlib.h is required for mccp support, but could not be found])])
 fi
 

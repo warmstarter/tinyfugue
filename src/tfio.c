@@ -733,7 +733,7 @@ void tfwprintf(const char *fmt, ...)
     va_end(ap);
 }
 
-#if TFPYTHON
+#if ENABLE_PYTHON
 /* The Python interpreter needs to be able to be debugged separately
  * from the rest of TF. This function allow for that through setting:
  * /set tfpy_debug=on

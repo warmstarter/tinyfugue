@@ -6,10 +6,10 @@
 
 #include "tfpython.h"
 
-const int feature_python = TFPYTHON - 0;
+const int feature_python = ENABLE_PYTHON - 0;
 
 // If this isn't defined, the whole file is null
-#if TFPYTHON
+#if ENABLE_PYTHON
 
 struct module_state {
         PyObject *error;

@@ -63,7 +63,7 @@ struct sockaddr_in {
 # include ARPA_INET_H
 #endif
 
-#if HAVE_MCCP
+#if ENABLE_MCCP
 # include <zlib.h>
 #endif
 
@@ -263,7 +263,7 @@ typedef enum {
 #define SOCKPROXY	0x04	/* indirect connection through proxy server */
 #define SOCKTELNET	0x08	/* server supports telnet protocol */
 #define SOCKMAYTELNET	0x10	/* server might support telnet protocol */
-#if HAVE_MCCP
+#if ENABLE_MCCP
 # define SOCKCOMPRESS	0x20	/* server has enabled MCCP v1 or v2 */
 #endif
 #define SOCKALLOCADDRS	0x40	/* addrs allocated by tf, not getaddrinfo */
@@ -304,7 +304,7 @@ typedef struct Sock {		/* an open connection to a server */
     char fsastate;		/* parser finite state automaton state */
     char substate;		/* parser fsa state for telnet subnegotiation */
     pid_t pid;			/* OS pid of name resolution process */
-#if HAVE_MCCP
+#if ENABLE_MCCP
     z_stream *zstream;		/* state of compressed stream */
 #endif
 #if HAVE_SSL
@@ -428,7 +428,7 @@ STATIC_BUFFER(telbuf);
 #define TN_NEW_ENVIRON	((char)39)	/* 1572 - (not used) */
 #define TN_CHARSET	((char)42)	/* 2066 - Charset negotiation */
 /* 85 & 86 are not standard. See http://www.randomly.org/projects/MCCP */
-#if HAVE_MCCP
+#if ENABLE_MCCP
 # define TN_COMPRESS	((char)85)	/* MCCP v1 */
 # define TN_COMPRESS2	((char)86)	/* MCCP v2 */
 #endif
@@ -464,7 +464,7 @@ STATIC_BUFFER(telbuf);
 
 #define ANSI_CSI	'\233'	/* ANSI terminal Command Sequence Intro */
 
-#if HAVE_MCCP /* hack for broken MCCPv1 subnegotiation */
+#if ENABLE_MCCP /* hack for broken MCCPv1 subnegotiation */
 char mccp1_subneg[] = { TN_IAC, TN_SB, TN_COMPRESS, TN_WILL, TN_SE };
 #endif
 
@@ -473,8 +473,8 @@ int quit_flag = FALSE;		/* Are we all done? */
 int active_count = 0;		/* # of (non-current) active sockets */
 String *incoming_text = NULL;
 const int feature_IPv6 = ENABLE_INET6 - 0;
-const int feature_MCCPv1 = HAVE_MCCP - 0;
-const int feature_MCCPv2 = HAVE_MCCP - 0;
+const int feature_MCCPv1 = ENABLE_MCCP - 0;
+const int feature_MCCPv2 = ENABLE_MCCP - 0;
 const int feature_ATCP = ENABLE_ATCP - 0;
 const int feature_GMCP = ENABLE_GMCP - 0;
 const int feature_OPTION102 = ENABLE_OPTION102 - 0;
@@ -619,7 +619,7 @@ void init_sock(void)
     telnet_label[(UCHAR)TN_AUTH]	= "AUTHENTICATION";
     telnet_label[(UCHAR)TN_NEW_ENVIRON]	= "NEW-ENVIRON";
     telnet_label[(UCHAR)TN_CHARSET]	= "CHARSET";
-#if HAVE_MCCP
+#if ENABLE_MCCP
     telnet_label[(UCHAR)TN_COMPRESS]	= "COMPRESS";
     telnet_label[(UCHAR)TN_COMPRESS2]	= "COMPRESS2";
 #endif
@@ -1277,7 +1277,7 @@ static int opensock(World *world, int flags)
     xsock->attrs = 0;
     xsock->prepromptattrs = 0;
     xsock->alert_id = 0;
-#if HAVE_MCCP
+#if ENABLE_MCCP
     xsock->zstream = NULL;
 #endif
     VEC_ZERO(&xsock->tn_them);
@@ -2023,7 +2023,7 @@ static void killsock(Sock *sock)
         close(sock->fd);
         sock->fd = -1;
     }
-#if HAVE_MCCP
+#if ENABLE_MCCP
     if (sock->zstream) {
 	inflateEnd(sock->zstream);
 	FREE(sock->zstream);
@@ -2329,7 +2329,7 @@ struct Value *handle_listsockets_command(String *args, int offset)
 #endif
 	    sock->constate == SS_CONNECTED ? 'C' :
 	    '#' /* shouldn't happen */;
-#if HAVE_MCCP
+#if ENABLE_MCCP
 	if (sock->flags & SOCKCOMPRESS)
 	    state = lcase(state);
 #endif
@@ -2879,7 +2879,7 @@ static void telnet_subnegotiation(void)
         Sappendf(telbuf, "%c%c", TN_IAC, TN_SE);
         telnet_send(telbuf);
         break;
-#if HAVE_MCCP
+#if ENABLE_MCCP
     case TN_COMPRESS:
     case TN_COMPRESS2:
 	if (!TELOPT(xsock, them, *p)) {
@@ -2964,7 +2964,7 @@ static void f_telnet_recv(int cmd, int opt)
     }
 }
 
-#if HAVE_MCCP
+#if ENABLE_MCCP
 static z_stream *new_zstream(void)
 {
     z_stream *zstream;
@@ -2980,7 +2980,7 @@ static z_stream *new_zstream(void)
     FREE(zstream);
     return NULL;
 }
-#endif /* HAVE_MCCP */
+#endif /* ENABLE_MCCP */
 
 #if WIDECHAR
 static int inbound_decode_str(String *output, String *input, UConverter *conv, const char cflush)
@@ -3060,7 +3060,7 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
 {
     char rawchar, inbuffer[BUFFSIZE];
     const char *incoming, *place;
-#if HAVE_MCCP
+#if ENABLE_MCCP
     char mccpbuffer[BUFFSIZE];
 #endif
     fd_set readfds;
@@ -3093,7 +3093,7 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
 	    incoming = simbuffer;
 	    count = simlen;
 	} else {
-#if HAVE_MCCP
+#if ENABLE_MCCP
 	    if (xsock->zstream && xsock->zstream->avail_in) {
 		count = 0;  /* no reading */
 	    } else
@@ -3155,7 +3155,7 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
 		    return received;
 		}
 	    }
-#if HAVE_MCCP
+#if ENABLE_MCCP
 	    if (xsock->zstream) {
 		int zret;
 		if (count) {
@@ -3306,7 +3306,7 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
                 } else {
                     Stringadd(xsock->subbuffer, rawchar);
                     xsock->substate = '\0';
-#if HAVE_MCCP /* hack for broken MCCPv1 subnegotiation */
+#if ENABLE_MCCP /* hack for broken MCCPv1 subnegotiation */
 		    if (xsock->subbuffer->len == 5 &&
 			memcmp(xsock->subbuffer->data, mccp1_subneg, 5) == 0)
 		    {
@@ -3315,7 +3315,7 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
 		    }
 #endif
                 }
-#if HAVE_MCCP
+#if ENABLE_MCCP
 		if (xsock->flags & SOCKCOMPRESS && !xsock->zstream) {
 		    /* compression was just enabled. */
 		    xsock->zstream = new_zstream();
@@ -3337,7 +3337,7 @@ static int handle_socket_input(const char *simbuffer, int simlen, const char *en
 		    no_reply("option was already agreed on");
                     CLR_TELOPT(xsock, them_tog, rawchar);
                 } else if (
-#if HAVE_MCCP
+#if ENABLE_MCCP
 		    (rawchar == TN_COMPRESS && mccp) ||
 		    (rawchar == TN_COMPRESS2 && mccp) ||
 #endif
@@ -3479,7 +3479,7 @@ non_telnet:
 
 	received += count;
 
-#if HAVE_MCCP
+#if ENABLE_MCCP
 	/* If there's still un-inflated stuff, we must process it before we
 	 * exit this loop.
 	 */

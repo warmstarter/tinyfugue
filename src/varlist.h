@@ -112,7 +112,7 @@ varint (VAR_max_instr,	"max_instr",	1000000,	NULL)
 varint (VAR_max_kbnum,	"max_kbnum",	999,		NULL)
 varint (VAR_max_recur,	"max_recur",	100,		NULL)
 varint (VAR_max_trig,	"max_trig",	1000,		NULL)
-#if HAVE_MCCP
+#if ENABLE_MCCP
 varflag(VAR_mccp,	"mccp",		TRUE,		NULL)
 #else
 varenum(VAR_mccp,	"mccp",		FALSE,		NULL,	enum_off)
@@ -165,7 +165,7 @@ varflag(VAR_telopt,	"telopt",	FALSE,		NULL)
 varenum(VAR_textdiv,	"textdiv",	TRUE,		NULL,	enum_textdiv)
 varstr (VAR_textdiv_str,"textdiv_str",	"=====",	NULL)
 varstr (VAR_tfhost,	"tfhost",	NULL,		NULL)
-#if TFPYTHON
+#if ENABLE_PYTHON
 varflag(VAR_tfpy_debug,	"tfpy_debug",	FALSE,		NULL)
 #endif
 varstr (VAR_time_format,"time_format",	"%H:%M",	NULL)

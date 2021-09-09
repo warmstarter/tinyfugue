@@ -20,7 +20,7 @@
 #include "signals.h"    /* suspend(), shell() */
 #include "variable.h"
 
-#if TFPYTHON
+#if ENABLE_PYTHON
 # include "Python.h"
 struct Value *handle_python_function( conString *args );
 struct Value *handle_python_command( String *args, int offset );

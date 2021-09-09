@@ -73,7 +73,7 @@ funccode(option102,	0,	1,  2),
 funccode(pad,		1,	1,  (unsigned)-1),
 funccode(pow,		1,	2,  2),
 funccode(prompt,	0,	1,  1),
-#if TFPYTHON
+#if ENABLE_PYTHON
 funccode(python,	0,	1,  1),
 #endif
 funccode(rand,		0,	0,  2),
