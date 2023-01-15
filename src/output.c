@@ -2760,6 +2760,7 @@ static void hwrite(conString *line, int start, int len, int indent)
     }
 
     cx += len;
+    assert(line->data + start + len < line->len);
 
     if (!line->charattrs && hilite && attrs)
         attributes_on(current = attrs);
@@ -2780,7 +2781,7 @@ static void hwrite(conString *line, int start, int len, int indent)
             col += tabsize - col % tabsize;
         } else {
 #if WIDECHAR
-	    ret = mbrtowc(NULL, (char *)line->data+i, len - i, &is);
+	    ret = mbrtowc(NULL, (char *)line->data+i, start + len - i, &is);
 	    if (ret >= (size_t) -2) {
 		/* Invalid character. Punt. */
 		bufputc(ctrl ? CTRL(c) : c);
