@@ -1,0 +1,511 @@
+// -------------------------------------------------------------------------------------
+// Python support for TinyFugue 5 beta
+//
+// Copyright 2008 Ron Dippold - Modify at will, just add your changes in README.python
+// -------------------------------------------------------------------------------------
+
+#include "tfpython.h"
+
+const int feature_python = ENABLE_PYTHON - 0;
+
+// If this isn't defined, the whole file is null
+#if ENABLE_PYTHON
+
+struct module_state {
+        PyObject *error;
+};
+
+#if PY_MAJOR_VERSION >= 3
+# define GETSTATE(m) ((struct module_state*)PyModule_GetState(m))
+#else
+# define GETSTATE(m) (&_state)
+static struct module_state _state;
+#endif
+
+static PyObject* tfvar_to_pyvar( const struct Value *rc );
+static struct Value* pyvar_to_tfvar( PyObject *pRc );
+
+// -------------------------------------------------------------------------------------
+// The tf 'module' as seen by python scripts
+// -------------------------------------------------------------------------------------
+
+// def tf.eval( argstring ):
+static PyObject *tf_eval( PyObject *pSelf, PyObject *pArgs )
+{
+	struct String *cmd;
+	const char *cargs;
+	struct Value *rc;
+
+	if( !PyArg_ParseTuple( pArgs, "s", &cargs ) ) {
+		eputs( "tf.eval called with non-string argument" );
+		Py_RETURN_NONE;
+
+	}
+
+	// ask tinyfugue to eval the string
+	( cmd = Stringnew( cargs, -1, 0 ) )->links++;
+	rc = handle_eval_command( cmd, 0 );
+	Stringfree( cmd );
+
+	return tfvar_to_pyvar( rc );
+}
+
+//def tf.out( string ):
+static PyObject *tf_out( PyObject *pSelf, PyObject *pArgs )
+{
+	const char *cargs;
+	if( !PyArg_ParseTuple( pArgs, "s", &cargs ) ) {
+		eputs( "tf.out called with non-string argument" );
+	} else {
+		oputs( cargs );
+	}
+	Py_RETURN_NONE;
+}
+
+//def tf.err( string ):
+static PyObject *tf_err( PyObject *pSelf, PyObject *pArgs )
+{
+	const char *cargs;
+	if( !PyArg_ParseTuple( pArgs, "s", &cargs ) ) {
+		eputs( "tf.err called with non-string argument" );
+	} else {
+		eputs( cargs );
+	}
+	Py_RETURN_NONE;
+}
+
+// tf.send( <string>, <world>=None )
+static PyObject *tf_send( PyObject *pSelf, PyObject *pArgs )
+{
+	const char *string, *worldname=NULL;
+
+	if( !PyArg_ParseTuple( pArgs, "s|s", &string, &worldname ) ) {
+		eputs( "tf.send called with bad arguments" );
+	} else {
+		String *buf = Stringnew( string, -1, 0 );
+		handle_send_function( CS(buf), worldname ? worldname : "" , "" );
+	}
+	Py_RETURN_NONE;
+}
+
+//def tf.tfrc()
+static PyObject *tf_tfrc( PyObject *pSelf, PyObject *pArgs )
+{
+	extern char *main_configfile;
+	return Py_BuildValue( "s", main_configfile ? main_configfile : "" );
+}
+
+//def tf.world():
+static PyObject *tf_world( PyObject *pSelf, PyObject *pArgs )
+{
+	World *world = named_or_current_world( "" );
+	return Py_BuildValue( "s", world ? world->name : "");
+}
+
+// tf.getvar( varname, default )
+static PyObject *tf_getvar( PyObject *pSelf, PyObject *pArgs )
+{
+	const char *cargs;
+	PyObject *def = NULL;
+	Var *var = NULL;
+
+	if( !PyArg_ParseTuple( pArgs, "s|O", &cargs, &def ) ) {
+		eputs( "tf.getvar called with bad arguments" );
+	} else {
+		var = ffindglobalvar( cargs );
+	}
+
+	if( var ) {
+		return tfvar_to_pyvar( &var->val );
+	} else if ( def ) {
+		Py_INCREF( def );
+		return def;
+	} else {
+		Py_RETURN_NONE;
+	}
+}
+
+// Our tf 'module'
+static PyMethodDef tfMethods[] = {
+	{
+		"err", tf_err, METH_VARARGS,
+		"tf.err( <string> )\n"
+		"Shows error <string> locally (to the tferr stream).\n"
+	},
+	{
+		"eval", tf_eval, METH_VARARGS,
+		"tf.eval( <string> )\n"
+		"Calls TinyFugue's /eval with <string>.\n"
+		"Returns the return code of the evaluation if any."
+	},
+	{
+		"getvar", tf_getvar, METH_VARARGS,
+		"tf.getvar( <varname>, (<default>) )\n"
+		"use tf.eval() for setvar functionality\n"
+		"Returns the value of <varname> if it exists, or default."
+	},
+	{
+		"out", tf_out, METH_VARARGS,
+		"tf.out( <string> )\n"
+		"Shows <string> locally (to the tfout stream).\n"
+	},
+	{
+		"send", tf_send, METH_VARARGS,
+		"tf.send( <string>, (<world>) )\n"
+		"Send <string> to <world> (default: current world)"
+	},
+	{	"tfrc", tf_tfrc, METH_VARARGS,
+		"tf.tfrc()\n"
+		"returns the file name of the .tfrc file (or empty string)"
+	},
+	{
+		"world", tf_world, METH_VARARGS,
+		"tf.world()\n"
+		"Returns the name of the current world, or a blank string."
+	},
+	{ NULL, NULL, 0, NULL }
+};
+
+
+// -------------------------------------------------------------------------------------
+// Helpers
+// -------------------------------------------------------------------------------------
+
+// run the command in the context of the __main__ dictionary
+static PyObject *main_module, *main_dict=NULL;
+static PyObject *common_run( const char *cmd, int start )
+{
+	return PyRun_String( cmd, start, main_dict, main_dict );
+}
+
+
+// Convert int, float, and string to python objects for return
+// Otherwise, just return None
+static PyObject* tfvar_to_pyvar( const struct Value *rc )
+{
+	switch( rc->type ) {
+	case TYPE_INT:
+	case TYPE_POS:
+		tfpywprintf( "TYPE_INT: %d", rc->u.ival );
+		return Py_BuildValue( "i", rc->u.ival );
+	case TYPE_FLOAT:
+		tfpywprintf( "TYPE_FLOAT: %f", rc->u.fval );
+		return Py_BuildValue( "f", rc->u.fval );
+	case TYPE_STR:
+	case TYPE_ENUM:
+		tfpywprintf( "TYPE_STR: %s", rc->sval->data );
+		return Py_BuildValue( "s", rc->sval->data );
+	default:
+		tfpywprintf( "TYPE ??? %d", rc->type );
+		Py_RETURN_NONE;
+	}
+}
+
+/* Helper - take a python return object and covert it to a tf return object.
+ * We supprt strings, integers, booleans (False->0, True->1 ), floats, and
+ * unicode */
+static struct Value* pyvar_to_tfvar( PyObject *pRc )
+{
+	struct Value *rc;
+	char *cstr;
+	Py_ssize_t len; /* retrn as int for tf */
+
+	// can be null if exception was thrown
+	if( !pRc ) {
+		PyErr_Print();
+		return newstr( "", 0 );
+	}
+
+	// Convert string back into tf string
+	if( PyBytes_Check( pRc ) && ( PyBytes_AsStringAndSize( pRc, &cstr, &len ) != -1 ) ) {
+		tfpywprintf( "  rc string: %s", cstr );
+		rc = newstr( cstr, (int) len );
+/* TODO: This is WIDECHAR check is likely always going to be true.
+ * In fact, it's likely that if using Python, we must also use
+ * WIDECHAR. Keeping this in fo now, but it should be examined in
+ * relation to the total codebase.
+ */
+#if WIDECHAR
+	} else if( PyUnicode_Check( pRc) ) {
+		PyObject* temp = PyUnicode_AsASCIIString( pRc );
+		PyBytes_AsStringAndSize( temp, &cstr, &len );
+		tfpywprintf( "  rc unicode: %s", cstr );
+		rc = newstr( cstr, (int) len );
+		Py_DECREF(temp);
+#endif
+	} else if( PyInt_Check( pRc ) ) {
+		tfpywprintf( "  rc int: %ld", PyInt_AsLong( pRc ) );
+		rc = newint( PyInt_AsLong( pRc ) );
+	} else if( PyLong_Check( pRc ) ) {
+		tfpywprintf( "  rc long: %ld", PyLong_AsLong( pRc ) );
+		rc = newint( PyLong_AsLong( pRc ) );
+	} else if( PyFloat_Check( pRc ) ) {
+		tfpywprintf( "  rc float: %lf", PyFloat_AsDouble( pRc ) );
+		rc = newfloat( PyFloat_AsDouble( pRc ) );
+	} else if( PyBool_Check( pRc ) ) {
+		tfpywprintf( "  rc bool: %lf", pRc == Py_True ? 1 : 0 );
+		rc = newint( pRc == Py_True ? 1 : 0 );
+	} else {
+		tfpywprintf( "  rc None" );
+		rc = newstr( "", 0 );
+	}
+	Py_DECREF( pRc ); /* TODO: while pRc can be null above, can it get here null? If not, change to Py_XDECREF */
+
+	// And return
+	return rc;
+}
+
+// -------------------------------------------------------------------------------------
+// Structural work - initialize the interpreter if necessary
+// -------------------------------------------------------------------------------------
+static int py_inited=0;
+
+// All this is executed on first load. Note - you can change the behavior of this
+// on the fly, for instance to turn on stdout, by doing
+//    /python sys.stdout.output=tf.out
+// then returning it with
+//    /python sys.stdout.output=None
+//
+static const char *init_src =
+	"class __dummyout:\n"
+	"	buf=''\n"
+	"\n"
+	"	def __init__( self, output ):\n"
+	"		'pass in None for no output'\n"
+	"		self.output = output\n"
+	"	def write( self, arg ):\n"
+	"		if not self.output:\n"
+	"			return\n"
+	"		self.buf+=arg\n"
+	"		while '\\n' in self.buf:\n"
+	"			a, self.buf = self.buf.split('\\n',1)\n"
+	"			self.output( a )\n"
+	"	def flush( self ):\n"
+	"		pass\n"
+	"\n"
+	"sys.stdout = __dummyout( None )\n"  	// this could be to tf.out
+	"sys.stderr = __dummyout( tf.err )\n"
+	"\n"
+	"sys.argv=[ 'tf' ]\n"
+;
+
+#if PY_MAJOR_VERSION >= 3
+static int tf_traverse(PyObject *m, visitproc visit, void *arg) {
+    Py_VISIT(GETSTATE(m)->error);
+    return 0;
+}
+
+static int tf_clear(PyObject *m) {
+    Py_CLEAR(GETSTATE(m)->error);
+    return 0;
+}
+
+static struct PyModuleDef moduledef = {
+    PyModuleDef_HEAD_INIT,
+    "tf",
+    NULL,
+    sizeof(struct module_state),
+    tfMethods,
+    NULL,
+    tf_traverse,
+    tf_clear,
+    NULL
+};
+
+# define INITERROR return NULL
+
+PyMODINIT_FUNC
+PyInit_tf(void)
+#else
+# define INITERROR return
+void
+PyInit_tf(void)
+#endif
+{
+    /* Tell it about our tf_eval */
+#if PY_MAJOR_VERSION >= 3
+    PyObject *module = PyModule_Create(&moduledef);
+#else
+    PyObject *module = Py_InitModule("tf", tfMethods);
+#endif
+
+    if (module == NULL) {
+	eputs( "tf module initialization failed NULL" );
+        INITERROR;
+    }
+
+    struct module_state *st = GETSTATE(module);
+
+    st->error = PyErr_NewException("tf.Error", NULL, NULL);
+    if (st->error == NULL) {
+        Py_DECREF(module);
+	eputs( "tf module initialization failed" );
+        INITERROR;
+    }
+#if PY_MAJOR_VERSION >= 3
+    return module;
+#endif
+}
+
+static void python_init()
+{
+	if( py_inited )
+		return;
+
+	PyImport_AppendInittab("tf", PyInit_tf);
+
+	/* Initialize python, without signal handling */
+	Py_InitializeEx(0);
+
+	// get the basic modules
+	PyRun_SimpleString( "import os, sys, tf" );
+	PyRun_SimpleString( "sys.path.append( '.' )" );
+
+	// modify python path
+	if( TFPATH && *TFPATH ) {
+		String *buf = Stringnew( NULL, 0, 0 );
+		Sprintf( buf, "sys.path.extend( \"%s\".split() )", TFPATH );
+		PyRun_SimpleString( buf->data );
+	}
+	if( TFLIBDIR && *TFLIBDIR ) {
+		String *buf = Stringnew( NULL, 0, 0 );
+		Sprintf( buf, "sys.path.append( \"%s\" )", TFLIBDIR );
+		PyRun_SimpleString( buf->data );
+	}
+
+	PyRun_SimpleString( init_src );
+
+	// These are both borrowed refs, we don't have to DECREF
+	main_module = PyImport_AddModule( "__main__");
+	main_dict = PyModule_GetDict( main_module );
+
+	py_inited = 1;
+}
+
+static void python_kill()
+{
+	if( py_inited ) {
+		Py_Finalize();
+		py_inited = 0;
+	}
+}
+
+
+// -------------------------------------------------------------------------------------
+// c -> python calls
+// -------------------------------------------------------------------------------------
+
+
+// Handle a python call with arguments
+struct Value *handle_python_call_command( String *args, int offset )
+{
+	char *funcstr, *argstr;
+	PyObject *pRc=NULL, *function=NULL, *arglist=NULL;
+	//String *buf;
+
+	if( !py_inited )
+		python_init();
+
+	tfpywprintf( "handle_python_call_command: %s", args->data + offset );
+
+	// Look for string splitting function name and arguments
+	funcstr = strdup( args->data + offset );
+	if( ( argstr = strchr( funcstr, ' ' ) ) ) {
+		*argstr++ = '\0';
+	} else {
+		argstr = "";
+	}
+
+	// Look up the function in the namespace, make sure it's callable
+	function = common_run( funcstr, Py_eval_input );
+	if( !function ) {
+		goto bail;
+	}
+	if( !PyCallable_Check( function )) {
+		PyErr_SetString(PyExc_TypeError, "parameter must be callable" );
+		goto bail;
+	}
+
+	// Okay, so now it's callable, give it the string.
+	// We go through all this because otherwise the quoting problem is insane.
+	arglist = Py_BuildValue( "(s)", argstr );
+	pRc = PyEval_CallObject( function, arglist );
+
+bail:
+	Py_XDECREF( function );
+	Py_XDECREF( arglist );
+	free( funcstr );
+	return pyvar_to_tfvar( pRc );
+}
+
+// Just kill the interpreter
+struct Value *handle_python_kill_command( String *args, int offset )
+{
+	python_kill();
+	return newint( 0 );
+}
+
+// Import/reload a python module
+struct Value *handle_python_load_command( String *args, int offset )
+{
+	PyObject *pRc;
+	struct Value *rv;
+	String *buf;
+	const char *name = args->data + offset;
+
+	if( !py_inited )
+		python_init();
+
+	tfpywprintf( "handle_python_load_command: %s", name );
+
+	// module could invoke tf.eval, so mark it as used
+	( buf = Stringnew( NULL, 0, 0 ) )->links++;
+	Sprintf( buf,
+		// if it exists, reload it, otherwise import it
+#if PY_MAJOR_VERSION >= 3
+		"from importlib import reload\n"
+#endif
+		"try:\n"
+		"	reload( %s )\n"
+		"except ( NameError, TypeError ):\n"
+		"	import %s\n",
+		name, name );
+
+	pRc = common_run( buf->data, Py_file_input );
+	if( pRc ) {
+		Py_DECREF( pRc );
+		rv = newint( 0 );
+	} else {
+		PyErr_Print();
+		rv = newint( 1 );
+	}
+	Stringfree( buf );
+	return rv;
+}
+
+// Run arbitrary code
+struct Value *handle_python_command( String *args, int offset )
+{
+	PyObject *pRc;
+
+	if( !py_inited )
+		python_init();
+
+	tfpywprintf( "handle_python_command: %s", args->data + offset );
+	pRc = common_run( args->data + offset, Py_single_input );
+	return pyvar_to_tfvar( pRc );
+}
+
+struct Value *handle_python_function( conString *args )
+{
+	PyObject *pRc;
+
+	if( !py_inited )
+		python_init();
+
+	tfpywprintf( "handle_python_expression: %s", args->data );
+	pRc = common_run( args->data, Py_eval_input );
+	return pyvar_to_tfvar( pRc );
+}
+
+#endif

@@ -1,0 +1,54 @@
+                   Interesting and useful macros
+
+The *.tf files in this directory contain many interesting and useful
+macros.  Some are quite useful, others illustrate useful macro
+programming techniques.  Any of the *.tf files can be loaded directly
+with /load.  Read the comments at the top of each file for specific
+instructions.
+
+=============================================================================
+
+Newly added:
+
+    utilities.tf
+      - The TF Mailing List's library of missing functions.
+    *.py
+      - Python scripts available with --enable-python
+        These were initially created for Python2, so some might not work if
+        you are using Python3. They are loaded differently.
+        See: /help python
+
+=============================================================================
+
+Removed:
+
+Outdated .tf files have been removed.
+Symlinks for old names of .tf files have been removed.
+Scripts should be updated to use the new names.
+Previously both were valid, now only the proper name will work.
+Most are likely already using these new naw names.
+
+If for some reason you need the old names, you can manually create them with
+a symlink: ln -s <canonical name> <legacy name>
+
+Deprecated files can always be found in github repo archive, but are
+likely out-of-date and not supported.
+
+legacy name         canonical name
+-----------------   --------------
+bind-bash.tf        kb-bash.tf
+bind-emacs.tf       kb-emacs.tf
+completion.tf       complete.tf
+factorial.tf        factoral.tf
+file-xfer.tf        filexfer.tf
+finger.tf           (deprecated)
+local.tf.sample     local-eg.tf
+mylib.tf            utilities.tf
+pref-shell.tf       psh.tf
+replace.tf          (previously deprecated)
+rwho.tf             (deprecated)
+space_page.tf       spc-page.tf
+speedwalk.tf        spedwalk.tf
+stack_queue.tf      stack-q.tf
+tintint.tf          (deprecated)
+worldqueue.tf       world-q.tf

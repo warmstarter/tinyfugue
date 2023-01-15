@@ -1,0 +1,24 @@
+########################################################################
+#
+#  TinyFugue - programmable mud client
+#  Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)
+#
+#  TinyFugue (aka "tf") is protected under the terms of the GNU
+#  General Public License.  See the file "LICENSE" for details.
+#
+########################################################################
+
+
+@SET_MAKE@
+LONGPATH=${PATH}:@PATH@
+
+default: files
+
+files all install tf clean uninstall: _force_
+	@cd src; PATH="${LONGPATH}" ${MAKE} $@
+
+_force_:
+
+# The next line is a hack to get around a bug in BSD/386 make.
+make:
+
