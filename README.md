@@ -2,12 +2,29 @@ TinyyFugue 50ws8
 ================
 ================
 
+This is likely the most up to date, bug-free, and featureful TinyFugue 5 out there.
+
+I am no longer actively developing this, but I will still be responsive to bug reports.
+
+Check out my tinyfugue-scripts repository for a lot of great stuff.
+
+Unicode support is now on by default, so read below on that, as you almost certainly want this feature, you might just need to install a package on your OS.
+
 TinyFugue 50b8 with numerous patches and improvements
 =====================================================
 
 General feature list and installation follows. The UTF8 section is
 what you probably what everyone should be aware of, so starting with
 it for those that tend to skip reading these.
+
+Quick Install
+=============
+
+autoconfig
+./configure
+(To see a variety of compile time options: ./configure --help)
+make
+(Optionally: sudo make install)
 
 UTF8 setup information
 ======================
