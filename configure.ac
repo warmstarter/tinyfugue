@@ -20,7 +20,7 @@ define(
 
 define(
     [VERSION_STRING],
-    [50b8])
+    [50ws8])
 
 define(
     [URL_STRING],
@@ -55,7 +55,7 @@ PACKAGE_EXE=EXE_STRING
 AC_SUBST([PACKAGE_EXE])
 
 AC_COPYRIGHT([Copyright (C) 1993-2007 Ken Keys (kenkeys@users.sourceforge.net)])
-AC_REVISION([$Revision: 0.60 $])
+AC_REVISION([$Revision: 1.00 $])
 
 ################################################################
 # 4. Process ./configure command line options
@@ -526,11 +526,11 @@ if test "$enable_widechar" = "yes"; then
 	    [1],
 	    [widechar unicode enabled]
 	)],
-        [AC_MSG_WARN([libicuuc not found. disabling widechar support.])])
+        [AC_MSG_ERROR([libicuuc not found. Check README or explicitly disable widechar option.])])
     AC_CHECK_HEADERS(
         [wchar.h wctype.h],
        	[],
-        [AC_MSG_WARN([wchar.h and wctype.h not found, require for widechar unicode support.])])
+        [AC_MSG_ERROR([wchar.h and wctype.h not found. Check README or explicitly disable widechar option.])])
 fi
 
 terminal_hardcode="TERM_vt100";
